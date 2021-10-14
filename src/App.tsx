@@ -1,25 +1,31 @@
 import React, {lazy, Suspense} from 'react'
 import './App.css'
-import {CircularProgress} from '@material-ui/core'
 import {Redirect, Route, Switch} from 'react-router-dom'
-import {LOGIN_PATH} from './routes'
+import {INFO_APP_PATH, LOGIN_PATH} from './routes'
+import {AMusicContainer} from './components/AMusicContainer'
+import {FallbackSpinner} from './components/fallback-spinner/FallbackSpinner'
 
 
 const LoginComponent = lazy(() => import('./containers/login/Login'))
+const InfoAppComponent = lazy(() => import('./containers/infoApplicazione/InformazioniApplicazione'))
 
 
 function App() {
     return (
-        <Suspense fallback={<CircularProgress/>}>
+        <Suspense fallback={<FallbackSpinner/>}>
+            <AMusicContainer>
+                <Switch>
 
-            <Switch>
+                    {/*HOMEPAGE*/}
+                    <Route path={LOGIN_PATH} component={LoginComponent}/>
 
-                {/*HOMEPAGE*/}
-                <Route path={LOGIN_PATH} component={LoginComponent}/>
+                    {/*INFO APP*/}
+                    <Route path={INFO_APP_PATH} component={InfoAppComponent}/>
 
-                <Redirect to={LOGIN_PATH}/>
+                    <Redirect to={LOGIN_PATH}/>
 
-            </Switch>
+                </Switch>
+            </AMusicContainer>
         </Suspense>
     )
 }

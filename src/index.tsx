@@ -6,7 +6,7 @@ import App from './App'
 import {Router} from 'react-router-dom'
 import {createHashHistory} from 'history'
 import {ThemeProvider} from '@material-ui/core/styles'
-import {NOME_PROGETTO_THEME} from './NomeProgetto_theme'
+import {AMUSIC_THEME} from './AMusic_theme'
 import * as serviceWorker from './serviceWorker';
 
 
@@ -16,7 +16,7 @@ export const HashHistory = createHashHistory()
 ReactDOM.render(
     <React.StrictMode>
         <Router history={HashHistory}>
-            <ThemeProvider theme={NOME_PROGETTO_THEME}>
+            <ThemeProvider theme={AMUSIC_THEME}>
                 <App/>
             </ThemeProvider>
         </Router>

@@ -3,16 +3,15 @@ import {itIT} from '@material-ui/core/locale'
 
 
 //TODO cambiare nome file e costanti
-export const NOME_PROGETTO_PALETTE_COLORS = {
+export const AMUSIC_PALETTE_COLORS = {
     /*USUALLY USED*/
-    YELLOW: '#f9bd39',
-    BLUE:'#1d626a',
-    DARK_BLUE:'#1b4a55',
-    MEDIUM_BLUE:'#689594',
-    LIGHT_BLUE:'#94c4cc',
-    WHITE:'#f5f5eb',
-    BROWN:'#36432d',
-    LIGHT_BROWN:'#989d73',
+    YELLOW: '#e6ae27',
+    BLUE: '#006172',
+    LIGHT_BLUE: '#008c96',
+    WHITE: '#f5f5eb',
+    PURPLE: '#936f9d',
+    VIOLET: '#382940',
+    BLACK: '#111111',
 
     /*COMMON*/
     NERO: '#000',
@@ -59,7 +58,7 @@ export const NOME_PROGETTO_PALETTE_COLORS = {
 
 
 // @ts-ignore
-export const NOME_PROGETTO_THEME: Theme = createTheme({
+export const AMUSIC_THEME: Theme = createTheme({
         breakpoints: {
             values: {
                 xs: 0,
@@ -71,29 +70,29 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
         },
         palette: {
             common: {
-                black: NOME_PROGETTO_PALETTE_COLORS.NERO,
-                white: NOME_PROGETTO_PALETTE_COLORS.BIANCO,
+                black: AMUSIC_PALETTE_COLORS.NERO,
+                white: AMUSIC_PALETTE_COLORS.BIANCO,
             },
             primary: {
-                main: NOME_PROGETTO_PALETTE_COLORS.DARK_GREEN,
+                main: '#936F9D',
             },
             secondary: {
-                main: NOME_PROGETTO_PALETTE_COLORS.MEDIUM_ORANGE,
+                main: '#F5F5EB',
             },
             error: {
-                main: NOME_PROGETTO_PALETTE_COLORS.ROSSO_MAIN,
+                main: AMUSIC_PALETTE_COLORS.ROSSO_MAIN,
             },
             warning: {
-                light: NOME_PROGETTO_PALETTE_COLORS.ARANCIONE_WG_LIGHT,
-                main: NOME_PROGETTO_PALETTE_COLORS.ARANCIONE_WG_MAIN,
-                dark: NOME_PROGETTO_PALETTE_COLORS.ARANCIONE_WG_DARK,
-                contrastText: NOME_PROGETTO_PALETTE_COLORS.NERO,
+                light: AMUSIC_PALETTE_COLORS.ARANCIONE_WG_LIGHT,
+                main: AMUSIC_PALETTE_COLORS.ARANCIONE_WG_MAIN,
+                dark: AMUSIC_PALETTE_COLORS.ARANCIONE_WG_DARK,
+                contrastText: AMUSIC_PALETTE_COLORS.NERO,
             },
             success: {
-                light: NOME_PROGETTO_PALETTE_COLORS.VERDE_SS_LIGHT,
-                main: NOME_PROGETTO_PALETTE_COLORS.VERDE_SS_MAIN,
-                dark: NOME_PROGETTO_PALETTE_COLORS.VERDE_SS_DARK,
-                contrastText: NOME_PROGETTO_PALETTE_COLORS.NERO,
+                light: AMUSIC_PALETTE_COLORS.VERDE_SS_LIGHT,
+                main: AMUSIC_PALETTE_COLORS.VERDE_SS_MAIN,
+                dark: AMUSIC_PALETTE_COLORS.VERDE_SS_DARK,
+                contrastText: AMUSIC_PALETTE_COLORS.NERO,
             },
             grey: {
                 50: '#fafafa',
@@ -125,7 +124,7 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
             divider: 'rgba(0, 0, 0, 0.12)',
             // VALUTARE
             background: {
-                paper: NOME_PROGETTO_PALETTE_COLORS.BIANCO,
+                paper: AMUSIC_PALETTE_COLORS.BIANCO,
                 default: '#fafafa',
             },
             action: {
@@ -211,7 +210,9 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
                 fontWeight: 700 /*400*/,
                 fontSize: '2.25rem' /*3rem*/,
                 lineHeight: '32px',
-                background: NOME_PROGETTO_PALETTE_COLORS.VERDE_LIME_HIGHLIGHTED_TEXT_GRADIENT,
+                /*
+                                background: AMUSIC_PALETTE_COLORS.VERDE_LIME_HIGHLIGHTED_TEXT_GRADIENT,
+                */
                 width: 'max-content',
             },
             //USATO PER SOTTOTITOLI SEZIONE (SPECIFICA LA TIPOLOGIA......) E RECAP POLIZZA (LA TUA POLIZZA)
@@ -330,30 +331,31 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
         overrides: {
             MuiCard: {
                 root: {
-                    background: NOME_PROGETTO_PALETTE_COLORS.BIANCO,
+                    background: AMUSIC_PALETTE_COLORS.BIANCO,
                     borderRadius: '20px',
                     boxShadow: '0px 4px 20px rgba(0, 110, 88, 0.13)',
                 },
             },
             MuiButton: {
                 contained: {
-                    backgroundColor: NOME_PROGETTO_PALETTE_COLORS.BIANCO,
-                    color: NOME_PROGETTO_PALETTE_COLORS.MEDIUM_GREEN,
-                    borderRadius: '25px',
+                    backgroundColor: '#936F9D',
+                    color: 'white',
+                    borderRadius: '4px',
                     boxSizing: 'border-box',
                     minWidth: '130px',
+                    maxWidth:'216px',
                     height: '40px',
                     boxShadow: '0 4px 4px rgba(0, 0, 0, 0.2)',
                     textTransform: 'none',
                     letterSpacing: '0.1em',
                     '&$disabled': {
-                        color: NOME_PROGETTO_PALETTE_COLORS.BIANCO,
+                        color: AMUSIC_PALETTE_COLORS.BIANCO,
                         opacity: 0.5,
                     },
                 },
                 outlined: {
-                    color: NOME_PROGETTO_PALETTE_COLORS.BIANCO,
-                    border: `1px solid ${NOME_PROGETTO_PALETTE_COLORS.BIANCO}`,
+                    color: AMUSIC_PALETTE_COLORS.BIANCO,
+                    border: `1px solid ${AMUSIC_PALETTE_COLORS.BIANCO}`,
                     borderRadius: '20px',
                     height: '40px',
                     backgroundColor: 'inherit',
@@ -361,15 +363,17 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
                     textTransform: 'none',
                     letterSpacing: '0.1em',
                     '&$disabled': {
-                        color: NOME_PROGETTO_PALETTE_COLORS.BIANCO,
-                        border: `1px solid ${NOME_PROGETTO_PALETTE_COLORS.BIANCO}`,
+                        color: AMUSIC_PALETTE_COLORS.BIANCO,
+                        border: `1px solid ${AMUSIC_PALETTE_COLORS.BIANCO}`,
                         opacity: 0.5,
                     },
                 },
             },
             MuiAccordion: {
                 root: {
-                    border: '1px solid rgba(0, 0, 0, .125)',
+                    backgroundColor: AMUSIC_PALETTE_COLORS.BLACK,
+                    border: '1px solid rgba(113,105,116,0.95)',
+
                     borderLeft: 0,
                     borderRight: 0,
                     boxShadow: 'none',
@@ -378,6 +382,9 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
                     },
                     '&:last-child': {
                         borderBottom: 'none',
+                    },
+                    '&:first-child': {
+                        border: 'none',
                     },
                     '&:before': {
                         display: 'none',
@@ -391,13 +398,12 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
             },
             MuiAccordionSummary: {
                 root: {
-                    backgroundColor: NOME_PROGETTO_PALETTE_COLORS.BIANCO,
-                    /* borderBottom: '1px solid rgba(0, 0, 0, .125)',*/
+                    backgroundColor: AMUSIC_PALETTE_COLORS.BLACK,
+                    borderTop: 0,
                     marginBottom: -1,
                     minHeight: 56,
                     '&$expanded': {
                         minHeight: 56,
-                        borderBottom: '1px solid rgba(0, 0, 0, .125)',
                     },
                 },
                 content: {
@@ -405,7 +411,8 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
                         '"Nunito"',
                         'sans-serif',
                     ].join(','),
-                    color: NOME_PROGETTO_PALETTE_COLORS.DARK_GREEN,
+                    color: AMUSIC_PALETTE_COLORS.WHITE,
+                    opacity:0.6,
                     fontSize: '16px',
                     fontWeight: 700,
                     '&$expanded': {
@@ -414,12 +421,15 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
                 },
                 expanded: {},
                 expandIcon: {
-                    color: NOME_PROGETTO_PALETTE_COLORS.DARK_GREEN,
+                    color: AMUSIC_PALETTE_COLORS.WHITE,
+                    opacity:0.6
                 },
             },
             MuiAccordionDetails: {
                 root: {
                     padding: '10px',
+                    color:'white',
+                    opacity:'0.9',
                     '&$expanded': {
                         borderBottom: 0,
                     },
@@ -433,7 +443,7 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
             MuiStepConnector: {
                 root: {
                     '& $line': {
-                        borderColor: NOME_PROGETTO_PALETTE_COLORS.BIANCO,
+                        borderColor: AMUSIC_PALETTE_COLORS.BIANCO,
                         borderStyle: 'dashed',
                         borderWidth: '1px',
                         opacity: 0.5,
@@ -441,14 +451,14 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
                 },
                 active: {
                     '& $line': {
-                        borderColor: NOME_PROGETTO_PALETTE_COLORS.BIANCO,
+                        borderColor: AMUSIC_PALETTE_COLORS.BIANCO,
                         borderStyle: 'solid',
                         opacity: 0.5,
                     },
                 },
                 completed: {
                     '& $line': {
-                        borderColor: NOME_PROGETTO_PALETTE_COLORS.BIANCO,
+                        borderColor: AMUSIC_PALETTE_COLORS.BIANCO,
                         borderStyle: 'solid',
                         opacity: 0.5,
                     },
@@ -456,20 +466,20 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
             },
             MuiStepLabel: {
                 label: {
-                    color: NOME_PROGETTO_PALETTE_COLORS.BIANCO,
+                    color: AMUSIC_PALETTE_COLORS.BIANCO,
                     opacity: 0.4,
                     fontSize: '12px',
                     fontWeight: 700,
                     marginTop: '5px !important',
                     textTransform: 'none',
                     '&$active': {
-                        color: `${NOME_PROGETTO_PALETTE_COLORS.BIANCO} `,
+                        color: `${AMUSIC_PALETTE_COLORS.BIANCO} `,
                         opacity: 1,
                         fontSize: '12px',
                         fontWeight: 700,
                     },
                     '&$completed': {
-                        color: `${NOME_PROGETTO_PALETTE_COLORS.BIANCO} `,
+                        color: `${AMUSIC_PALETTE_COLORS.BIANCO} `,
                         opacity: 1,
                         fontSize: '12px',
                         fontWeight: 700,
@@ -479,7 +489,7 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
             MuiStepIcon: {
                 root: {
                     color: 'transparent !important',
-                    border: `2px solid ${NOME_PROGETTO_PALETTE_COLORS.BIANCO}`,
+                    border: `2px solid ${AMUSIC_PALETTE_COLORS.BIANCO}`,
                     borderRadius: '20px',
                     opacity: 0.5,
                 },
@@ -487,34 +497,32 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
                     opacity: 1,
                 },
                 completed: {
-                    color: `${NOME_PROGETTO_PALETTE_COLORS.BIANCO} !important`,
+                    color: `${AMUSIC_PALETTE_COLORS.BIANCO} !important`,
                     opacity: 1,
                     border: 'none',
                 },
                 text: {
                     '&$completed': {
-                        color: `${NOME_PROGETTO_PALETTE_COLORS.BIANCO} `,
+                        color: `${AMUSIC_PALETTE_COLORS.BIANCO} `,
                         opacity: 1,
                     },
                 },
             },
             MuiInputLabel: {
                 root: {
-                    display: 'none',
+                    color: '#F5F5EB'
                 },
                 shrink: {
-                    color: NOME_PROGETTO_PALETTE_COLORS.DARK_GREEN,
                     fontSize: '22px',
                     fontWeight: 400,
-                    padding: '0px 0px 0px 20px',
                 },
             },
             MuiInput: {
                 root: {
-                    backgroundColor: '#F2F2F2',
-                    borderRadius: '25px',
+                    border: '2px solid #F2F2F2',
+                    borderRadius: '4px',
                     height: '40px',
-                    //minWidth: '150px',
+                    color: 'white',
                     '&$disabled': {
                         opacity: 0.2,
                     },
@@ -525,8 +533,7 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
                     padding: 'auto',
                 },
                 formControl: {
-                    marginTop: '10px !important',
-                    paddingRight: '10px',
+                    marginTop: '20px !important',
                     '&$disabled': {
                         opacity: 0.6,
                     },
@@ -564,23 +571,23 @@ export const NOME_PROGETTO_THEME: Theme = createTheme({
             /*@ts-ignore*/
             MuiPickersToolbar: {
                 toolbar: {
-                    backgroundColor: NOME_PROGETTO_PALETTE_COLORS.DARK_GREEN,
+                    backgroundColor: AMUSIC_PALETTE_COLORS.DARK_GREEN,
                 },
             },
             MuiPickersCalendarHeader: {
                 switchHeader: {
-                    color: NOME_PROGETTO_PALETTE_COLORS.DARK_GREEN,
+                    color: AMUSIC_PALETTE_COLORS.DARK_GREEN,
                 },
             },
             MuiPickersDay: {
                 day: {
-                    color: NOME_PROGETTO_PALETTE_COLORS.NERO,
+                    color: AMUSIC_PALETTE_COLORS.NERO,
                 },
                 daySelected: {
-                    backgroundImage: NOME_PROGETTO_PALETTE_COLORS.VERDE_GRADIENT,
+                    backgroundImage: AMUSIC_PALETTE_COLORS.VERDE_GRADIENT,
                 },
                 current: {
-                    color: NOME_PROGETTO_PALETTE_COLORS.DARK_GREEN,
+                    color: AMUSIC_PALETTE_COLORS.DARK_GREEN,
                 },
             },
         },
