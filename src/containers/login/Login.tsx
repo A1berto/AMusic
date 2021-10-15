@@ -1,17 +1,43 @@
 import * as React from 'react'
-import {FC} from 'react'
-import {Button, TextField, Typography} from '@material-ui/core'
+import {FC, useState} from 'react'
+import {createStyles, makeStyles, Typography} from '@material-ui/core'
 import FacebookLogo from '../../assets/img/facebookLogo.svg'
 import GoogleLogo from '../../assets/img/googleLogo.svg'
 import {AMUSIC_PALETTE_COLORS} from '../../AMusic_theme'
+import LoginFields from './LoginFields'
 
 
-//TODO creare useStyle dove inserisco tutto lo stile che si può inserire di questo file
+const useStyles = makeStyles(() =>
+    createStyles({
+        divider: (isSingIn) => ({
+            borderLeft: '2px solid white',
+            opacity: '0.6',
+            height: isSingIn ? '30vh' : '20vh',
+            position: 'fixed',
+            left: '50%',
+            marginTop: 'inherit'
+        }),
+        link: {
+            marginLeft: '8px',
+            textDecoration: 'underline',
+            cursor: 'pointer'
+        }
+    }),
+)
+
+
 interface ILogin {
 }
 
 const Login: FC<ILogin> = () => {
 
+    const [isSingIn, setIsSingIn] = useState<boolean>(false)
+
+    const classes = useStyles(isSingIn)
+
+    const handleToggleClick = () => {
+        setIsSingIn(preveState => !preveState)
+    }
 
     return (
         <div style={{textAlign: 'center', width: '60%'}}>
@@ -20,59 +46,28 @@ const Login: FC<ILogin> = () => {
                     <Typography variant={'h3'} color="primary">Divertiamoci</Typography>
                 </div>
                 <div className="col-12 d-flex justify-content-center">
-                    {/*TODO fare in modo che nel sottotitolo non ripeto due volte le stesse parole, modificare!   (proposta: Ne hai già uno? Accedi)*/}
-                    <Typography variant={'h4'} color="secondary">
-                        Iniziamo creando il tuo account. Disponi già di un account? Accedi
-                    </Typography>
+                    {
+                        isSingIn ?
+                            <Typography variant={'h4'} color="secondary">
+                                Iniziamo creando il tuo account inserendo i seguenti dati. Ne hai già uno?
+                                <span className={classes.link} onClick={handleToggleClick}>Accedi</span>
+                            </Typography> :
+                            <Typography variant={'h4'} color="secondary">
+                                Iniziamo creando il tuo account inserendo i seguenti dati. Non ne hai già uno?
+                                <span className={classes.link} onClick={handleToggleClick}>Registrati</span>
+                            </Typography>
+                    }
                 </div>
             </div>
-            <div className="row mt-5">
-                <div className="col-5">
-                    <div className="row justify-content-center">
-                        <div className="col-8 mt-3">
-                            <TextField
-                                label="Nome"
-                                defaultValue="Alberto"
-                            />
-                        </div>
-                        <div className="col-8 mt-3">
-                            <TextField
-                                label="Cognome"
-                                defaultValue="Manuguerra"
-                            />
-                        </div>
-                        <div className="col-8 mt-3">
-                            <TextField
-                                label="Email"
-                                defaultValue="a@mail.it"
-                            />
-                        </div>
-                        <div className="col-8 mt-3">
-                            <TextField
-                                label="Password"
-                                defaultValue="*******"
-                            />
-                        </div>
-                    </div>
-                    <div className="row justify-content-center">
-                        <div className="col-8 mt-5">
-                            <Button variant="contained" fullWidth>
-                                Login
-                            </Button>
-                        </div>
-                    </div>
-                </div>
+            <div
+                className={`row mt-5 ${!isSingIn ? 'animate__animated animate__fadeInRight' : 'animate__animated animate__fadeInLeft'}`}>
+
+                {/*SING IN*/}
+                <LoginFields isSingIn={isSingIn}/>
 
                 {/*DIVIDER*/}
-                <div style={{
-                    borderLeft: '2px solid white',
-                    opacity: '0.6',
-                    height: '40vh',
-                    position: 'fixed',
-                    left: '50%',
-                    marginTop: 'inherit'
-                }}/>
                 <div className="col-2 d-flex align-items-center justify-content-center">
+                    <div className={classes.divider}/>
                     <Typography variant="caption" color="secondary"
                                 className="p-3"
                                 style={{background: AMUSIC_PALETTE_COLORS.BLACK, zIndex: 1}}>
@@ -82,17 +77,17 @@ const Login: FC<ILogin> = () => {
 
                 {/*LOGIN CON TERZI*/}
                 <div className="col-5 d-flex align-items-center justify-content-center">
-                    <div className="row" style={{paddingLeft: '3vw'}}
-                         onClick={() => console.log('Login con Google')}>
-                        <div className="col-12 d-flex align-items-center mb-2">
+                    <div className="row" style={{paddingLeft: '3vw'}}>
+                        <div className={`col-12 appTerzeParti mb-2`}
+                             onClick={() => console.log('Login con Google')}>
                             <img src={GoogleLogo} alt="GoogleLogo"/>
                             <Typography variant="h6" color="secondary" className="ms-3">
                                 Continua su Google
                             </Typography>
                         </div>
-                        <div className="col-12 d-flex align-items-center mt-2"
+                        <div className={`col-12 appTerzeParti mt-2`}
                              onClick={() => console.log('Login con Facebook')}>
-                            <img src={FacebookLogo} alt="FacebookLogo"/>
+                            <img className="ciao" src={FacebookLogo} alt="FacebookLogo"/>
                             <Typography variant="h6" color="secondary" className="ms-3">
                                 Continua su Facebook
                             </Typography>

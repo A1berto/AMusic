@@ -5,11 +5,11 @@ import InfoApplicazione from './InfoApplicazione'
 import {informazioni} from './info.constants'
 
 
-//TODO creare useStyle dove inserisco tutto lo stile che si può inserire di questo file
 interface IInformazioniApplicazione {
 }
 
 const InformazioniApplicazione: FC<IInformazioniApplicazione> = () => {
+    //React State used to open accordion one at time
     const [expanded, setExpanded] = React.useState<string | false>(false)
 
     return (

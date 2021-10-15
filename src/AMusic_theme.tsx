@@ -343,7 +343,7 @@ export const AMUSIC_THEME: Theme = createTheme({
                     borderRadius: '4px',
                     boxSizing: 'border-box',
                     minWidth: '130px',
-                    maxWidth:'216px',
+                    maxWidth: '216px',
                     height: '40px',
                     boxShadow: '0 4px 4px rgba(0, 0, 0, 0.2)',
                     textTransform: 'none',
@@ -412,7 +412,7 @@ export const AMUSIC_THEME: Theme = createTheme({
                         'sans-serif',
                     ].join(','),
                     color: AMUSIC_PALETTE_COLORS.WHITE,
-                    opacity:0.6,
+                    opacity: 0.6,
                     fontSize: '16px',
                     fontWeight: 700,
                     '&$expanded': {
@@ -422,14 +422,14 @@ export const AMUSIC_THEME: Theme = createTheme({
                 expanded: {},
                 expandIcon: {
                     color: AMUSIC_PALETTE_COLORS.WHITE,
-                    opacity:0.6
+                    opacity: 0.6
                 },
             },
             MuiAccordionDetails: {
                 root: {
                     padding: '10px',
-                    color:'white',
-                    opacity:'0.9',
+                    color: 'white',
+                    opacity: '0.9',
                     '&$expanded': {
                         borderBottom: 0,
                     },
@@ -562,6 +562,17 @@ export const AMUSIC_THEME: Theme = createTheme({
                     height: 'auto',
                     maxHeight: '98%',
                 },
+            },
+            MuiPaper: {
+                root: {
+                    backgroundColor: 'rgba(245,245,235,0.6)',
+                }
+            },
+            MuiMenuItem: {
+                root: {
+                    fontWeight: 'bold',
+                    color: '#111111'
+                }
             },
             MuiBackdrop: {
                 root: {
