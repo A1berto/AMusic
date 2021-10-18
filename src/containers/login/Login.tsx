@@ -49,18 +49,17 @@ const Login: FC<ILogin> = () => {
                     {
                         isSingIn ?
                             <Typography variant={'h4'} color="secondary">
-                                Iniziamo creando il tuo account inserendo i seguenti dati. Ne hai già uno?
+                                Per cominciare, crea il tuo account AMusic. Ne hai già uno?
                                 <span className={classes.link} onClick={handleToggleClick}>Accedi</span>
                             </Typography> :
                             <Typography variant={'h4'} color="secondary">
-                                Iniziamo creando il tuo account inserendo i seguenti dati. Non ne hai già uno?
+                                Per cominciare, crea il tuo account AMusic. Non ne hai già uno?
                                 <span className={classes.link} onClick={handleToggleClick}>Registrati</span>
                             </Typography>
                     }
                 </div>
             </div>
-            <div
-                className={`row mt-5 ${!isSingIn ? 'animate__animated animate__fadeInRight' : 'animate__animated animate__fadeInLeft'}`}>
+            <div className={`row mt-5 ${!isSingIn ? 'animate__animated animate__fadeInRight' : 'animate__animated animate__fadeInLeft'}`}>
 
                 {/*SING IN*/}
                 <LoginFields isSingIn={isSingIn}/>

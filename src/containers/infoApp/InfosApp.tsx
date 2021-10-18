@@ -1,14 +1,14 @@
 import * as React from 'react'
 import {FC} from 'react'
 import {Typography} from '@material-ui/core'
-import InfoApplicazione from './InfoApplicazione'
+import InfoApp from './InfoApp'
 import {informazioni} from './info.constants'
 
 
 interface IInformazioniApplicazione {
 }
 
-const InformazioniApplicazione: FC<IInformazioniApplicazione> = () => {
+const InfosApp: FC<IInformazioniApplicazione> = () => {
     //React State used to open accordion one at time
     const [expanded, setExpanded] = React.useState<string | false>(false)
 
@@ -28,16 +28,16 @@ const InformazioniApplicazione: FC<IInformazioniApplicazione> = () => {
             <div className="row mt-5">
                 {
                     informazioni.map((informazione) =>
-                        <InfoApplicazione title={informazione.title}
-                                          subtitle={informazione.subtitle}
-                                          setExpanded={setExpanded}
-                                          expanded={expanded}/>
+                        <InfoApp title={informazione.title}
+                                 subtitle={informazione.subtitle}
+                                 setExpanded={setExpanded}
+                                 expanded={expanded}/>
                     )
                 }
             </div>
         </div>
     )
 }
-export default InformazioniApplicazione
+export default InfosApp
 
 

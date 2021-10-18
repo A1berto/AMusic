@@ -4,7 +4,7 @@ import {IconButton, Menu, MenuItem, Tooltip, useMediaQuery} from '@material-ui/c
 import MenuIcon from '@material-ui/icons/Menu'
 import Typography from '@material-ui/core/Typography'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
-import {INFO_APP_PATH} from '../routes'
+import {INFO_APP_PATH, PROFILE_PATH} from '../routes'
 import {useHistory} from 'react-router-dom'
 import {AMUSIC_PALETTE_COLORS} from '../AMusic_theme'
 
@@ -34,6 +34,11 @@ const Header: FC<IHeaderProps> = props => {
         history.push(INFO_APP_PATH)
     }
 
+    const handleOpenProfile = () => {
+        history.push(PROFILE_PATH)
+        setAnchorEl(null)
+    }
+
     return (
         <div className="row">
             <div className="col-12 d-flex align-items-center">
@@ -61,7 +66,7 @@ const Header: FC<IHeaderProps> = props => {
                         horizontal: 'left',
                     }}
                 >
-                    <MenuItem onClick={handleClose}>Profilo</MenuItem>
+                    <MenuItem onClick={handleOpenProfile}>Profilo</MenuItem>
                     <MenuItem onClick={handleClose}>Eventi</MenuItem>
                     <MenuItem onClick={handleClose}>Lista amici</MenuItem>
                     <MenuItem onClick={handleClose}>Cronologia eventi</MenuItem>

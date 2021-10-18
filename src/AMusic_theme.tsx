@@ -1,5 +1,6 @@
 import {createTheme, Theme} from '@material-ui/core'
 import {itIT} from '@material-ui/core/locale'
+import * as React from 'react'
 
 
 //TODO cambiare nome file e costanti
@@ -9,9 +10,10 @@ export const AMUSIC_PALETTE_COLORS = {
     BLUE: '#006172',
     LIGHT_BLUE: '#008c96',
     WHITE: '#f5f5eb',
-    PURPLE: '#936f9d',
+    PURPLE: '#936F9D',
     VIOLET: '#382940',
     BLACK: '#111111',
+    ELECTIC_BLUE: '#2B99FF',
 
     /*COMMON*/
     NERO: '#000',
@@ -74,7 +76,7 @@ export const AMUSIC_THEME: Theme = createTheme({
                 white: AMUSIC_PALETTE_COLORS.BIANCO,
             },
             primary: {
-                main: '#936F9D',
+                main: AMUSIC_PALETTE_COLORS.PURPLE,
             },
             secondary: {
                 main: '#F5F5EB',
@@ -196,8 +198,8 @@ export const AMUSIC_THEME: Theme = createTheme({
                     '"Nunito"',
                     'sans-serif',
                 ].join(','),
-                fontWeight: 300,
-                fontSize: '3.75rem',
+                fontWeight: 400,
+                fontSize: '3rem',
                 lineHeight: 1.2,
                 letterSpacing: '-0.00833em',
             },
@@ -338,7 +340,7 @@ export const AMUSIC_THEME: Theme = createTheme({
             },
             MuiButton: {
                 contained: {
-                    backgroundColor: '#936F9D',
+                    backgroundColor: AMUSIC_PALETTE_COLORS.VIOLET,
                     color: 'white',
                     borderRadius: '4px',
                     boxSizing: 'border-box',
@@ -352,6 +354,9 @@ export const AMUSIC_THEME: Theme = createTheme({
                         color: AMUSIC_PALETTE_COLORS.BIANCO,
                         opacity: 0.5,
                     },
+                    '&:hover': {
+                        backgroundColor: AMUSIC_PALETTE_COLORS.PURPLE
+                    }
                 },
                 outlined: {
                     color: AMUSIC_PALETTE_COLORS.BIANCO,
@@ -523,6 +528,7 @@ export const AMUSIC_THEME: Theme = createTheme({
                     borderRadius: '4px',
                     height: '40px',
                     color: 'white',
+                    textDecoration: 'none',
                     '&$disabled': {
                         opacity: 0.2,
                     },
@@ -539,6 +545,26 @@ export const AMUSIC_THEME: Theme = createTheme({
                     },
                 },
             },
+            MuiFormLabel: {
+                root: {
+                    '&$disabled': {
+                        color: '#f5f5eb',
+                    },
+                }
+            },
+            MuiInputBase: {
+                root: {
+                    color: '#F5F5EB !important',
+                    textDecoration: 'underline',
+                    textDecorationColor: AMUSIC_PALETTE_COLORS.PURPLE,
+                    '&$disabled': {
+                        textDecoration: 'none',
+                    },
+                },
+                input: {
+                    padding: '0 8px 0 8px'
+                }
+            },
             MuiSelect: {
                 select: {
                     '&:focus': {
@@ -550,6 +576,12 @@ export const AMUSIC_THEME: Theme = createTheme({
                 root: {
                     marginLeft: '15px'
                 },
+            },
+            MuiAvatar: {
+                circle: {
+                    width: '80px',
+                    height: '80px',
+                }
             },
             MuiDialog: {
                 paper: {

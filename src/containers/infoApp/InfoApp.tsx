@@ -11,7 +11,7 @@ interface IInfoApplicazione {
     setExpanded: React.Dispatch<React.SetStateAction<string | false>>
 }
 
-const InfoApplicazione: FC<IInfoApplicazione> = (props) => {
+const InfoApp: FC<IInfoApplicazione> = (props) => {
 
     const {title, subtitle, expanded, setExpanded} = props
 
@@ -21,14 +21,14 @@ const InfoApplicazione: FC<IInfoApplicazione> = (props) => {
     }
 
     return (
-            <Accordion expanded={expanded === title} onChange={handleChange(title)}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-                    <Typography variant="h5">{title}</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <Typography>{subtitle}</Typography>
-                </AccordionDetails>
-            </Accordion>
+        <Accordion expanded={expanded === title} onChange={handleChange(title)}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                <Typography variant="h5">{title}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+                <Typography>{subtitle}</Typography>
+            </AccordionDetails>
+        </Accordion>
     )
 }
-export default InfoApplicazione
+export default InfoApp

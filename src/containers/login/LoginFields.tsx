@@ -12,8 +12,7 @@ const LoginFields: FC<ILoginFields> = (props) => {
 
     return (
         <div className="col-5">
-            <div
-                className={`row justify-content-center`}>
+            <div className={`row justify-content-center`}>
                 {
                     props.isSingIn &&
                     <>
