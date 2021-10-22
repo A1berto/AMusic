@@ -440,78 +440,14 @@ export const AMUSIC_THEME: Theme = createTheme({
                     },
                 },
             },
-            MuiStepper: {
-                root: {
-                    padding: '16px 14px',
-                },
-            },
-            MuiStepConnector: {
-                root: {
-                    '& $line': {
-                        borderColor: AMUSIC_PALETTE_COLORS.BIANCO,
-                        borderStyle: 'dashed',
-                        borderWidth: '1px',
-                        opacity: 0.5,
-                    },
-                },
-                active: {
-                    '& $line': {
-                        borderColor: AMUSIC_PALETTE_COLORS.BIANCO,
-                        borderStyle: 'solid',
-                        opacity: 0.5,
-                    },
-                },
-                completed: {
-                    '& $line': {
-                        borderColor: AMUSIC_PALETTE_COLORS.BIANCO,
-                        borderStyle: 'solid',
-                        opacity: 0.5,
-                    },
-                },
-            },
-            MuiStepLabel: {
-                label: {
-                    color: AMUSIC_PALETTE_COLORS.BIANCO,
-                    opacity: 0.4,
-                    fontSize: '12px',
-                    fontWeight: 700,
-                    marginTop: '5px !important',
-                    textTransform: 'none',
-                    '&$active': {
-                        color: `${AMUSIC_PALETTE_COLORS.BIANCO} `,
-                        opacity: 1,
-                        fontSize: '12px',
-                        fontWeight: 700,
-                    },
-                    '&$completed': {
-                        color: `${AMUSIC_PALETTE_COLORS.BIANCO} `,
-                        opacity: 1,
-                        fontSize: '12px',
-                        fontWeight: 700,
-                    },
+            MuiLink: {
+                underlineAlways: {
+                    color: AMUSIC_PALETTE_COLORS.PURPLE,
+                    '&:hover': {
+                        color: AMUSIC_PALETTE_COLORS.PURPLE,
+                        textDecorationColor: 'rgba(245,245,235,0.7)',
+                    }
                 }
-            },
-            MuiStepIcon: {
-                root: {
-                    color: 'transparent !important',
-                    border: `2px solid ${AMUSIC_PALETTE_COLORS.BIANCO}`,
-                    borderRadius: '20px',
-                    opacity: 0.5,
-                },
-                active: {
-                    opacity: 1,
-                },
-                completed: {
-                    color: `${AMUSIC_PALETTE_COLORS.BIANCO} !important`,
-                    opacity: 1,
-                    border: 'none',
-                },
-                text: {
-                    '&$completed': {
-                        color: `${AMUSIC_PALETTE_COLORS.BIANCO} `,
-                        opacity: 1,
-                    },
-                },
             },
             MuiInputLabel: {
                 root: {
@@ -586,7 +522,7 @@ export const AMUSIC_THEME: Theme = createTheme({
             MuiDialog: {
                 paper: {
                     boxShadow: '5px 10px 30px rgba(0, 0, 0, 0.1)',
-                    borderRadius: 20,
+                    borderRadius: 10,
                 },
             },
             MuiDrawer: {
@@ -597,13 +533,13 @@ export const AMUSIC_THEME: Theme = createTheme({
             },
             MuiPaper: {
                 root: {
-                    backgroundColor: 'rgba(245,245,235,0.6)',
+                    backgroundColor: 'rgba(38,38,38,1)',
                 }
             },
             MuiMenuItem: {
                 root: {
                     fontWeight: 'bold',
-                    color: '#111111'
+                    color: AMUSIC_PALETTE_COLORS.WHITE
                 }
             },
             MuiBackdrop: {

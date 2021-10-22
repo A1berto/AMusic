@@ -1,29 +1,44 @@
 import * as React from 'react'
 import {FC, useState} from 'react'
-import {Avatar, Button, InputBase, Typography} from '@material-ui/core'
+import {Avatar, Button, InputBase, Tooltip, Typography} from '@material-ui/core'
 import Image from '../../assets/img/avatar-man.jpg'
 import {AMUSIC_PALETTE_COLORS} from '../../AMusic_theme'
+import {CurrentDialogType} from '../../redux/dialogs/current-dialog.constants'
+import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
+import {useDispatch, useSelector} from 'react-redux'
+import {profileImageSelector} from './redux/profile.selectors'
 
 
 interface IProfileProps {
 }
 
-//TODO inserire immagine in maniera dinamica da be
 const Profile: FC<IProfileProps> = props => {
 
     const [isEditProfile, setIsEditProfile] = useState<boolean>(false)
 
+    const dispatch = useDispatch()
+
+    //La utilizzerò per popolare l'avatar, ogni volta che effettuo la modifica devo cambiare lo state su redux
+    const profileImage = useSelector(profileImageSelector)
+
     const handleEditClick = () => {
         setIsEditProfile(prevState => !prevState)
     }
+    const handleOpenEditImageDialog = () => {
+        dispatch(setCurrentDialog(CurrentDialogType.EDIT_PROFILE_IMAGE))
+    }
+
     return (
         <div style={{width: '70%'}}>
             <div className="row">
                 <div className="col-12 d-flex justify-content-center">
-                    <Avatar
-                        variant="circle"
-                        alt="Profile Image"
-                        src={Image}/>
+                    <Tooltip title="Change profile image" placement="right" className="c-pointer">
+                        <Avatar
+                            variant="circle"
+                            alt="Profile Image"
+                            src={Image}
+                            onClick={handleOpenEditImageDialog}/>
+                    </Tooltip>
                 </div>
                 <div className="col-12 d-flex justify-content-center"
                      style={{
@@ -38,7 +53,7 @@ const Profile: FC<IProfileProps> = props => {
             <div className="row mt-5">
                 <div className="col-6">
                     <div className="row">
-                        <div className="col-12 p-0 mb-2">
+                        <div className="col-12 px-1 mb-2">
                             <Typography variant="h2" color="secondary">
                                 Dati
                             </Typography>
@@ -125,7 +140,7 @@ const Profile: FC<IProfileProps> = props => {
 
                 <div className="col-6">
                     <div className="row">
-                        <div className="col-12 d-flex justify-content-end p-0 mb-2">
+                        <div className="col-12 d-flex justify-content-end px-1 mb-2">
                             <Typography variant="h2" color="secondary">
                                 Credenziali
                             </Typography>
@@ -165,7 +180,7 @@ const Profile: FC<IProfileProps> = props => {
                         </div>
                     </div>
                     <div className="row d-flex justify-content-end" style={{marginTop: '110px'}}>
-                        <Button variant="contained" fullWidth onClick={handleEditClick}>
+                        <Button variant="contained" onClick={handleEditClick}>
                             {isEditProfile ? 'Conferma modifica' : 'Modifica dati'}
                         </Button>
                     </div>

@@ -9,18 +9,23 @@ import {createHashHistory} from 'history'
 import {ThemeProvider} from '@material-ui/core/styles'
 import {AMUSIC_THEME} from './AMusic_theme'
 import * as serviceWorker from './serviceWorker';
+import {Provider} from 'react-redux'
+import {initConfiguration} from './init'
 
 
 export const HashHistory = createHashHistory()
 
+const {getStore} = initConfiguration()
 
 ReactDOM.render(
     <React.StrictMode>
+        <Provider store={getStore()}>
         <Router history={HashHistory}>
             <ThemeProvider theme={AMUSIC_THEME}>
                 <App/>
             </ThemeProvider>
         </Router>
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 )

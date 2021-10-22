@@ -4,6 +4,7 @@ import {INFO_APP_PATH, LOGIN_PATH, PROFILE_PATH} from './routes'
 import {AMusicContainer} from './components/AMusicContainer'
 import {FallbackSpinner} from './components/fallback-spinner/FallbackSpinner'
 import 'animate.css';
+import DialogProvider from './components/dialogs/DialogProvider'
 
 const LoginComponent = lazy(() => import('./containers/login/Login'))
 const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosApp'))
@@ -28,6 +29,10 @@ function App() {
                     <Redirect to={LOGIN_PATH}/>
 
                 </Switch>
+
+                {/* GENERIC DIALOGS */}
+                <DialogProvider/>
+
             </AMusicContainer>
         </Suspense>
     )

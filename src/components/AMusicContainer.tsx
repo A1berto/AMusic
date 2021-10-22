@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {FC, useRef} from 'react'
-import {makeStyles, useMediaQuery} from '@material-ui/core'
+import {makeStyles} from '@material-ui/core'
 import Header from './Header'
 
 
