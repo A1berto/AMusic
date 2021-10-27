@@ -10,7 +10,7 @@ import {ThemeProvider} from '@material-ui/core/styles'
 import {AMUSIC_THEME} from './AMusic_theme'
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux'
-import {initConfiguration} from './init'
+import {initConfiguration} from './initConfig'
 
 
 export const HashHistory = createHashHistory()

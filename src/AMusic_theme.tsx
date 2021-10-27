@@ -3,7 +3,6 @@ import {itIT} from '@material-ui/core/locale'
 import * as React from 'react'
 
 
-//TODO cambiare nome file e costanti
 export const AMUSIC_PALETTE_COLORS = {
     /*USUALLY USED*/
     YELLOW: '#e6ae27',

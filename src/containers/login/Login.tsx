@@ -3,8 +3,11 @@ import {FC, useState} from 'react'
 import {createStyles, makeStyles, Typography} from '@material-ui/core'
 import FacebookLogo from '../../assets/img/facebookLogo.svg'
 import GoogleLogo from '../../assets/img/googleLogo.svg'
+import GitHubLogo from '../../assets/img/gitHubLogo.svg'
 import {AMUSIC_PALETTE_COLORS} from '../../AMusic_theme'
 import LoginFields from './LoginFields'
+import {facebookProvider, gitHubProvider, googleProvider} from '../../components/autentication/authMethods'
+import {socialMediaAuth} from '../../components/autentication/service.auth'
 
 
 const useStyles = makeStyles(() =>
@@ -39,6 +42,11 @@ const Login: FC<ILogin> = () => {
         setIsSingIn(preveState => !preveState)
     }
 
+    const handleAuthenticationClick = async (provider: any) => {
+        const response = await socialMediaAuth(provider)
+        console.log('AUTHENTICATION: response>>>', response)
+    }
+
     return (
         <div style={{textAlign: 'center', width: '60%'}}>
             <div className="row">
@@ -59,7 +67,8 @@ const Login: FC<ILogin> = () => {
                     }
                 </div>
             </div>
-            <div className={`row mt-5 ${!isSingIn ? 'animate__animated animate__fadeInRight' : 'animate__animated animate__fadeInLeft'}`}>
+            <div
+                className={`row mt-5 ${!isSingIn ? 'animate__animated animate__fadeInRight' : 'animate__animated animate__fadeInLeft'}`}>
 
                 {/*SING IN*/}
                 <LoginFields isSingIn={isSingIn}/>
@@ -77,18 +86,42 @@ const Login: FC<ILogin> = () => {
                 {/*LOGIN CON TERZI*/}
                 <div className="col-5 d-flex align-items-center justify-content-center">
                     <div className="row" style={{paddingLeft: '3vw'}}>
+
+                        {/*<GoogleLogin
+                            clientId="690568376089-dj021f2tuvagpokbgq3dhhodu37nf3pq.apps.googleusercontent.com"
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                            cookiePolicy="single_host_origin"
+                            render={(renderProps) =>
+                                <div className={`col-12 appTerzeParti mb-2`} onClick={renderProps.onClick}>
+                                    <img src={GoogleLogo} alt="GoogleLogo"/>
+                                    <Typography variant="h6" color="secondary" className="ms-3">
+                                        Continua su Google
+                                    </Typography>
+                                </div>}/>*/}
+
                         <div className={`col-12 appTerzeParti mb-2`}
-                             onClick={() => console.log('Login con Google')}>
+                             onClick={() => handleAuthenticationClick(googleProvider)}>
                             <img src={GoogleLogo} alt="GoogleLogo"/>
                             <Typography variant="h6" color="secondary" className="ms-3">
                                 Continua su Google
                             </Typography>
                         </div>
-                        <div className={`col-12 appTerzeParti mt-2`}
-                             onClick={() => console.log('Login con Facebook')}>
-                            <img className="ciao" src={FacebookLogo} alt="FacebookLogo"/>
+
+
+                        <div className={`col-12 appTerzeParti my-2`}
+                             onClick={() => handleAuthenticationClick(facebookProvider)}>
+                            <img src={FacebookLogo} alt="FacebookLogo"/>
                             <Typography variant="h6" color="secondary" className="ms-3">
                                 Continua su Facebook
+                            </Typography>
+                        </div>
+
+                        <div className={`col-12 appTerzeParti mt-2`}
+                             onClick={() => handleAuthenticationClick(gitHubProvider)}>
+                            <img src={GitHubLogo} alt="GitHubLogo"/>
+                            <Typography variant="h6" color="secondary" className="ms-3">
+                                Continua su GitHub
                             </Typography>
                         </div>
                     </div>
