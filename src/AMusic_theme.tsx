@@ -1,7 +1,5 @@
 import {createTheme, Theme} from '@material-ui/core'
 import {itIT} from '@material-ui/core/locale'
-import * as React from 'react'
-
 
 export const AMUSIC_PALETTE_COLORS = {
     /*USUALLY USED*/
@@ -332,9 +330,9 @@ export const AMUSIC_THEME: Theme = createTheme({
         overrides: {
             MuiCard: {
                 root: {
-                    background: AMUSIC_PALETTE_COLORS.BIANCO,
-                    borderRadius: '20px',
-                    boxShadow: '0px 4px 20px rgba(0, 110, 88, 0.13)',
+                    background: AMUSIC_PALETTE_COLORS.VIOLET,
+                    borderRadius: '10px',
+                    boxShadow: '0px 0px 10px rgba(253, 255, 255, 0.1)',
                 },
             },
             MuiButton: {
@@ -474,7 +472,6 @@ export const AMUSIC_THEME: Theme = createTheme({
                     padding: 'auto',
                 },
                 formControl: {
-                    marginTop: '20px !important',
                     '&$disabled': {
                         opacity: 0.6,
                     },
@@ -567,6 +564,12 @@ export const AMUSIC_THEME: Theme = createTheme({
                 current: {
                     color: AMUSIC_PALETTE_COLORS.DARK_GREEN,
                 },
+            },
+
+            MuiAutocomplete: {
+                endAdornment: {
+                    paddingRight: '10px'
+                }
             },
         },
     },

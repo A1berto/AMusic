@@ -16,6 +16,7 @@ interface IDialog<T = any> {
 DIALOGS lazy imports
  */
 const EditProfileImageDialog = lazy(() => import('./components/EditProfileImageDialog'))
+const LocalInfos = lazy(() => import('./components/LocalInfos'))
 
 /**
  * @description
@@ -27,6 +28,11 @@ export const dialogRenderFactory = (modalType: string, meta?: any): null | IDial
         case CurrentDialogType.EDIT_PROFILE_IMAGE:
             return ({
                 component: <EditProfileImageDialog {...meta}/>,
+                customDialogProps: {disableEscapeKeyDown: false},
+            })
+        case CurrentDialogType.LOCAL_INFOS:
+            return ({
+                component: <LocalInfos {...meta}/>,
                 customDialogProps: {disableEscapeKeyDown: false},
             })
         default:

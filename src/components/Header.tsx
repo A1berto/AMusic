@@ -4,14 +4,14 @@ import {IconButton, Menu, MenuItem, Tooltip, useMediaQuery} from '@material-ui/c
 import MenuIcon from '@material-ui/icons/Menu'
 import Typography from '@material-ui/core/Typography'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
-import {INFO_APP_PATH, PROFILE_PATH} from '../routes'
+import {EVENTI_PATH, INFO_APP_PATH, PROFILE_PATH} from '../routes'
 import {useHistory} from 'react-router-dom'
 import {AMUSIC_PALETTE_COLORS} from '../AMusic_theme'
 
 interface IHeaderProps {
 }
 
-const Header: FC<IHeaderProps> = props => {
+const Header: FC<IHeaderProps> = () => {
 
 
     //ReactState
@@ -29,14 +29,10 @@ const Header: FC<IHeaderProps> = props => {
         setAnchorEl(null)
     }
 
-    const handleOpenInfo = () => {
-        console.info('Redirect to InfoAppComponent')
-        history.push(INFO_APP_PATH)
-    }
-
-    const handleOpenProfile = () => {
-        history.push(PROFILE_PATH)
-        setAnchorEl(null)
+    const handleOpenSection = (path: string) => {
+        console.info(`Redirect to ${path}`)
+        history.push(path)
+        handleClose()
     }
 
     return (
@@ -66,8 +62,8 @@ const Header: FC<IHeaderProps> = props => {
                         horizontal: 'left',
                     }}
                 >
-                    <MenuItem onClick={handleOpenProfile}>Profilo</MenuItem>
-                    <MenuItem onClick={handleClose}>Eventi</MenuItem>
+                    <MenuItem onClick={() => handleOpenSection(PROFILE_PATH)}>Profilo</MenuItem>
+                    <MenuItem onClick={() => handleOpenSection(EVENTI_PATH)}>Eventi</MenuItem>
                     <MenuItem onClick={handleClose}>Lista amici</MenuItem>
                     <MenuItem onClick={handleClose}>Cronologia eventi</MenuItem>
                 </Menu>
@@ -88,7 +84,7 @@ const Header: FC<IHeaderProps> = props => {
                     <Tooltip title="Più informazioni">
                         <IconButton edge="start"
                                     color="inherit"
-                                    onClick={handleOpenInfo}>
+                                    onClick={() => handleOpenSection(INFO_APP_PATH)}>
                             <InfoOutlinedIcon color="secondary" style={{opacity: 0.6}}/>
                         </IconButton>
                     </Tooltip>

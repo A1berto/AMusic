@@ -11,3 +11,5 @@ export const genericDropzoneFileNameNormalizer = (field: FieldInputProps<any>) =
     const kiloByteValue = fieldValue && (fieldValue / 1000).toFixed(2)
     return megaByteValue && parseFloat(megaByteValue) > 0.00 ? `${fieldName} - ${megaByteValue} MB` : `${fieldName} - ${kiloByteValue} KB`
 }
+
+export const mobileMaxWidth = '(max-width:991px)'

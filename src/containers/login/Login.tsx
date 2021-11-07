@@ -67,8 +67,7 @@ const Login: FC<ILogin> = () => {
                     }
                 </div>
             </div>
-            <div
-                className={`row mt-5 ${!isSingIn ? 'animate__animated animate__fadeInRight' : 'animate__animated animate__fadeInLeft'}`}>
+            <div className={`row mt-5 ${!isSingIn ? 'animate__animated animate__fadeInRight' : 'animate__animated animate__fadeInLeft'}`}>
 
                 {/*SING IN*/}
                 <LoginFields isSingIn={isSingIn}/>
@@ -87,19 +86,6 @@ const Login: FC<ILogin> = () => {
                 <div className="col-5 d-flex align-items-center justify-content-center">
                     <div className="row" style={{paddingLeft: '3vw'}}>
 
-                        {/*<GoogleLogin
-                            clientId="690568376089-dj021f2tuvagpokbgq3dhhodu37nf3pq.apps.googleusercontent.com"
-                            onSuccess={responseGoogle}
-                            onFailure={responseGoogle}
-                            cookiePolicy="single_host_origin"
-                            render={(renderProps) =>
-                                <div className={`col-12 appTerzeParti mb-2`} onClick={renderProps.onClick}>
-                                    <img src={GoogleLogo} alt="GoogleLogo"/>
-                                    <Typography variant="h6" color="secondary" className="ms-3">
-                                        Continua su Google
-                                    </Typography>
-                                </div>}/>*/}
-
                         <div className={`col-12 appTerzeParti mb-2`}
                              onClick={() => handleAuthenticationClick(googleProvider)}>
                             <img src={GoogleLogo} alt="GoogleLogo"/>
@@ -107,7 +93,6 @@ const Login: FC<ILogin> = () => {
                                 Continua su Google
                             </Typography>
                         </div>
-
 
                         <div className={`col-12 appTerzeParti my-2`}
                              onClick={() => handleAuthenticationClick(facebookProvider)}>

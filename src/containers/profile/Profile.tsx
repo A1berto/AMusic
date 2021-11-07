@@ -5,21 +5,22 @@ import Image from '../../assets/img/avatar-man.jpg'
 import {AMUSIC_PALETTE_COLORS} from '../../AMusic_theme'
 import {CurrentDialogType} from '../../redux/dialogs/current-dialog.constants'
 import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
-import {useDispatch, useSelector} from 'react-redux'
-import {profileImageSelector} from './redux/profile.selectors'
+import {useDispatch} from 'react-redux'
 
 
 interface IProfileProps {
 }
 
-const Profile: FC<IProfileProps> = props => {
+const Profile: FC<IProfileProps> = () => {
 
     const [isEditProfile, setIsEditProfile] = useState<boolean>(false)
 
     const dispatch = useDispatch()
 
     //La utilizzerò per popolare l'avatar, ogni volta che effettuo la modifica devo cambiare lo state su redux
-    const profileImage = useSelector(profileImageSelector)
+    /*
+        const profileImage = useSelector(profileImageSelector)
+    */
 
     const handleEditClick = () => {
         setIsEditProfile(prevState => !prevState)

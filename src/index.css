@@ -1,17 +1,19 @@
 
 html {
-    height: 100%;
+    height: auto;
     overflow-x: hidden;
-}
-
-#root {
-    height: 100%;
     background-color: #111111;
     opacity: 0.99;
 }
 
+#root {
+    height: auto;
+    background-color: #111111;
+    display: flex;
+}
+
 body {
-    height: 100%;
+    height: auto;
     margin: 0;
     font-family: 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;

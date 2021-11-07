@@ -56,16 +56,17 @@ export const DropzoneField: FC<IDropzoneFieldProps> = props => {
         ...customErrors
     }), [customErrors])
 
+    //TODO controllare se levare o meno le deps da onDrop e onDropAccepted
     const onDropAccepted = useCallback((files: File[]) => {
         form.setFieldValue(
             field.name,
             props.multiple ? files : files[0]
         )
-    }, [])
+    }, [field.name, form, props.multiple])
 
     const onDrop = useCallback(() => {
         form.setFieldTouched(field.name, true, false)
-    }, [])
+    }, [field.name, form])
 
 
     const {
