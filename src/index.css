@@ -1,0 +1,26 @@
+
+html {
+    height: auto;
+    overflow-x: hidden;
+    background-color: #111111;
+    opacity: 0.99;
+}
+
+#root {
+    height: auto;
+    background-color: #111111;
+    display: flex;
+}
+
+body {
+    height: auto;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: 'Roboto', sans-serif;
+}
+
