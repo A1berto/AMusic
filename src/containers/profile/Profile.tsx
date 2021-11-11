@@ -35,6 +35,7 @@ const Profile: FC<IProfileProps> = () => {
                 <div className="col-12 d-flex justify-content-center">
                     <Tooltip title="Change profile image" placement="right" className="c-pointer">
                         <Avatar
+                            className="profileImage"
                             variant="circle"
                             alt="Profile Image"
                             src={Image}

@@ -1,12 +1,14 @@
 import * as React from 'react'
-import {FC, useCallback} from 'react'
+import {FC, useCallback, useEffect, useState} from 'react'
 import {IEvent} from '../../../containers/eventi/eventi.types'
-import {IconButton, Tooltip, Typography} from '@material-ui/core'
+import {CircularProgress, IconButton, Tooltip, Typography} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import Fab from '@material-ui/core/Fab'
 import PaymentOutlinedIcon from '@material-ui/icons/PaymentOutlined'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
+import StripeContainer from '../../../containers/eventi/Payment/StripeContainer'
+import {isFetchPaymentPendingSelector} from '../../../containers/eventi/redux/eventi.actions'
 
 interface ILocalInfosProps {
     event: IEvent
@@ -14,12 +16,22 @@ interface ILocalInfosProps {
 
 const LocalInfos: FC<ILocalInfosProps> = props => {
     const {event} = props
+    const [showPaymentForm, setPaymentForm] = useState<boolean>(false)
 
     const dispatch = useDispatch()
+    const isFetchPaymentPending = useSelector(isFetchPaymentPendingSelector)
+
+    useEffect(() => {
+        console.log('isFetchPaymentPending>>>>>', isFetchPaymentPending)
+    }, [isFetchPaymentPending])
 
     const handleClose = useCallback(() => {
         dispatch(closeCurrentDialog())
     }, [dispatch])
+
+    const handleOpenPayment = useCallback(() => {
+        setPaymentForm(prev => !prev)
+    }, [])
 
     return (
         <>
@@ -39,11 +51,25 @@ const LocalInfos: FC<ILocalInfosProps> = props => {
                     </Typography>
                 </div>
 
+
+                {/*PAYMENT COMPONENT*/}
+                {
+                    showPaymentForm &&
+                    <div className="col-12" style={{position: 'absolute', left: 0, bottom: 10}}>
+                        <StripeContainer/>
+                    </div>
+                }
+
                 {/*PAYMENT BUTTON*/}
                 <div className="col-12">
                     <Tooltip title={'Iscrizione e Pagamento'} placement="left">
-                        <Fab style={{position: 'absolute', right: 25, bottom: 25}} color="primary">
-                            <PaymentOutlinedIcon/>
+                        <Fab style={{position: 'absolute', right: 25, bottom: 25}} color="primary"
+                             onClick={handleOpenPayment}>
+
+                            {
+                                isFetchPaymentPending ?
+                                    <CircularProgress style={{color: 'white'}}/> : <PaymentOutlinedIcon/>
+                            }
                         </Fab>
                     </Tooltip>
                 </div>

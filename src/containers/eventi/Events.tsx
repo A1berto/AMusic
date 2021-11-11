@@ -187,7 +187,7 @@ const Events: FC<IEventsProps> = () => {
 
 
     return (
-        <div style={{textAlign: 'center', width: '80%'}}>
+        <div style={{textAlign: 'center', width: '90%'}}>
             <div style={{width: '60%', margin: 'auto'}}>
                 <div className="row">
                     <div className="col-12 d-flex justify-content-center">
@@ -200,7 +200,7 @@ const Events: FC<IEventsProps> = () => {
                     </div>
                 </div>
 
-                <div className="row my-4">
+                <div className="row my-5">
                     <div className="col-12 d-flex justify-content-center">
                         <Card style={{width: '80%', backgroundColor: '#382940'}}>
                             <CardHeader title={<GoogleMapsAutocomplete onPlaceChange={handleAutocompleChangePlace}/>}/>
@@ -216,7 +216,7 @@ const Events: FC<IEventsProps> = () => {
                                          }}>
                                         <GoogleMapsReact
                                             bootstrapURLKeys={{
-                                                key: '',
+                                                key: "AIzaSyAJw3ne1rGwjdNEhyQsMlIZ-lO3_XG5_k0",
                                                 language: 'it',
                                                 libraries: ['places', 'geometry'],
                                             }}
@@ -237,7 +237,7 @@ const Events: FC<IEventsProps> = () => {
                 </div>
             </div>
 
-            <div className="row d-flex justify-content-center">
+            <div className="row d-flex justify-content-center pt-2">
                 <EventsList/>
             </div>
 

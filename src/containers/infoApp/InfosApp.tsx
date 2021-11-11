@@ -27,8 +27,9 @@ const InfosApp: FC<IInformazioniApplicazione> = () => {
 
             <div className="row mt-5">
                 {
-                    informazioni.map((informazione) =>
-                        <InfoApp title={informazione.title}
+                    informazioni.map((informazione,index) =>
+                        <InfoApp key={index}
+                                 title={informazione.title}
                                  subtitle={informazione.subtitle}
                                  setExpanded={setExpanded}
                                  expanded={expanded}/>

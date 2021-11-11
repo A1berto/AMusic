@@ -9,7 +9,6 @@ html {
 #root {
     height: auto;
     background-color: #111111;
-    display: flex;
 }
 
 body {

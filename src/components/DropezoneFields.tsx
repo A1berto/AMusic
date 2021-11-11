@@ -91,8 +91,8 @@ export const DropzoneField: FC<IDropzoneFieldProps> = props => {
                 field?.value.length === 1 ? '' : field?.value.filter((value: File) => value !== current))
         , [field])
 
-    const getFileList = useCallback((files: File[]) => files?.map((current: File) =>
-        <li className="ml-2">
+    const getFileList = useCallback((files: File[]) => files?.map((current: File,index) =>
+        <li className="ml-2" key={index}>
             {current.name} - {(current.size / 1024 / 1024).toFixed(2)} MB
             <DeleteOutlineIcon
                 className="c-pointer"
@@ -100,8 +100,8 @@ export const DropzoneField: FC<IDropzoneFieldProps> = props => {
         </li>
     ), [field])
 
-    const getFileRejectionsList = useCallback((fileRejections) => fileRejections.map((current: FileRejection) =>
-        <li className="ml-2">{current.file?.name} - {dropzoneErrorsMapper[current.errors[0]?.code]}</li>
+    const getFileRejectionsList = useCallback((fileRejections) => fileRejections.map((current: FileRejection,index:number) =>
+        <li className="ml-2" key={index}>{current.file?.name} - {dropzoneErrorsMapper[current.errors[0]?.code]}</li>
     ), [])
 
     return (

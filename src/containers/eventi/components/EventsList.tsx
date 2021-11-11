@@ -24,25 +24,26 @@ const EventsList: FC<IEventsListProps> = () => {
 
     return (
         <>{
-            events?.map((event: IEvent) =>
-                <Card className="col-12 col-sm-6 col-md-4 m-4 p-0 localCard c-pointer"
+            events?.map((event: IEvent, index) =>
+                <Card key={index}
+                      className="col-12 col-sm-6 col-md-4 m-4 p-0 localCard c-pointer"
                       onClick={() => handleCardClick(event)}
                       style={{
                           background: '#252525',
-                          height: '160px',
-                          width: '320px',
+                          height: '180px',
+                          width: '360px',
                           boxShadow: 'none',
                           borderRadius: 4
                       }}>
                     <CardMedia
                         component="img"
-                        height="130px"
+                        height="140px"
                         image={disco}
                         alt="eventImage"
                     />
                     <CardContent className="p-0">
                         <div className="row">
-                            <div className="col-12">
+                            <div className="col-12 pt-2">
                                 <Typography variant="h5" component="div" color={'textSecondary'}>
                                     {event.localName}
                                 </Typography>

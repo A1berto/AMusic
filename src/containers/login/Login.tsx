@@ -88,7 +88,7 @@ const Login: FC<ILogin> = () => {
 
                         <div className={`col-12 appTerzeParti mb-2`}
                              onClick={() => handleAuthenticationClick(googleProvider)}>
-                            <img src={GoogleLogo} alt="GoogleLogo"/>
+                            <img src={GoogleLogo} className="appTerzePartiHover" alt="GoogleLogo"/>
                             <Typography variant="h6" color="secondary" className="ms-3">
                                 Continua su Google
                             </Typography>
@@ -96,7 +96,7 @@ const Login: FC<ILogin> = () => {
 
                         <div className={`col-12 appTerzeParti my-2`}
                              onClick={() => handleAuthenticationClick(facebookProvider)}>
-                            <img src={FacebookLogo} alt="FacebookLogo"/>
+                            <img src={FacebookLogo} className="appTerzePartiHover" alt="FacebookLogo"/>
                             <Typography variant="h6" color="secondary" className="ms-3">
                                 Continua su Facebook
                             </Typography>
@@ -104,7 +104,7 @@ const Login: FC<ILogin> = () => {
 
                         <div className={`col-12 appTerzeParti mt-2`}
                              onClick={() => handleAuthenticationClick(gitHubProvider)}>
-                            <img src={GitHubLogo} alt="GitHubLogo"/>
+                            <img src={GitHubLogo} className="appTerzePartiHover" alt="GitHubLogo"/>
                             <Typography variant="h6" color="secondary" className="ms-3">
                                 Continua su GitHub
                             </Typography>

@@ -1,19 +1,18 @@
 import * as React from 'react'
 import {useEffect} from 'react'
-import {Grid, makeStyles, TextField, Typography, useMediaQuery} from '@material-ui/core'
+import {Grid, makeStyles, TextField, Typography} from '@material-ui/core'
 import throttle from 'lodash/throttle'
 import {Autocomplete} from '@material-ui/lab'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import parse from 'autosuggest-highlight/parse'
-import {AMUSIC_THEME} from '../../../AMusic_theme'
-import {mobileMaxWidth} from '../../../utils'
+import {AMUSIC_PALETTE_COLORS} from '../../../AMusic_theme'
 import {IGeoLocation} from '../eventi.types'
 
 
 const useStyles = makeStyles((theme) => ({
     icon: {
-        color: '#85AE1B',
-        marginRight: theme.spacing(2),
+        color: AMUSIC_PALETTE_COLORS.PURPLE,
+        marginRight: theme.spacing(4),
     },
     paperHidden: {
         display: 'none',
@@ -165,12 +164,16 @@ export const GoogleMapsAutocomplete: React.FC<IGoogleMapsAutocomplete> = props =
                         <Grid item xs>
                             {
                                 parts.map((part, index) => (
-                                    <span key={index} style={{fontWeight: part.highlight ? 700 : 400}}>
+                                    <span key={index} style={{
+                                        fontWeight: part.highlight ? 700 : 400,
+                                        color: AMUSIC_PALETTE_COLORS.WHITE,
+                                        opacity: 0.6
+                                    }}>
                                          {part.text}
                                     </span>
                                 ))
                             }
-                            <Typography variant="body2" style={{color: AMUSIC_THEME.palette.grey['500']}}>
+                            <Typography variant="body2" style={{color: AMUSIC_PALETTE_COLORS.WHITE}}>
                                 {option.structured_formatting.secondary_text}
                             </Typography>
                         </Grid>
