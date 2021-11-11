@@ -9,7 +9,7 @@ import LoginFields from './LoginFields'
 import {facebookProvider, gitHubProvider, googleProvider} from '../../components/autentication/authMethods'
 import {socialMediaAuth} from '../../components/autentication/service.auth'
 
-
+/*Login style*/
 const useStyles = makeStyles(() =>
     createStyles({
         divider: (isSingIn) => ({
@@ -29,30 +29,32 @@ const useStyles = makeStyles(() =>
 )
 
 
-interface ILogin {
-}
+interface ILogin {}
 
 const Login: FC<ILogin> = () => {
 
     const [isSingIn, setIsSingIn] = useState<boolean>(false)
-
     const classes = useStyles(isSingIn)
 
     const handleToggleClick = () => {
         setIsSingIn(preveState => !preveState)
     }
 
+    /** @description Authentication with different providers **/
     const handleAuthenticationClick = async (provider: any) => {
         const response = await socialMediaAuth(provider)
-        console.log('AUTHENTICATION: response>>>', response)
+        console.info('AUTHENTICATION: ', response)
     }
 
     return (
         <div style={{textAlign: 'center', width: '60%'}}>
+
             <div className="row">
+                {/*TITLE*/}
                 <div className="col-12 d-flex justify-content-center">
                     <Typography variant={'h3'} color="primary">Divertiamoci</Typography>
                 </div>
+                {/*SUBTITLE*/}
                 <div className="col-12 d-flex justify-content-center">
                     {
                         isSingIn ?
@@ -67,6 +69,7 @@ const Login: FC<ILogin> = () => {
                     }
                 </div>
             </div>
+
             <div className={`row mt-5 ${!isSingIn ? 'animate__animated animate__fadeInRight' : 'animate__animated animate__fadeInLeft'}`}>
 
                 {/*SING IN*/}
@@ -82,7 +85,7 @@ const Login: FC<ILogin> = () => {
                     </Typography>
                 </div>
 
-                {/*LOGIN CON TERZI*/}
+                {/*LOGIN WITH THIRD PARTIES*/}
                 <div className="col-5 d-flex align-items-center justify-content-center">
                     <div className="row" style={{paddingLeft: '3vw'}}>
 

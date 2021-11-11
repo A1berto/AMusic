@@ -25,6 +25,8 @@ const Profile: FC<IProfileProps> = () => {
     const handleEditClick = () => {
         setIsEditProfile(prevState => !prevState)
     }
+
+    /* Open the dialog to allow the user to edit profile image */
     const handleOpenEditImageDialog = () => {
         dispatch(setCurrentDialog(CurrentDialogType.EDIT_PROFILE_IMAGE))
     }
@@ -32,6 +34,8 @@ const Profile: FC<IProfileProps> = () => {
     return (
         <div style={{width: '70%'}}>
             <div className="row">
+
+                {/* PROFILE IMAGE */}
                 <div className="col-12 d-flex justify-content-center">
                     <Tooltip title="Change profile image" placement="right" className="c-pointer">
                         <Avatar
@@ -42,6 +46,8 @@ const Profile: FC<IProfileProps> = () => {
                             onClick={handleOpenEditImageDialog}/>
                     </Tooltip>
                 </div>
+
+                {/* PROFILE NAME*/}
                 <div className="col-12 d-flex justify-content-center"
                      style={{
                          marginTop: '-10px',
@@ -54,6 +60,8 @@ const Profile: FC<IProfileProps> = () => {
 
             <div className="row mt-5">
                 <div className="col-6">
+
+                    {/* PROFILE INFOS */}
                     <div className="row">
                         <div className="col-12 px-1 mb-2">
                             <Typography variant="h2" color="secondary">
@@ -142,6 +150,8 @@ const Profile: FC<IProfileProps> = () => {
 
                 <div className="col-6">
                     <div className="row">
+
+                        {/* PROFILE CREDENTIALS */}
                         <div className="col-12 d-flex justify-content-end px-1 mb-2">
                             <Typography variant="h2" color="secondary">
                                 Credenziali
@@ -181,6 +191,8 @@ const Profile: FC<IProfileProps> = () => {
                             </div>
                         </div>
                     </div>
+
+                    {/* EDIT BUTTON */}
                     <div className="row d-flex justify-content-end" style={{marginTop: '110px'}}>
                         <Button variant="contained" onClick={handleEditClick}>
                             {isEditProfile ? 'Conferma modifica' : 'Modifica dati'}

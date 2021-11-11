@@ -141,7 +141,7 @@ interface IEventsProps {
 }
 
 const Events: FC<IEventsProps> = () => {
-    const [isButtonComeBackVisible, setButtonComeBackVisible] = useState<boolean>(false)
+    const [isButtonComeBackUpVisible, setButtonComeBackUpVisible] = useState<boolean>(false)
     const [mapsProps, setMapsPros] = useState<GoogleMapsReactProps>({
         center: {
             lat: 41.9027835,
@@ -157,14 +157,14 @@ const Events: FC<IEventsProps> = () => {
         },
     })
 
-    /*Quando l'utente ha scrollato almeno di 100px allora faccio visaulizzare il bottone torna su*/
+    /** @description When the user has scrolled at least 100px then I make the button go back up **/
     useEffect(() => {
         window.addEventListener('scroll',()=>
-            window.pageYOffset > 100 ? setButtonComeBackVisible(true) : setButtonComeBackVisible(false)
+            window.pageYOffset > 100 ? setButtonComeBackUpVisible(true) : setButtonComeBackUpVisible(false)
         )
     }, [])
 
-
+    /** @description Come back with animation to the top of page **/
     const handleCameBackUp = () => {
         window.scrollTo({
             top: 0,
@@ -172,9 +172,9 @@ const Events: FC<IEventsProps> = () => {
             behavior: 'smooth',
         })
     }
-    /*Funzione utilizzata per centrare la mappa in base al posto selezionato dal field autocomplete*/
+
+    /** @description Function used to center map based on the selected place **/
     const handleAutocompleChangePlace = useCallback((location: IGeoLocation) => {
-        console.log('Nuova posizione da autocomplete', location)
         setMapsPros(val => ({
             ...val,
             center: {
@@ -190,9 +190,13 @@ const Events: FC<IEventsProps> = () => {
         <div style={{textAlign: 'center', width: '90%'}}>
             <div style={{width: '60%', margin: 'auto'}}>
                 <div className="row">
+
+                    {/* TITLE */}
                     <div className="col-12 d-flex justify-content-center">
                         <Typography variant={'h3'} color="primary">Eventi</Typography>
                     </div>
+
+                    {/*SUBTITLE*/}
                     <div className="col-12 d-flex justify-content-center">
                         <Typography variant={'h4'} color="secondary">
                             Inserisci una località per scegliere il locale più vicino!
@@ -203,6 +207,8 @@ const Events: FC<IEventsProps> = () => {
                 <div className="row my-5">
                     <div className="col-12 d-flex justify-content-center">
                         <Card style={{width: '80%', backgroundColor: '#382940'}}>
+
+                            {/* GOOGLE MAPS AUTOCOMPLETE*/}
                             <CardHeader title={<GoogleMapsAutocomplete onPlaceChange={handleAutocompleChangePlace}/>}/>
 
                             <CardContent>
@@ -214,9 +220,11 @@ const Events: FC<IEventsProps> = () => {
                                              position: 'relative',
                                              overflow: 'hidden',
                                          }}>
+
+                                        {/* GOOGLE MAPS REACT */}
                                         <GoogleMapsReact
                                             bootstrapURLKeys={{
-                                                key: "AIzaSyAJw3ne1rGwjdNEhyQsMlIZ-lO3_XG5_k0",
+                                                key: "AIzaSyAJw3ne1rGwjdNEhyQsMlIZ-lO3_XG5_k0",  //TODO passare dal be durante la chiamata config
                                                 language: 'it',
                                                 libraries: ['places', 'geometry'],
                                             }}
@@ -238,12 +246,16 @@ const Events: FC<IEventsProps> = () => {
             </div>
 
             <div className="row d-flex justify-content-center pt-2">
+
+                {/* Events list based on google maps place */}
                 <EventsList/>
             </div>
 
             {
-                isButtonComeBackVisible &&
+                isButtonComeBackUpVisible &&
                 <div style={{position: 'fixed', right: 20, bottom: 20}}>
+
+                    {/* COME BACK UP BUTTON */}
                     <Button variant={'contained'} onClick={handleCameBackUp}>
                         TORNA SU
                         <ArrowUpwardOutlinedIcon fontSize={'small'} className="ms-1 mb-1"/>

@@ -15,15 +15,15 @@ interface ILocalInfosProps {
 }
 
 const LocalInfos: FC<ILocalInfosProps> = props => {
+    //PROPS
     const {event} = props
+
+    //REACT STATE
     const [showPaymentForm, setPaymentForm] = useState<boolean>(false)
 
     const dispatch = useDispatch()
     const isFetchPaymentPending = useSelector(isFetchPaymentPendingSelector)
 
-    useEffect(() => {
-        console.log('isFetchPaymentPending>>>>>', isFetchPaymentPending)
-    }, [isFetchPaymentPending])
 
     const handleClose = useCallback(() => {
         dispatch(closeCurrentDialog())
@@ -37,7 +37,11 @@ const LocalInfos: FC<ILocalInfosProps> = props => {
         <>
             <div className="row m-4" style={{width: '800px', minHeight: '500px', alignContent: 'start'}}>
                 <div className="col-12 d-flex justify-content-center align-items-center">
+
+                    {/* TITLE */}
                     <Typography variant={'h3'} color="primary">{event.localName}</Typography>
+
+                    {/* CLOSE BUTTON*/}
                     <div style={{position: 'absolute', right: 16}}>
                         <IconButton onClick={handleClose}
                                     color="secondary">
@@ -45,6 +49,8 @@ const LocalInfos: FC<ILocalInfosProps> = props => {
                         </IconButton>
                     </div>
                 </div>
+
+                {/* EVENT DESCRIPTION*/}
                 <div className="col-12 pt-3">
                     <Typography variant={'body1'} color="secondary">
                         {event.description}

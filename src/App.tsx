@@ -9,42 +9,43 @@ import {useDispatch} from 'react-redux'
 import {fetchProfileAction} from './containers/profile/redux/profile.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 
+/* Lazy loading of principle components*/
 const LoginComponent = lazy(() => import('./containers/login/Login'))
-const EventiComponent = lazy(() => import('./containers/eventi/Events'))
-const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosApp'))
 const ProfileComponent = lazy(() => import('./containers/profile/Profile'))
+const EventiComponent = lazy(() => import('./containers/eventi/Events'))
 const FriendsListComponent = lazy(() => import('./containers/friends-list/FriendsList'))
+const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosApp'))
 
 
 function App() {
-
     const dispatch= useDispatch()
 
+    /** @description During the application starting we call profile action **/
     useEffect(()=>{
-        console.log("Qui dentro")
         dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
-    },[])
-
+    },[dispatch])
 
     return (
         <Suspense fallback={<FallbackSpinner/>}>
             <AMusicContainer>
                 <Switch>
-
+                    
                     {/*LOGIN*/}
                     <Route path={LOGIN_PATH} component={LoginComponent}/>
-
+                    
                     {/*EVENTI*/}
                     <Route path={EVENTI_PATH} component={EventiComponent}/>
-
+                    
                     {/*PROFILE*/}
                     <Route path={PROFILE_PATH} component={ProfileComponent}/>
-
+                    
                     {/*INFO APP*/}
                     <Route path={INFO_APP_PATH} component={InfoAppComponent}/>
-
+                    
+                    {/*FRIENDS LIST*/}
                     <Route path={FRIENDS_LIST_PATH} component={FriendsListComponent}/>
-
+                    
+                    {/*DEFAULT*/}
                     <Redirect to={LOGIN_PATH}/>
 
                 </Switch>

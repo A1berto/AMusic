@@ -12,16 +12,11 @@ interface IDialog<T = any> {
     customDialogProps?: ICustomDialogProps
 }
 
-/*
-DIALOGS lazy imports
- */
+/** @description Dialogs lazy import **/
 const EditProfileImageDialog = lazy(() => import('./components/EditProfileImageDialog'))
 const LocalInfos = lazy(() => import('./components/LocalInfos'))
 
-/**
- * @description
- * SWITCH CHE FA IL RENDER DEI MODALI A SECONDA DELLA KEY
- */
+/** @description Switch that render modals based on key **/
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 export const dialogRenderFactory = (modalType: string, meta?: any): null | IDialog => {
     switch (modalType) {
@@ -30,7 +25,7 @@ export const dialogRenderFactory = (modalType: string, meta?: any): null | IDial
                 component: <EditProfileImageDialog {...meta}/>,
                 customDialogProps: {disableEscapeKeyDown: false},
             })
-        case CurrentDialogType.LOCAL_INFOS:
+        case CurrentDialogType.LOCAL_DETAILS:
             return ({
                 component: <LocalInfos {...meta}/>,
                 customDialogProps: {disableEscapeKeyDown: false},

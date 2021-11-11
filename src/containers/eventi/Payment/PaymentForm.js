@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {useEffect, useState} from 'react'
-import {PaymentElement, useElements, useStripe} from '@stripe/react-stripe-js'
+import {CardElement, PaymentElement, useElements, useStripe} from '@stripe/react-stripe-js'
 
 const CARD_OPTIONS = {
     iconStyle: 'solid',

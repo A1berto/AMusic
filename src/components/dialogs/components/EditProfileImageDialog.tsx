@@ -9,8 +9,7 @@ import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions
 import {DROPZONE_FORM_INIT_VALUES} from '../../../containers/profile/profile.constants'
 import {IProfileImageFields} from '../../../containers/profile/profile.types'
 
-interface IEditProfileImageDialogProps {
-}
+interface IEditProfileImageDialogProps {}
 
 const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = props => {
     const dispatch = useDispatch()
@@ -19,8 +18,8 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = props => {
         dispatch(closeCurrentDialog())
     }, [dispatch])
 
+    /** @description Fetch to change profile image**/
     const handleSubmit = (values: IProfileImageFields) => {
-        console.log('values.dropzone>>>', values.dropzone)
         if (values.dropzone) {
             const formData = new FormData()
             formData.append('file', values.dropzone)
@@ -33,12 +32,15 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = props => {
         <div className="row m-3" style={{minWidth: '600px'}}>
             <div className="col-12">
                 <div className="row">
+
+                    {/* TITLE */}
                     <div className="col-10 d-flex align-items-center">
                         <Typography variant="h5" color="primary">
                             Edit Profile Image
                         </Typography>
                     </div>
 
+                    {/* CLOSE DIALOG ICON */}
                     <div className="col-2 text-end p-0">
                         <IconButton onClick={handleClose}
                                     color="secondary">
@@ -48,8 +50,7 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = props => {
                 </div>
 
                 <div className="row">
-                    <Formik
-                        initialValues={DROPZONE_FORM_INIT_VALUES} onSubmit={handleSubmit}>
+                    <Formik initialValues={DROPZONE_FORM_INIT_VALUES} onSubmit={handleSubmit}>
                         <Form>
                             <div className="col-12 p-3">
                                 <Field
