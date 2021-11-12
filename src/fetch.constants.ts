@@ -20,3 +20,16 @@ export const FETCH_PAYMENT_API: IRequestModel = {
         'Content-Type': 'application/json'
     },
 }
+
+/**
+ * @description Take profile info
+ * @method GET
+ */
+export const FETCH_REGISTER_API: IRequestModel = {
+    url: `/pay`,
+    method: HttpMethods.POST,
+    headers: {
+        'Content-Type': 'application/json'
+    },
+}
+

@@ -454,6 +454,9 @@ export const AMUSIC_THEME: Theme = createTheme({
                     fontSize: '22px',
                     fontWeight: 400,
                 },
+                formControl:{
+                    top: "-5px"
+                }
             },
             MuiInput: {
                 root: {
