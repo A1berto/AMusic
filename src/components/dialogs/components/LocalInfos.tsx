@@ -33,6 +33,7 @@ const LocalInfos: FC<ILocalInfosProps> = props => {
         setPaymentForm(prev => !prev)
     }, [])
 
+
     return (
         <>
             <div className="row m-4" style={{width: '800px', minHeight: '500px', alignContent: 'start'}}>
@@ -59,9 +60,10 @@ const LocalInfos: FC<ILocalInfosProps> = props => {
 
 
                 {/*PAYMENT COMPONENT*/}
+                {/*TODO allineare questo field sempre in basso*/}
                 {
                     showPaymentForm &&
-                    <div className="col-12" style={{position: 'absolute', left: 0, bottom: 10}}>
+                    <div className="col-12">
                         <StripeContainer/>
                     </div>
                 }

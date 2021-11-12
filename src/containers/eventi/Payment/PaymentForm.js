@@ -1,26 +1,8 @@
 import * as React from 'react'
 import {useEffect, useState} from 'react'
-import {CardElement, PaymentElement, useElements, useStripe} from '@stripe/react-stripe-js'
+import {PaymentElement, useElements, useStripe} from '@stripe/react-stripe-js'
+import {Button} from '@material-ui/core'
 
-const CARD_OPTIONS = {
-    iconStyle: 'solid',
-    style: {
-        base: {
-            iconColor: '#c4f0ff',
-            color: '#fff',
-            fontWeight: 500,
-            fontFamily: 'Roboto,Open Sans,Segoe UI,sans-serif',
-            fontSize: '16px',
-            fontSoothing: 'antialiased',
-            ':-webkit-autofill': {color: '#fce883'},
-            ':-placeholder': {color: '#87bbfd'}
-        },
-        invalid: {
-            iconColor: '#ffc7ee',
-            color: '#ffc7ee'
-        }
-    }
-}
 
 
 const PaymentForm = () => {
@@ -96,16 +78,17 @@ const PaymentForm = () => {
 
     return (
         <>
-            <div style={{width: '100%'}}>
-                <form id="payment-form">
+            <div style={{width: '50%', paddingTop: '30px'}}>
+                <form>
                     <PaymentElement id="payment-element"/>
-                    <button disabled={isLoading || !stripe || !elements} onClick={handleSubmit}>
+                    <Button variant="contained" color="primary" disabled={isLoading || !stripe || !elements}
+                            onClick={handleSubmit}>
                         <span id="button-text">
                             {
                                 isLoading ? <div className="spinner" id="spinner"/> : 'Paga'
                             }
                         </span>
-                    </button>
+                    </Button>
                     {/* Show any error or success messages */}
                     {message && <div id="payment-message">{message}</div>}
                 </form>

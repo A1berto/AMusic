@@ -507,6 +507,13 @@ export const AMUSIC_THEME: Theme = createTheme({
                     },
                 },
             },
+            MuiListItem:{
+                root:{
+                    '&:hover':{
+                        backgroundColor:'#382940 !important'
+                    }
+                }
+            },
             MuiFormHelperText: {
                 root: {
                     marginLeft: '15px'
@@ -538,7 +545,14 @@ export const AMUSIC_THEME: Theme = createTheme({
             MuiMenuItem: {
                 root: {
                     fontWeight: 'bold',
-                    color: AMUSIC_PALETTE_COLORS.WHITE
+                    color: AMUSIC_PALETTE_COLORS.WHITE,
+                }
+            },
+            MuiGrid:{
+                root:{
+                    '&:hover':{
+                        backgroundColor:'rgba(229, 229, 229, 0.1)',
+                    }
                 }
             },
             MuiBackdrop: {

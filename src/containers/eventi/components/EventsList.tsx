@@ -34,8 +34,8 @@ const EventsList: FC<IEventsListProps> = () => {
                               background: '#252525',
                               height: '180px',
                               width: '360px',
-                              boxShadow: 'none',
-                              borderRadius: 4
+                              boxShadow: '0px 0px 10px rgba(256, 256, 256, 0.6)',
+                              borderRadius: 10
                           }}>
                         <CardMedia
                             component="img"
