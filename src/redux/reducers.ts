@@ -3,14 +3,19 @@ import {currentDialogReducer, ICurrentDialog} from './dialogs/current-dialog.red
 import {IProfile} from '../containers/profile/profile.types'
 import {profileReducer} from '../containers/profile/redux/profile.reducer'
 import {eventsCombineReducer, IEventReducer} from '../containers/eventi/redux/eventi.reducers'
+import {coreCombineReducer} from 'fetch-with-redux-observable/dist/reducer'
+import {CORE_REDUCER_KEY} from 'fetch-with-redux-observable/dist/constants'
+import {ICoreState} from 'fetch-with-redux-observable/dist/types'
 
 export interface IRootState {
+    core: ICoreState
     currentDialog: ICurrentDialog | null
     profile: IProfile | null
     events: IEventReducer
 }
 
 export const rootReducer = combineReducers<IRootState>({
+    [CORE_REDUCER_KEY]: coreCombineReducer,
     currentDialog: currentDialogReducer,
     profile: profileReducer,
     events: eventsCombineReducer

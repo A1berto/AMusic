@@ -1,4 +1,5 @@
 import {FieldInputProps} from 'formik/dist/types'
+import {useEffect, useRef} from 'react'
 
 /**
  * GENERIC DROPZONE FILE NAME NORMALIZER
@@ -13,3 +14,20 @@ export const genericDropzoneFileNameNormalizer = (field: FieldInputProps<any>) =
 }
 
 export const mobileMaxWidth = '(max-width:991px)'
+
+
+/**
+ * @label CUSTOM HOOK
+ * Returns the previuos value of something
+ * @param value
+ */
+export const usePrevious = (value: any): any => {
+    const ref = useRef()
+
+    useEffect(() => {
+        if (value) {
+            ref.current = value
+        }
+    })
+    return ref.current
+}
