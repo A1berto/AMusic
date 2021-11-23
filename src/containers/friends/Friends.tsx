@@ -1,25 +1,42 @@
 import * as React from 'react'
-import {FC, useEffect, useState} from 'react'
+import {FC, useEffect} from 'react'
 import Typography from '@material-ui/core/Typography'
-import {Button, TextField} from '@material-ui/core'
-import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined'
+import {Avatar, Button} from '@material-ui/core'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import {useDispatch} from 'react-redux'
 import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
 import {CurrentDialogType} from '../../redux/dialogs/current-dialog.constants'
-import FriendsList from './components/FriendsList'
 import {fetchFriendsListAction} from './redux/friends.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
+import Image from '../../assets/img/avatar-man.jpg'
+
+export const friendsList = [
+    {name: 'Andrea', surname: 'Messina'},
+    {name: 'Lorenzo', surname: 'Castorina'},
+    {name: 'Sara', surname: 'Testa'},
+    {name: 'Luca', surname: 'Varriale'},
+    {name: 'Andrea', surname: 'Potì'},
+    {name: 'Andrea', surname: 'Guarino'},
+    {name: 'Antonino', surname: 'Manuguerra'},
+    {name: 'Rossana', surname: 'Provenzano'},
+    {name: 'Anna Maria', surname: 'Urso'},
+    {name: 'Andrea', surname: 'Messina'},
+    {name: 'Lorenzo', surname: 'Castorina'},
+    {name: 'Sara', surname: 'Testa'},
+    {name: 'Luca', surname: 'Varriale'},
+    {name: 'Andrea', surname: 'Potì'},
+    {name: 'Andrea', surname: 'Guarino'},
+    {name: 'Antonino', surname: 'Manuguerra'},
+    {name: 'Rossana', surname: 'Provenzano'},
+    {name: 'Anna Maria', surname: 'Urso'},
+    {name: 'Ciccio', surname: 'Urso'},
+]
 
 interface IFriendsListProps {
 }
 
 const Friends: FC<IFriendsListProps> = () => {
     const dispatch = useDispatch()
-
-    const [isSearchClicked, setIsSearchClicked] = useState<boolean>(false)
-    const [searchValue, setSearchValue] = useState<string>('')
-
 
     useEffect(() => {
         dispatch(fetchFriendsListAction.build(null, DEFAULT_REQUEST_ID, {USER_ID: 'asd'}))
@@ -29,17 +46,13 @@ const Friends: FC<IFriendsListProps> = () => {
         dispatch(setCurrentDialog(CurrentDialogType.ADD_FRIENDS_LIST))
     }
 
-    const handleSearch = () => {
-        setIsSearchClicked(prev => !prev)
-    }
-
-    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(event.target.value)
+    const handleOpenInfoFriend = () => {
+        dispatch(setCurrentDialog(CurrentDialogType.FRIEND_INFO))
     }
 
     return (
         <>
-            <div style={{textAlign: 'center', width: '50%'}}>
+            <div style={{textAlign: 'center', width: '70%'}}>
                 <div className="row pb-2">
 
                     {/* TITLE */}
@@ -56,32 +69,29 @@ const Friends: FC<IFriendsListProps> = () => {
                 </div>
 
                 {/* FRIENDS LIST */}
-                <div className="row mt-5"
-                     style={{overflowY: 'scroll', height: '40vh', width: '30vw', textAlign: 'start', margin: 'auto'}}>
-                    <FriendsList friendsList={[]}/>
-                </div>
-
-                <div style={{position: 'fixed', bottom: 40, right: '40%'}}>
-
+                <div className="row mt-4"
+                     style={{overflowY: 'scroll', height: '50vh', width: '100%', textAlign: 'start', margin: 'auto'}}>
                     {
-                        isSearchClicked &&
-                        <div className="pb-3">
-                            <TextField
-                                value={searchValue}
-                                onChange={handleSearchChange}
-                                variant="standard"
-                            />
-                        </div>
+                        friendsList?.map((friend: any) =>
+                            <div className="col-4 p-4 d-flex align-items-center friend c-pointer"
+                            onClick={handleOpenInfoFriend}>
+                                <Avatar
+                                    variant="circle"
+                                    alt="Profile Image"
+                                    src={Image}         //TODO friend.image
+                                    onClick={() => console.log('Cliccato avatar')}/>
+                                <Typography variant="body2"
+                                            color="secondary"
+                                            className="ms-4">
+                                    {`${friend.name} ${friend.surname}`}
+                                </Typography>
+                            </div>
+                        )
                     }
 
-                    {/* SEARCH BUTTON */}
-                    <Button variant={'contained'}
-                            onClick={handleSearch}
-                            className="me-4">
-                        {isSearchClicked ? 'ANNULLA' : 'CERCA'}
-                        <SearchOutlinedIcon fontSize={'small'} className="ms-1 mb-1"/>
-                    </Button>
+                </div>
 
+                <div style={{position: 'fixed', bottom: 40, right: '45.5%'}}>
                     {/* ADD FRIENDS */}
                     <Button variant={'contained'} onClick={handleAddFriendsClick}>
                         AGGIUNGI

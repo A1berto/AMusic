@@ -18,8 +18,8 @@ const LoginFields: FC<ILoginFields> = (props) => {
 
     const handleAuthenticationEmailClick = async (e: any) => {
         props.isSingIn ?
-            await createProfileWithEmailAndPasswordAuth('ema2il@gmail.com', 'password') :
-            await loginProfileWithEmailAndPasswordAuth('ema2il@gmail.com', 'password')
+            await createProfileWithEmailAndPasswordAuth('ema25il@gmail.com', 'password') :
+            await loginProfileWithEmailAndPasswordAuth('ema25il@gmail.com', 'password')
     }
 
     const handleValidate = (values: ILoginFormProps) => {

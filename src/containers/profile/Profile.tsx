@@ -53,8 +53,9 @@ const Profile: FC<IProfileProps> = () => {
                                             className="profileImage"
                                             variant="circle"
                                             alt="Profile Image"
-                                            src={Image}         //TODO passare l'url che viene dal be
+                                            src={"https://www.googleapis.com/download/storage/v1/b/polimi-amusic.appspot.com/o/7df4d921-16cf-4327-b4ae-4fd99c82a5a1?generation=1637692104348735&alt=media"}         //TODO passare l'url che viene dal be
                                             onClick={handleOpenEditImageDialog}/>
+
                                     </Tooltip>
                                 </div>
 

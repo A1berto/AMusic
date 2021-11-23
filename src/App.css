@@ -52,6 +52,11 @@
     transform: scale3d(1.05, 1.05,1.10)
 }
 
+.friend:hover {
+    background:  rgba(229, 229, 229, 0.2);
+    border-radius:8px;
+}
+
 .StripeElement-webkit-autofill{
     background: transparent !important;
 }

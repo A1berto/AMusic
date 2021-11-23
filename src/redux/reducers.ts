@@ -6,21 +6,21 @@ import {eventsCombineReducer, IEventReducer} from '../containers/eventi/redux/ev
 import {coreCombineReducer} from 'fetch-with-redux-observable/dist/reducer'
 import {CORE_REDUCER_KEY} from 'fetch-with-redux-observable/dist/constants'
 import {ICoreState} from 'fetch-with-redux-observable/dist/types'
-import {friendsListReducer} from '../containers/friends/redux/friends.reducers'
+import {friendsCombineReducer, IFriendsCombineReducer} from '../containers/friends/redux/friends.reducers'
 
 export interface IRootState {
     core: ICoreState
     currentDialog: ICurrentDialog | null
     profile: IProfile | null
     events: IEventReducer
-    friendsList: any | null
+    friends: IFriendsCombineReducer
 }
 
 export const rootReducer = combineReducers<IRootState>({
     [CORE_REDUCER_KEY]: coreCombineReducer,
     currentDialog: currentDialogReducer,
     profile: profileReducer,
-    friendsList: friendsListReducer,
-    events: eventsCombineReducer
+    events: eventsCombineReducer,
+    friends: friendsCombineReducer
 })
 

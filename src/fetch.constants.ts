@@ -44,3 +44,12 @@ export const FETCH_FRIENDS_LIST_API: IRequestModel = {
     url: `/user/${{USER_ID}}/friends`,
     method: HttpMethods.GET,
 }
+
+/**
+ * @description Get filtered friends list
+ * @method GET
+ */
+export const FETCH_FILTERED_FRIENDS_LIST_API: IRequestModel = {
+    url: `/user/${{USER_ID}}/friends/search`,
+    method: HttpMethods.GET,
+}
