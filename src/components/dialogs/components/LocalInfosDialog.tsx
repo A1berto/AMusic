@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {FC, useCallback, useEffect, useState} from 'react'
+import {FC, useCallback, useState} from 'react'
 import {IEvent} from '../../../containers/eventi/eventi.types'
 import {CircularProgress, IconButton, Tooltip, Typography} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
@@ -14,7 +14,7 @@ interface ILocalInfosProps {
     event: IEvent
 }
 
-const LocalInfos: FC<ILocalInfosProps> = props => {
+const LocalInfosDialog: FC<ILocalInfosProps> = props => {
     //PROPS
     const {event} = props
 
@@ -85,4 +85,4 @@ const LocalInfos: FC<ILocalInfosProps> = props => {
         </>
     )
 }
-export default LocalInfos
+export default LocalInfosDialog

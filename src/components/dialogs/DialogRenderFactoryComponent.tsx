@@ -14,7 +14,8 @@ interface IDialog<T = any> {
 
 /** @description Dialogs lazy import **/
 const EditProfileImageDialog = lazy(() => import('./components/EditProfileImageDialog'))
-const LocalInfos = lazy(() => import('./components/LocalInfos'))
+const LocalInfos = lazy(() => import('./components/LocalInfosDialog'))
+const AddFriendsList = lazy(() => import('./components/AddFriendsListDialog'))
 
 /** @description Switch that render modals based on key **/
 /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -28,6 +29,11 @@ export const dialogRenderFactory = (modalType: string, meta?: any): null | IDial
         case CurrentDialogType.LOCAL_DETAILS:
             return ({
                 component: <LocalInfos {...meta}/>,
+                customDialogProps: {disableEscapeKeyDown: false},
+            })
+        case CurrentDialogType.ADD_FRIENDS_LIST:
+            return ({
+                component: <AddFriendsList {...meta}/>,
                 customDialogProps: {disableEscapeKeyDown: false},
             })
         default:

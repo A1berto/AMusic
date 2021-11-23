@@ -10,13 +10,12 @@ import {fetchProfileAction} from './containers/profile/redux/profile.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {SnackbarProvider} from 'notistack'
 import {SnackbarConsumer} from './components/SnackbarConsumer'
-import {addError, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 
 /* Lazy loading of principle components*/
 const LoginComponent = lazy(() => import('./containers/login/Login'))
 const ProfileComponent = lazy(() => import('./containers/profile/Profile'))
 const EventiComponent = lazy(() => import('./containers/eventi/Events'))
-const FriendsListComponent = lazy(() => import('./containers/friends-list/FriendsList'))
+const FriendsListComponent = lazy(() => import('./containers/friends/Friends'))
 const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosApp'))
 
 

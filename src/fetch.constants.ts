@@ -1,5 +1,8 @@
 import {HttpMethods, IRequestModel} from 'fetch-with-redux-observable'
 
+
+const USER_ID = 'idUserDocument'
+
 /**
  * @description Take profile info
  * @method GET
@@ -33,3 +36,11 @@ export const FETCH_REGISTER_API: IRequestModel = {
     },
 }
 
+/**
+ * @description Get friends list
+ * @method GET
+ */
+export const FETCH_FRIENDS_LIST_API: IRequestModel = {
+    url: `/user/${{USER_ID}}/friends`,
+    method: HttpMethods.GET,
+}

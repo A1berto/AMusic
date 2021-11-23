@@ -7,3 +7,5 @@ export const currentDialogRootSelector = (state: IRootState) => state.currentDia
 export const profileRootSelector = (state: IRootState): IProfile | null => state.profile
 
 export const eventsRootSelector = (state: IRootState): IEventReducer | null => state.events
+
+export const friendsListRootSelector = (state: IRootState): any | null => state.friendsList
