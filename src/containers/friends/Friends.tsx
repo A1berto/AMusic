@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {FC, useEffect} from 'react'
 import Typography from '@material-ui/core/Typography'
-import {Avatar, Button} from '@material-ui/core'
+import {Avatar, Button, createStyles, makeStyles} from '@material-ui/core'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import {useDispatch} from 'react-redux'
 import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
@@ -9,6 +9,20 @@ import {CurrentDialogType} from '../../redux/dialogs/current-dialog.constants'
 import {fetchFriendsListAction} from './redux/friends.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import Image from '../../assets/img/avatar-man.jpg'
+
+export const friendsStyles = makeStyles(() =>
+    createStyles({
+        friendsList: {
+            overflowY: 'scroll',
+            height: '50vh',
+            width: '100%',
+            textAlign: 'start',
+            margin: 'auto',
+            marginTop:'24px'
+        },
+    }),
+)
+
 
 export const friendsList = [
     {name: 'Andrea', surname: 'Messina'},
@@ -36,6 +50,8 @@ interface IFriendsListProps {
 }
 
 const Friends: FC<IFriendsListProps> = () => {
+
+    const classes = friendsStyles()
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -69,12 +85,11 @@ const Friends: FC<IFriendsListProps> = () => {
                 </div>
 
                 {/* FRIENDS LIST */}
-                <div className="row mt-4"
-                     style={{overflowY: 'scroll', height: '50vh', width: '100%', textAlign: 'start', margin: 'auto'}}>
+                <div className={`row px-2 ${classes.friendsList}`}>
                     {
                         friendsList?.map((friend: any) =>
                             <div className="col-4 p-4 d-flex align-items-center friend c-pointer"
-                            onClick={handleOpenInfoFriend}>
+                                 onClick={handleOpenInfoFriend}>
                                 <Avatar
                                     variant="circle"
                                     alt="Profile Image"

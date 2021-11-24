@@ -438,6 +438,9 @@ export const AMUSIC_THEME: Theme = createTheme({
                 },
             },
             MuiLink: {
+                root:{
+                  cursor:'pointer'
+                },
                 underlineAlways: {
                     color: AMUSIC_PALETTE_COLORS.PURPLE,
                     '&:hover': {

@@ -9,6 +9,9 @@ import {
 } from '../../../containers/friends/redux/friends.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {filteredFriendsListSelector} from '../../../containers/friends/redux/friends.selectors'
+import {setCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
+import {CurrentDialogType} from '../../../redux/dialogs/current-dialog.constants'
+import {IEvent} from '../../../containers/eventi/eventi.types'
 
 interface IAddFriendsListDialogProps {
 }
@@ -37,6 +40,10 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = props => {
         dispatch(fetchFilteredFriendsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {name: searchValue}))
     }
 
+    const handleOpenEvent = (event:IEvent)=>{
+        dispatch(setCurrentDialog(CurrentDialogType.LOCAL_DETAILS, {event}))
+    }
+
     return (
         <>
             <div className="row m-4" style={{width: '600px', minHeight: '300px', alignContent: 'start'}}>
@@ -57,8 +64,24 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = props => {
                         </div>
                     </div>
 
-                    <div className="row mt-4">
+                    <div className="row pt-4">
                         <div className="col-12 d-flex align-items-baseline">
+                            <div className="col-auto">
+                                <Typography variant="h4"
+                                            color="secondary"
+                                            style={{opacity: 0.6}}>
+                                    Città
+                                </Typography>
+                            </div>
+                            <div className="col">
+                                <Typography variant="h6"
+                                            color="secondary"
+                                            className="ms-3">
+                                    Trapani
+                                </Typography>
+                            </div>
+                        </div>
+                        <div className="col-12 pt-3 d-flex align-items-baseline">
                             <div className="col-auto">
                                 <Typography variant="h4"
                                             color="secondary"
@@ -80,7 +103,13 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = props => {
                         <Typography variant={'h4'} color="secondary" style={{opacity: 0.6}}>
                             Lista iscrizione eventi
                         </Typography>
-                        {[].map((evento: any) => <Link>{evento?.name}</Link>)}
+                        <div className="col-12 d-flex">
+                            {[{name: 'bar1'}, {name: 'bar2'}, {name: 'bar3'}, {name: 'bar4'}].map((event: any, index) =>
+                                <Link className="me-2" color="secondary" onClick={()=>handleOpenEvent(event)}>
+                                    {event?.name}{[{name: 'bar1'}, {name: 'bar2'}, {name: 'bar3'}, {name: 'bar4'}].length -1 !== index ? `,` : '.'}
+                                </Link>
+                            )}
+                        </div>
                     </div>
 
                 </div>

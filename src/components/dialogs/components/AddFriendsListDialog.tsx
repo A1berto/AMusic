@@ -12,6 +12,7 @@ import {
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {filteredFriendsListSelector} from '../../../containers/friends/redux/friends.selectors'
 import {friendsList} from '../../../containers/friends/Friends'
+import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 
 interface IAddFriendsListDialogProps {
 }
@@ -40,6 +41,10 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = props => {
         dispatch(fetchFilteredFriendsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {name: searchValue}))
     }
 
+    const handleClose = () => {
+        dispatch(closeCurrentDialog())
+    }
+
     return (
         <>
             <div className="row m-4" style={{width: '900px', minHeight: '500px', alignContent: 'start'}}>
@@ -53,7 +58,7 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = props => {
 
                             {/* CLOSE BUTTON*/}
                             <div style={{position: 'absolute', right: 16}}>
-                                <IconButton onClick={() => console.log('amici')}
+                                <IconButton onClick={handleClose}
                                             color="secondary">
                                     <CloseIcon/>
                                 </IconButton>
