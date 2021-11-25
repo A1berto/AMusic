@@ -13,6 +13,18 @@ export const FETCH_PROFILE_API: IRequestModel = {
 }
 
 /**
+ * @description Update profile info
+ * @method GET
+ */
+export const UPDATE_PROFILE_API: IRequestModel = {
+    url: `/user/update`,
+    method: HttpMethods.POST,
+    headers: {
+        'Content-Type': 'application/json'
+    },
+}
+
+/**
  * @description Take profile info
  * @method GET
  */

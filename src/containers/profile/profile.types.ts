@@ -1,14 +1,16 @@
 /*Interface used to identify user profile*/
-export interface IProfile {
-    name: string
-    surname: string
+export interface IProfile extends IProfileFormFields{
+    image?: string
     email: string
     password: string
+}
+
+export interface IProfileFormFields{
+    name: string
+    surname: string
     sex?: string
     birthDate?: string
     city?: string
-    image?: string
-    hobby?: string
 }
 
 

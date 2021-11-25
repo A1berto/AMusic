@@ -8,6 +8,8 @@ import {DropzoneField} from '../../DropezoneFields'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {DROPZONE_FORM_INIT_VALUES} from '../../../containers/profile/profile.constants'
 import {IProfileImageFields} from '../../../containers/profile/profile.types'
+import {HttpMethods} from 'fetch-with-redux-observable'
+import {addError, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 
 interface IEditProfileImageDialogProps {}
 
@@ -23,8 +25,19 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = props => {
         if (values.dropzone) {
             const formData = new FormData()
             formData.append('file', values.dropzone)
-            /*TODO @alberto*/
-            console.log('Effettuare una fetch al be')
+
+            console.log("qui")
+            fetch(`storage/upload`, {
+                method: HttpMethods.POST,
+                body: formData
+            }).then(async (response) => {
+                if (response.ok) {
+                    dispatch(addSuccess({userMessage: 'Documento caricato con successo'}))
+                } else {
+                    dispatch(addError({userMessage: 'Ops! Errore durante il caricamento'}))
+                }
+            })
+
         }
     }
 

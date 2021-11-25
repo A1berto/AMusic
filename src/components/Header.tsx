@@ -1,10 +1,10 @@
 import * as React from 'react'
-import {FC} from 'react'
+import {FC, useState} from 'react'
 import {IconButton, Menu, MenuItem, Tooltip, useMediaQuery} from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import Typography from '@material-ui/core/Typography'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
-import {EVENTI_PATH, FRIENDS_LIST_PATH, INFO_APP_PATH, PROFILE_PATH} from '../routes'
+import {EVENTI_PATH, FRIENDS_LIST_PATH, INFO_APP_PATH, LOGIN_PATH, PROFILE_PATH} from '../routes'
 import {useHistory} from 'react-router-dom'
 import {AMUSIC_PALETTE_COLORS} from '../AMusic_theme'
 
@@ -13,16 +13,14 @@ interface IHeaderProps {
 
 const Header: FC<IHeaderProps> = () => {
 
-
     //ReactState
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
     const isTabletDevice = useMediaQuery('max-width:767px')
-
     const history = useHistory()
 
     const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget)
+        !history.location.pathname.includes(LOGIN_PATH) && setAnchorEl(event.currentTarget)
     }
 
     const handleClose = () => {
@@ -30,9 +28,11 @@ const Header: FC<IHeaderProps> = () => {
     }
 
     const handleOpenSection = (path: string) => {
-        console.info(`Redirect to ${path}`)
-        history.push(path)
-        handleClose()
+        if (!history.location.pathname.includes(LOGIN_PATH)) {
+            history.push(path)
+            console.info(`Redirect to ${path}`)
+            handleClose()
+        }
     }
 
     return (
