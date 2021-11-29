@@ -6,6 +6,7 @@ import Image from '../../../assets/img/avatar-man.jpg'
 import {SearchOutlined} from '@material-ui/icons'
 import {useDispatch, useSelector} from 'react-redux'
 import {
+    fetchAddFriendAction,
     fetchFilteredFriendsListAction,
     isFetchFilteredFriendsListPendingSelector
 } from '../../../containers/friends/redux/friends.actions'
@@ -17,7 +18,7 @@ import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions
 interface IAddFriendsListDialogProps {
 }
 
-const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = props => {
+const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
 
     const [searchValue, setSearchValue] = useState<string>('')
 
@@ -34,11 +35,11 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = props => {
     }
 
     const handleAddFriend = (friend: any) => {
-        //TODO dispatch addFriend
+        dispatch(fetchAddFriendAction.build(null, DEFAULT_REQUEST_ID, undefined, {idUserDocument: friend?.id}))
     }
 
     const handleSearch = () => {
-        dispatch(fetchFilteredFriendsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {name: searchValue}))
+        dispatch(fetchFilteredFriendsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {search: searchValue}))
     }
 
     const handleClose = () => {
@@ -127,7 +128,7 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = props => {
 
                             {/* SEARCH FRIENDS*/}
                             <Button variant={'contained'} onClick={handleSearch} className="ms-3">
-                                CERCA AMICO
+                                CERCA UTENTE
                                 {
                                     isFetchFilteredFriendsListPending ?
                                         <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/> :

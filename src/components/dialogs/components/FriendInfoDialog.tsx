@@ -3,11 +3,7 @@ import {FC, useState} from 'react'
 import {IconButton, Link, Typography} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import {useDispatch, useSelector} from 'react-redux'
-import {
-    fetchFilteredFriendsListAction,
-    isFetchFilteredFriendsListPendingSelector
-} from '../../../containers/friends/redux/friends.actions'
-import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
+import {isFetchFilteredFriendsListPendingSelector} from '../../../containers/friends/redux/friends.actions'
 import {filteredFriendsListSelector} from '../../../containers/friends/redux/friends.selectors'
 import {setCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {CurrentDialogType} from '../../../redux/dialogs/current-dialog.constants'
@@ -36,11 +32,7 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = props => {
         //TODO dispatch addFriend
     }
 
-    const handleSearch = () => {
-        dispatch(fetchFilteredFriendsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {name: searchValue}))
-    }
-
-    const handleOpenEvent = (event:IEvent)=>{
+    const handleOpenEvent = (event: IEvent) => {
         dispatch(setCurrentDialog(CurrentDialogType.LOCAL_DETAILS, {event}))
     }
 
@@ -105,8 +97,8 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = props => {
                         </Typography>
                         <div className="col-12 d-flex">
                             {[{name: 'bar1'}, {name: 'bar2'}, {name: 'bar3'}, {name: 'bar4'}].map((event: any, index) =>
-                                <Link className="me-2" color="secondary" onClick={()=>handleOpenEvent(event)}>
-                                    {event?.name}{[{name: 'bar1'}, {name: 'bar2'}, {name: 'bar3'}, {name: 'bar4'}].length -1 !== index ? `,` : '.'}
+                                <Link className="me-2" color="secondary" onClick={() => handleOpenEvent(event)}>
+                                    {event?.name}{[{name: 'bar1'}, {name: 'bar2'}, {name: 'bar3'}, {name: 'bar4'}].length - 1 !== index ? `,` : '.'}
                                 </Link>
                             )}
                         </div>

@@ -285,7 +285,6 @@ export const AMUSIC_THEME: Theme = createTheme({
                 fontWeight: 700,
                 fontSize: '1rem',
                 lineHeight: '24px',
-                textTransform: 'uppercase',
             },
             // PULSANTI
             button: {
@@ -296,7 +295,6 @@ export const AMUSIC_THEME: Theme = createTheme({
                 fontWeight: 'bold',
                 fontSize: '14px',
                 lineHeight: '22px',
-                textTransform: 'uppercase',
                 cursor: 'pointer',
             },
             // USATO PER FOOTER e SCRITTA 'al mese' in RIEPILOGO POLIZZA

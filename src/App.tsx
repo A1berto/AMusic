@@ -1,6 +1,6 @@
 import React, {lazy, Suspense, useEffect} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
-import {EVENTI_PATH, FRIENDS_LIST_PATH, INFO_APP_PATH, LOGIN_PATH, PROFILE_PATH} from './routes'
+import {EVENTS_PATH, FRIENDS_LIST_PATH, INFO_APP_PATH, LOGIN_PATH, PROFILE_PATH} from './routes'
 import {AMusicContainer} from './components/AMusicContainer'
 import {FallbackSpinner} from './components/fallback-spinner/FallbackSpinner'
 import 'animate.css'
@@ -36,7 +36,7 @@ function App() {
                         <Route path={LOGIN_PATH} component={LoginComponent}/>
 
                         {/*EVENTI*/}
-                        <Route path={EVENTI_PATH} component={EventiComponent}/>
+                        <Route path={EVENTS_PATH} component={EventiComponent}/>
 
                         {/*PROFILE*/}
                         <Route path={PROFILE_PATH} component={ProfileComponent}/>

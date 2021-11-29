@@ -58,12 +58,11 @@ export function initConfiguration() {
                     applyMiddleware(epicsMiddleware),
                 ))
 
-            store.subscribe(()=>{
+            store.subscribe(() => {
                 localStorage.setItem('reduxState', JSON.stringify(store.getState()))
             })
 
             epicsMiddleware.run(rootEpics)
-
             return store
         },
         fetchConfig,

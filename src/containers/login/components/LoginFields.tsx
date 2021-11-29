@@ -5,35 +5,25 @@ import {
     createProfileWithEmailAndPasswordAuth,
     loginProfileWithEmailAndPasswordAuth
 } from '../../../components/autentication/service.auth'
-import {Field, Form, Formik, FormikProps} from 'formik'
+import {Field, Form, Formik} from 'formik'
 import {ILoginFormProps} from '../login.types'
-import {LOGIN_FIELDS_NAMES, LOGIN_FORM_INIT_VALUES} from '../login.constants'
+import {LOGIN_FIELDS_NAMES, LOGIN_FORM_INIT_VALUES, loginValidationSchema} from '../login.constants'
 import {TextField} from 'formik-material-ui'
+import {useDispatch} from 'react-redux'
 
 interface ILoginFields {
     isSingIn: boolean
 }
 
-const LoginFields: FC<ILoginFields> = (props) => {
+const LoginFields: FC<ILoginFields> = (props: ILoginFields) => {
 
-    const handleAuthenticationEmailClick = async (e: any) => {
-        props.isSingIn ?
-            await createProfileWithEmailAndPasswordAuth('ema25il@gmail.com', 'password') :
-            await loginProfileWithEmailAndPasswordAuth('ema25il@gmail.com', 'password')
-    }
+    const {isSingIn = false} = props
+    const dispatch= useDispatch()
 
-    const handleValidate = (values: ILoginFormProps) => {
-        const errors: { [key: string]: string } = {}
-        const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i)
-
-        if (!values.email && !emailPattern.test(values.email)) {
-            errors[LOGIN_FIELDS_NAMES.email] = 'Email non valida'
-        }
-        if (!values.password) {
-            errors[LOGIN_FIELDS_NAMES.password] = 'Password non valida'
-        }
-        console.log('errors>>>', errors)
-        return errors
+    const handleAuthenticationEmailClick = async (formValues: ILoginFormProps) => {
+        isSingIn ?
+            await createProfileWithEmailAndPasswordAuth(formValues?.email, formValues?.password,dispatch) :
+            await loginProfileWithEmailAndPasswordAuth(formValues?.email, formValues?.password,dispatch)
     }
 
     return (
@@ -42,14 +32,13 @@ const LoginFields: FC<ILoginFields> = (props) => {
             <Formik initialValues={LOGIN_FORM_INIT_VALUES}
                     onSubmit={handleAuthenticationEmailClick}
                     validateOnChange={true}
-                    validate={handleValidate}>
+                    validationSchema={loginValidationSchema(isSingIn)}>
                 {
-                    (formikProps: FormikProps<ILoginFormProps>) => {
+                    () => {
                         return <Form autoComplete="off">
-
-                            <div className={`row justify-content-center`}>
+                            <div className="row justify-content-center">
                                 {
-                                    props.isSingIn &&
+                                    isSingIn &&
                                     <>
                                         <div className={`col-8 mt-3`}>
                                             <Field
@@ -101,7 +90,7 @@ const LoginFields: FC<ILoginFields> = (props) => {
                             <div className="row justify-content-center">
                                 <div className="col-8 mt-5">
                                     <Button variant="contained" type="submit" fullWidth>
-                                        {props.isSingIn ? 'Registrati' : 'Accedi'}
+                                        {isSingIn ? 'Registrati' : 'Accedi'}
                                     </Button>
                                 </div>
                             </div>

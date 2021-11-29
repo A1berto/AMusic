@@ -19,7 +19,7 @@ import {FetchProvider} from 'react-fetch-it-hook'
 
 export const HashHistory = createHashHistory()
 
-const {getStore} = initConfiguration()
+export const {getStore} = initConfiguration()
 
 ReactDOM.render(
     <React.StrictMode>

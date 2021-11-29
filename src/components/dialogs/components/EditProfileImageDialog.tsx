@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {FC, useCallback} from 'react'
+import {FC, useCallback, useEffect} from 'react'
 import {Button, IconButton, Typography} from '@material-ui/core'
 import {useDispatch} from 'react-redux'
 import {Field, Form, Formik} from 'formik'
@@ -8,13 +8,19 @@ import {DropzoneField} from '../../DropezoneFields'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {DROPZONE_FORM_INIT_VALUES} from '../../../containers/profile/profile.constants'
 import {IProfileImageFields} from '../../../containers/profile/profile.types'
-import {HttpMethods} from 'fetch-with-redux-observable'
+import {DEFAULT_REQUEST_ID, HttpMethods} from 'fetch-with-redux-observable'
 import {addError, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
+import {fetchSuggestedFriendsListAction} from '../../../containers/friends/redux/friends.actions'
 
-interface IEditProfileImageDialogProps {}
+interface IEditProfileImageDialogProps {
+}
 
-const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = props => {
+const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchSuggestedFriendsListAction.build(null, DEFAULT_REQUEST_ID))
+    }, [dispatch])
 
     const handleClose = useCallback(() => {
         dispatch(closeCurrentDialog())
@@ -26,10 +32,10 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = props => {
             const formData = new FormData()
             formData.append('file', values.dropzone)
 
-            console.log("qui")
+            console.log('qui')
             fetch(`storage/upload`, {
                 method: HttpMethods.POST,
-                body: formData
+                body: formData,
             }).then(async (response) => {
                 if (response.ok) {
                     dispatch(addSuccess({userMessage: 'Documento caricato con successo'}))

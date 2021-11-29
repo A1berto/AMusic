@@ -7,7 +7,7 @@ import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
 import {useDispatch, useSelector} from 'react-redux'
 import {Field, Form, Formik} from 'formik'
 import {PROFILE_FIELDS_NAMES, PROFILE_FORM_INIT_VALUES} from './profile.constants'
-import {updateProfileAction} from './redux/profile.actions'
+import {changeProfilePasswordAction, updateProfileAction} from './redux/profile.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {Select, TextField} from 'formik-material-ui'
 import {IProfileFormFields} from './profile.types'
@@ -21,11 +21,9 @@ const Profile: FC<IProfileProps> = () => {
     const profileImage = useSelector(profileImageSelector)
 
     const [isEditProfileData, setIsEditProfileData] = useState<boolean>(false)
-    const [isEditProfileCredentials, setIsEditProfileCredentials] = useState<boolean>(false)
     const [password, setPassword] = useState<string>()
 
     const dispatch = useDispatch()
-
 
     const handleEditFormSubmit = (values: IProfileFormFields) => {
         setIsEditProfileData(prevState => !prevState)
@@ -33,9 +31,7 @@ const Profile: FC<IProfileProps> = () => {
     }
 
     const handleChangeCredentials = () => {
-        //TODO aggiungere la chiamata modifica password
-        setIsEditProfileCredentials(prev => !prev)
-        isEditProfileCredentials && console.log('modificato il valore della password>>', password)
+        dispatch(changeProfilePasswordAction.build(null, DEFAULT_REQUEST_ID))
     }
 
     /* Open the dialog to allow the user to edit profile image */
@@ -247,7 +243,7 @@ const Profile: FC<IProfileProps> = () => {
                                             name={PROFILE_FIELDS_NAMES.password}
                                             color="secondary"
                                             value={password}
-                                            disabled={!isEditProfileCredentials}
+                                            InputProps={{readOnly: true}}
                                             onChange={handlePasswordChange}
                                         />
                                     </div>
@@ -257,7 +253,7 @@ const Profile: FC<IProfileProps> = () => {
                             {/* EDIT BUTTONS */}
                             <div className="row d-flex justify-content-end" style={{marginTop: '112px'}}>
                                 <Button variant="contained" onClick={handleChangeCredentials}>
-                                    {isEditProfileCredentials ? 'Conferma modifica' : 'Modifica credenziali'}
+                                    Modifica password
                                 </Button>
                             </div>
                             <div className="row d-flex justify-content-end mt-2">

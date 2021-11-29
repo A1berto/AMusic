@@ -8,6 +8,7 @@ import {AMUSIC_PALETTE_COLORS} from '../../AMusic_theme'
 import LoginFields from './components/LoginFields'
 import {facebookProvider, gitHubProvider, googleProvider} from '../../components/autentication/authMethods'
 import {socialMediaAuth} from '../../components/autentication/service.auth'
+import {useDispatch} from 'react-redux'
 
 /*Login style*/
 const useStyles = makeStyles(() =>
@@ -29,10 +30,12 @@ const useStyles = makeStyles(() =>
 )
 
 
-interface ILogin {}
+interface ILogin {
+}
 
 const Login: FC<ILogin> = () => {
 
+    const dispatch= useDispatch()
     const [isSingIn, setIsSingIn] = useState<boolean>(false)
     const classes = useStyles(isSingIn)
 
@@ -42,7 +45,7 @@ const Login: FC<ILogin> = () => {
 
     /** @description Authentication with different providers **/
     const handleAuthenticationClick = async (provider: any) => {
-        const response = await socialMediaAuth(provider)
+        const response = await socialMediaAuth(provider, dispatch)
         console.info('AUTHENTICATION: ', response)
     }
 
@@ -70,7 +73,7 @@ const Login: FC<ILogin> = () => {
                 </div>
             </div>
 
-            <div className={`row mt-5 ${!isSingIn ? 'animate__animated animate__fadeInRight' : 'animate__animated animate__fadeInLeft'}`}>
+            <div className={`row mt-5 animate__animated ${!isSingIn ? ' animate__fadeInRight' : ' animate__fadeInLeft'}`}>
 
                 {/* SING IN or LOGIN */}
                 <LoginFields isSingIn={isSingIn}/>

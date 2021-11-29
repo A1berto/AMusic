@@ -55,7 +55,7 @@ const Friends: FC<IFriendsListProps> = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchFriendsListAction.build(null, DEFAULT_REQUEST_ID, {USER_ID: 'asd'}))
+        dispatch(fetchFriendsListAction.build(null, DEFAULT_REQUEST_ID))
     }, [dispatch])
 
     const handleAddFriendsClick = () => {

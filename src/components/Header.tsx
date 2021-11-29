@@ -4,7 +4,7 @@ import {IconButton, Menu, MenuItem, Tooltip, useMediaQuery} from '@material-ui/c
 import MenuIcon from '@material-ui/icons/Menu'
 import Typography from '@material-ui/core/Typography'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
-import {EVENTI_PATH, FRIENDS_LIST_PATH, INFO_APP_PATH, LOGIN_PATH, PROFILE_PATH} from '../routes'
+import {EVENTS_PATH, FRIENDS_LIST_PATH, INFO_APP_PATH, LOGIN_PATH, PROFILE_PATH} from '../routes'
 import {useHistory} from 'react-router-dom'
 import {AMUSIC_PALETTE_COLORS} from '../AMusic_theme'
 
@@ -63,7 +63,7 @@ const Header: FC<IHeaderProps> = () => {
                     }}
                 >
                     <MenuItem onClick={() => handleOpenSection(PROFILE_PATH)}>Profilo</MenuItem>
-                    <MenuItem onClick={() => handleOpenSection(EVENTI_PATH)}>Eventi</MenuItem>
+                    <MenuItem onClick={() => handleOpenSection(EVENTS_PATH)}>Eventi</MenuItem>
                     <MenuItem onClick={() => handleOpenSection(FRIENDS_LIST_PATH)}>Lista amici</MenuItem>
                     <MenuItem onClick={handleClose}>Cronologia eventi</MenuItem>
                 </Menu>
