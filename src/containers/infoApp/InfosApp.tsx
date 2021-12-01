@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {FC} from 'react'
 import {Typography} from '@material-ui/core'
-import InfoApp from './InfoApp'
+import InfoApp from './components/InfoApp'
 import {informazioni} from './info.constants'
 
 

@@ -5,7 +5,7 @@ import {
     fetchProfileAction,
     updateProfileAction
 } from '../containers/profile/redux/profile.actions'
-import {fetchPaymentAction} from '../containers/eventi/redux/eventi.actions'
+import {fetchPaymentAction} from '../containers/events/redux/eventi.actions'
 import {
     fetchAddFriendAction,
     fetchFilteredFriendsListAction,

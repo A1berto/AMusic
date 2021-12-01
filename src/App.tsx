@@ -11,7 +11,7 @@ import {SnackbarConsumer} from './commons/SnackbarConsumer'
 /* Lazy loading of principle components*/
 const LoginComponent = lazy(() => import('./containers/login/Login'))
 const ProfileComponent = lazy(() => import('./containers/profile/Profile'))
-const EventiComponent = lazy(() => import('./containers/eventi/Events'))
+const EventiComponent = lazy(() => import('./containers/events/Events'))
 const FriendsListComponent = lazy(() => import('./containers/friends/Friends'))
 const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosApp'))
 
