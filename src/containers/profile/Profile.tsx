@@ -46,7 +46,6 @@ const Profile: FC<IProfileProps> = () => {
     //TODO non inserire i default value cosi. Prendere i dati dai selector e valorizzare gli initValues
     return (
         <div style={{width: '70%'}}>
-
             <div className="row">
                 {/* PROFILE IMAGE */}
                 <div className="col-12 d-flex justify-content-center">

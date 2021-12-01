@@ -1,15 +1,12 @@
-import React, {lazy, Suspense, useEffect} from 'react'
+import React, {lazy, Suspense} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {EVENTS_PATH, FRIENDS_LIST_PATH, INFO_APP_PATH, LOGIN_PATH, PROFILE_PATH} from './routes'
-import {AMusicContainer} from './components/AMusicContainer'
-import {FallbackSpinner} from './components/fallback-spinner/FallbackSpinner'
+import {AMusicContainer} from './commons/AMusicContainer'
+import {FallbackSpinner} from './commons/fallback-spinner/FallbackSpinner'
 import 'animate.css'
-import DialogProvider from './components/dialogs/DialogProvider'
-import {useDispatch} from 'react-redux'
-import {fetchProfileAction} from './containers/profile/redux/profile.actions'
-import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
+import DialogProvider from './commons/dialogs/DialogProvider'
 import {SnackbarProvider} from 'notistack'
-import {SnackbarConsumer} from './components/SnackbarConsumer'
+import {SnackbarConsumer} from './commons/SnackbarConsumer'
 
 /* Lazy loading of principle components*/
 const LoginComponent = lazy(() => import('./containers/login/Login'))
@@ -20,12 +17,6 @@ const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosApp'))
 
 
 function App() {
-    const dispatch = useDispatch()
-
-    /** @description During the application starting we call profile action **/
-    useEffect(() => {
-        dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
-    }, [dispatch])
 
     return (<>
             <Suspense fallback={<FallbackSpinner/>}>

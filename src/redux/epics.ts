@@ -12,12 +12,14 @@ import {
     fetchFriendsListAction,
     fetchSuggestedFriendsListAction
 } from '../containers/friends/redux/friends.actions'
-import {genericMessagesEpic} from '../components/messages/messages.epics'
+import {genericMessagesEpic} from '../commons/messages/messages.epics'
+import {fetchSuggestedFriendsListSuccessEpic} from '../containers/friends/redux/friends.epics'
 
 // root epics
 export const rootEpics: Epic = combineEpics<Epic>(
     generalSpinnerEpics,
     genericMessagesEpic,
+    fetchSuggestedFriendsListSuccessEpic,
 
     //fetch
     switchMapFetchEpics(fetchProfileAction.pendingActionTypeWithSpinner),

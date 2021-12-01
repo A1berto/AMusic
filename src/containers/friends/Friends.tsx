@@ -1,12 +1,16 @@
 import * as React from 'react'
 import {FC, useEffect} from 'react'
 import Typography from '@material-ui/core/Typography'
-import {Avatar, Button, createStyles, makeStyles} from '@material-ui/core'
+import {Avatar, Button, CircularProgress, createStyles, makeStyles} from '@material-ui/core'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
 import {CurrentDialogType} from '../../redux/dialogs/current-dialog.constants'
-import {fetchFriendsListAction} from './redux/friends.actions'
+import {
+    fetchFriendsListAction,
+    fetchSuggestedFriendsListAction,
+    isFetchSuggestedFriendsListPendingSelector
+} from './redux/friends.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import Image from '../../assets/img/avatar-man.jpg'
 
@@ -18,7 +22,7 @@ export const friendsStyles = makeStyles(() =>
             width: '100%',
             textAlign: 'start',
             margin: 'auto',
-            marginTop:'24px'
+            marginTop: '24px'
         },
     }),
 )
@@ -54,12 +58,14 @@ const Friends: FC<IFriendsListProps> = () => {
     const classes = friendsStyles()
     const dispatch = useDispatch()
 
+    const isFetchSuggestedFriendsListPending = useSelector(isFetchSuggestedFriendsListPendingSelector)
+
     useEffect(() => {
         dispatch(fetchFriendsListAction.build(null, DEFAULT_REQUEST_ID))
     }, [dispatch])
 
     const handleAddFriendsClick = () => {
-        dispatch(setCurrentDialog(CurrentDialogType.ADD_FRIENDS_LIST))
+        dispatch(fetchSuggestedFriendsListAction.build(null, DEFAULT_REQUEST_ID))
     }
 
     const handleOpenInfoFriend = () => {
@@ -110,7 +116,11 @@ const Friends: FC<IFriendsListProps> = () => {
                     {/* ADD FRIENDS */}
                     <Button variant={'contained'} onClick={handleAddFriendsClick}>
                         AGGIUNGI
-                        <AddOutlinedIcon fontSize={'small'} className="ms-1 mb-1"/>
+                        {
+                            isFetchSuggestedFriendsListPending ?
+                                <CircularProgress className="ms-2" size={20} style={{color: 'white'}} /> :
+                                <AddOutlinedIcon fontSize={'small'} className="ms-1 mb-1"/>
+                        }
                     </Button>
                 </div>
             </div>

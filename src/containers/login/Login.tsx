@@ -6,8 +6,8 @@ import GoogleLogo from '../../assets/img/googleLogo.svg'
 import GitHubLogo from '../../assets/img/gitHubLogo.svg'
 import {AMUSIC_PALETTE_COLORS} from '../../AMusic_theme'
 import LoginFields from './components/LoginFields'
-import {facebookProvider, gitHubProvider, googleProvider} from '../../components/autentication/authMethods'
-import {socialMediaAuth} from '../../components/autentication/service.auth'
+import {facebookProvider, gitHubProvider, googleProvider} from '../../commons/autentication/authMethods'
+import {socialMediaAuth} from '../../commons/autentication/service.auth'
 import {useDispatch} from 'react-redux'
 
 /*Login style*/

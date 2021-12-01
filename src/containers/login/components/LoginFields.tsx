@@ -4,7 +4,7 @@ import {Button} from '@material-ui/core'
 import {
     createProfileWithEmailAndPasswordAuth,
     loginProfileWithEmailAndPasswordAuth
-} from '../../../components/autentication/service.auth'
+} from '../../../commons/autentication/service.auth'
 import {Field, Form, Formik} from 'formik'
 import {ILoginFormProps} from '../login.types'
 import {LOGIN_FIELDS_NAMES, LOGIN_FORM_INIT_VALUES, loginValidationSchema} from '../login.constants'

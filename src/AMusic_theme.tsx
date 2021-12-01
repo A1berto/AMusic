@@ -3,9 +3,6 @@ import {itIT} from '@material-ui/core/locale'
 
 export const AMUSIC_PALETTE_COLORS = {
     /*USUALLY USED*/
-    YELLOW: '#e6ae27',
-    BLUE: '#006172',
-    LIGHT_BLUE: '#008c96',
     WHITE: '#f5f5eb',
     PURPLE: '#936F9D',
     VIOLET: '#382940',
@@ -41,18 +38,11 @@ export const AMUSIC_PALETTE_COLORS = {
     VERDE_SS_MAIN: '#4caf50',
     VERDE_SS_DARK: '#388e3c',
 
-    LIGHT_GREEN: '#C9D200',
-    MEDIUM_GREEN: '#85AE1B',
-
 
     AZZURRO: '#6FBDC2',
-
-
-    /*GRADIENT*/
-    VERDE_GRADIENT: 'linear-gradient(90deg, #006750 0%, #85AE1B 100%)',
-    VERDE_LIME_HIGHLIGHTED_TEXT_GRADIENT: 'linear-gradient(180deg, rgba(255,255,255,0) 50%, #E0E480 50%)',
-    ARANCIONE_GRADIENT: 'linear-gradient(90deg, #E85420 0%, #FFB100 99.99%, #649301 100%, #FFB100 100%)',
-    ARANCIONE_LIGHT_GRADIENT: 'linear-gradient(90deg, #EBAC2C 65%, #F3DB3D 90%)',
+    YELLOW: '#e6ae27',
+    BLUE: '#006172',
+    LIGHT_BLUE: '#008c96',
 }
 
 
@@ -436,16 +426,14 @@ export const AMUSIC_THEME: Theme = createTheme({
                 },
             },
             MuiLink: {
-                root:{
-                  cursor:'pointer'
-                },
-                underlineAlways: {
-                    color: AMUSIC_PALETTE_COLORS.PURPLE,
+                root: {
+                    cursor: 'pointer',
+                    color: AMUSIC_PALETTE_COLORS.WHITE,
                     '&:hover': {
                         color: AMUSIC_PALETTE_COLORS.PURPLE,
                         textDecorationColor: 'rgba(245,245,235,0.7)',
                     }
-                }
+                },
             },
             MuiInputLabel: {
                 root: {
@@ -455,8 +443,8 @@ export const AMUSIC_THEME: Theme = createTheme({
                     fontSize: '22px',
                     fontWeight: 400,
                 },
-                formControl:{
-                    top: "-5px"
+                formControl: {
+                    top: '-5px'
                 }
             },
             MuiInput: {
@@ -508,10 +496,10 @@ export const AMUSIC_THEME: Theme = createTheme({
                     },
                 },
             },
-            MuiListItem:{
-                root:{
-                    '&:hover':{
-                        backgroundColor:'#382940 !important'
+            MuiListItem: {
+                root: {
+                    '&:hover': {
+                        backgroundColor: '#382940 !important'
                     }
                 }
             },
@@ -549,10 +537,10 @@ export const AMUSIC_THEME: Theme = createTheme({
                     color: AMUSIC_PALETTE_COLORS.WHITE,
                 }
             },
-            MuiGrid:{
-                root:{
-                    '&:hover':{
-                        backgroundColor:'rgba(229, 229, 229, 0.1)',
+            MuiGrid: {
+                root: {
+                    '&:hover': {
+                        backgroundColor: 'rgba(229, 229, 229, 0.1)',
                     }
                 }
             },
@@ -577,7 +565,7 @@ export const AMUSIC_THEME: Theme = createTheme({
                     color: AMUSIC_PALETTE_COLORS.NERO,
                 },
                 daySelected: {
-                    backgroundImage: AMUSIC_PALETTE_COLORS.VERDE_GRADIENT,
+                    backgroundImage: AMUSIC_PALETTE_COLORS.VIOLET,
                 },
                 current: {
                     color: AMUSIC_PALETTE_COLORS.DARK_GREEN,
