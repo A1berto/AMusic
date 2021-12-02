@@ -105,7 +105,7 @@ export const AMUSIC_THEME: Theme = createTheme({
             // VALUTARE SE MODIFICARE
             text: {
                 primary: '#212121',
-                secondary: '#FFF',
+                secondary: 'rgba(255,255,255,0.6)',
                 disabled: 'rgba(0, 0, 0, 0.38)',
                 hint: 'rgba(0, 0, 0, 0.38)',
             },

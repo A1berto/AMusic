@@ -147,8 +147,7 @@ export const DropzoneField: FC<IDropzoneFieldProps> = props => {
                                     <div className="row flex-column px-2">
                                         <Typography className="d-block"
                                                     variant="subtitle1"
-                                                    color="secondary"
-                                                    style={{opacity: 0.6}}>
+                                                    color="textSecondary">
                                             {props.multiple ? 'Immagini caricate:' : 'Immagine caricata:'}
                                         </Typography>
                                         <Typography

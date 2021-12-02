@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {FC} from 'react'
 import {Card, CardContent, Icon, Typography} from '@material-ui/core'
-import {infoAgenziaStyles} from '../Events'
+import {infoAgenziaStyles} from '../EventsContainer'
 
 const Marker: FC<{ lat: number, lng: number, title: string, handleClick?: any, open?: boolean, agenziaCorrente?: any }> = (props) => {
 

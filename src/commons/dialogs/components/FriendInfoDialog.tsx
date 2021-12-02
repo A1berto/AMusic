@@ -63,8 +63,7 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                         <div className="col-12 d-flex align-items-baseline">
                             <div className="col-auto">
                                 <Typography variant="h4"
-                                            color="secondary"
-                                            style={{opacity: 0.6}}>
+                                            color="textSecondary">
                                     Amici da
                                 </Typography>
                             </div>
@@ -79,8 +78,7 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                         <div className="col-12 pt-3 d-flex align-items-baseline">
                             <div className="col-auto">
                                 <Typography variant="h4"
-                                            color="secondary"
-                                            style={{opacity: 0.6}}>
+                                            color="textSecondary">
                                     Ultimo accesso
                                 </Typography>
                             </div>
@@ -95,7 +93,7 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                     </div>
 
                     <div className="row pt-3">
-                        <Typography variant={'h4'} color="secondary" style={{opacity: 0.6}}>
+                        <Typography variant={'h4'} color="textSecondary">
                             Lista iscrizione eventi
                         </Typography>
                         <div className="col-12 d-flex">

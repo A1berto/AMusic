@@ -12,7 +12,7 @@ import {
 } from '../../../containers/friends/redux/friends.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {filteredFriendsListSelector} from '../../../containers/friends/redux/friends.selectors'
-import {friendsList} from '../../../containers/friends/Friends'
+import {friendsList} from '../../../containers/friends/FriendsContainer'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 
 interface IAddFriendsListDialogProps {
@@ -82,8 +82,7 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                                 !filteredFriendsList &&
                                 <div className="row">
                                     <div className="col-12 d-flex justify-content-center">
-                                        <Typography variant={'h4'} color="secondary"
-                                                    style={{opacity: 0.6}}>SUGGERITI</Typography>
+                                        <Typography variant={'h4'} color="textSecondary">SUGGERITI</Typography>
                                     </div>
                                 </div>
                             }
@@ -101,7 +100,7 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                                              onClick={() => handleAddFriend(friend)}>
                                             <Avatar
                                                 variant="circle"
-                                                alt="Profile Image"
+                                                alt="ProfileContainer Image"
                                                 src={Image}         //TODO friend.image
                                                 onClick={() => console.log('Cliccato avatar')}/>
                                             <Typography variant="body2"

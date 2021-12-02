@@ -1,6 +1,6 @@
 import React, {lazy, Suspense} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
-import {EVENTS_PATH, FRIENDS_LIST_PATH, INFO_APP_PATH, LOGIN_PATH, PROFILE_PATH} from './routes'
+import {EVENTS_HISTORY_PATH, EVENTS_PATH, FRIENDS_LIST_PATH, INFO_APP_PATH, LOGIN_PATH, PROFILE_PATH} from './routes'
 import {AMusicContainer} from './commons/AMusicContainer'
 import {FallbackSpinner} from './commons/fallback-spinner/FallbackSpinner'
 import 'animate.css'
@@ -9,11 +9,12 @@ import {SnackbarProvider} from 'notistack'
 import {SnackbarConsumer} from './commons/SnackbarConsumer'
 
 /* Lazy loading of principle components*/
-const LoginComponent = lazy(() => import('./containers/login/Login'))
-const ProfileComponent = lazy(() => import('./containers/profile/Profile'))
-const EventiComponent = lazy(() => import('./containers/events/Events'))
-const FriendsListComponent = lazy(() => import('./containers/friends/Friends'))
-const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosApp'))
+const LoginComponent = lazy(() => import('./containers/login/LoginOrSignInContainer'))
+const ProfileComponent = lazy(() => import('./containers/profile/ProfileContainer'))
+const EventiComponent = lazy(() => import('./containers/events/EventsContainer'))
+const FriendsListComponent = lazy(() => import('./containers/friends/FriendsContainer'))
+const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosContainer'))
+const EventsHistoryComponent = lazy(() => import('./containers/infoApp/InfosContainer'))
 
 
 function App() {
@@ -37,6 +38,9 @@ function App() {
 
                         {/*FRIENDS LIST*/}
                         <Route path={FRIENDS_LIST_PATH} component={FriendsListComponent}/>
+
+                        {/*EVENTS HISTORY*/}
+                        <Route path={EVENTS_HISTORY_PATH} component={EventsHistoryComponent}/>
 
                         {/*DEFAULT*/}
                         <Redirect to={LOGIN_PATH}/>

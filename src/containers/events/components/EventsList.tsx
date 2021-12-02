@@ -3,7 +3,7 @@ import {FC} from 'react'
 import {Card, CardContent, CardMedia} from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import {IEvent} from '../eventi.types'
-import {events} from '../Events'
+import {eventsContainer} from '../EventsContainer'
 import disco from '../../../assets/img/disco.jpg'
 import {useDispatch} from 'react-redux'
 import {setCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
@@ -26,7 +26,7 @@ const EventsList: FC<IEventsListProps> = () => {
     return (
         <>
             {
-                events?.map((event: IEvent, index) =>
+                eventsContainer?.map((event: IEvent, index) =>
                     <Card key={index}
                           className="col-12 col-sm-6 col-md-4 m-4 p-0 localCard c-pointer"
                           onClick={() => handleCardClick(event)}

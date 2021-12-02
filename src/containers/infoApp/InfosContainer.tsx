@@ -8,7 +8,7 @@ import {informazioni} from './info.constants'
 interface IInformazioniApplicazione {
 }
 
-const InfosApp: FC<IInformazioniApplicazione> = () => {
+const InfosContainer: FC<IInformazioniApplicazione> = () => {
     //React State used to open accordion one at time
     const [expanded, setExpanded] = React.useState<string | false>(false)
 
@@ -39,6 +39,6 @@ const InfosApp: FC<IInformazioniApplicazione> = () => {
         </div>
     )
 }
-export default InfosApp
+export default InfosContainer
 
 

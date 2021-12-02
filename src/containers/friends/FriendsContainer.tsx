@@ -53,7 +53,7 @@ export const friendsList = [
 interface IFriendsListProps {
 }
 
-const Friends: FC<IFriendsListProps> = () => {
+const FriendsContainer: FC<IFriendsListProps> = () => {
 
     const classes = friendsStyles()
     const dispatch = useDispatch()
@@ -98,7 +98,7 @@ const Friends: FC<IFriendsListProps> = () => {
                                  onClick={handleOpenInfoFriend}>
                                 <Avatar
                                     variant="circle"
-                                    alt="Profile Image"
+                                    alt="ProfileContainer Image"
                                     src={Image}         //TODO friend.image
                                     onClick={() => console.log('Cliccato avatar')}/>
                                 <Typography variant="body2"
@@ -127,4 +127,4 @@ const Friends: FC<IFriendsListProps> = () => {
         </>
     )
 }
-export default Friends
+export default FriendsContainer

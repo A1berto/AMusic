@@ -43,7 +43,7 @@ export const infoAgenziaStyles = makeStyles(() =>
 )
 
 
-export const events: IEvent[] = [
+export const eventsContainer: IEvent[] = [
     {
         lat: 23,
         lng: 24,
@@ -229,7 +229,7 @@ const Events: FC<IEventsProps> = () => {
                                                 libraries: ['places', 'geometry'],
                                             }}
                                             {...mapsProps}>
-                                            {events?.map((evento: IEvent, index) =>
+                                            {eventsContainer?.map((evento: IEvent, index) =>
                                                 <Marker key={`marker${index}`}
                                                         lat={evento.lat}
                                                         lng={evento.lng}

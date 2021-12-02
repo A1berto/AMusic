@@ -1,6 +1,6 @@
 import {setBaseRequestURL} from 'fetch-with-redux-observable'
 import {applyMiddleware, compose, createStore} from 'redux'
-import {rootReducer} from './redux/reducers'
+import {rootReducer} from './redux/reducer'
 import {rootEpics} from './redux/epics'
 import {createEpicMiddleware} from 'redux-observable'
 

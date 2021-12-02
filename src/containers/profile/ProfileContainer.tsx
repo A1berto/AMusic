@@ -16,7 +16,7 @@ import {profileImageSelector} from './redux/profile.selectors'
 interface IProfileProps {
 }
 
-const Profile: FC<IProfileProps> = () => {
+const ProfileContainer: FC<IProfileProps> = () => {
 
     const profileImage = useSelector(profileImageSelector)
 
@@ -53,7 +53,7 @@ const Profile: FC<IProfileProps> = () => {
                         <Avatar
                             className="profileImage"
                             variant="circle"
-                            alt="Profile Image"
+                            alt="ProfileContainer Image"
                             src={profileImage}
                             onClick={handleOpenEditImageDialog}/>
                     </Tooltip>
@@ -86,8 +86,7 @@ const Profile: FC<IProfileProps> = () => {
                                 <div className="col-12 d-flex align-items-center mt-4">
                                     <div className="col-3">
                                         <Typography variant="h4"
-                                                    color="secondary"
-                                                    style={{opacity: 0.6}}>
+                                                    color="textSecondary">
                                             Nome
                                         </Typography>
                                     </div>
@@ -107,8 +106,7 @@ const Profile: FC<IProfileProps> = () => {
                                 <div className="col-12 d-flex align-items-center mt-4">
                                     <div className="col-3">
                                         <Typography variant="h4"
-                                                    color="secondary"
-                                                    style={{opacity: 0.6}}>
+                                                    color="textSecondary">
                                             Cognome
                                         </Typography>
                                     </div>
@@ -128,8 +126,7 @@ const Profile: FC<IProfileProps> = () => {
                                 <div className="col-12 d-flex align-items-center mt-4">
                                     <div className="col-3">
                                         <Typography variant="h4"
-                                                    color="secondary"
-                                                    style={{opacity: 0.6}}>
+                                                    color="textSecondary">
                                             Città
                                         </Typography>
                                     </div>
@@ -149,8 +146,7 @@ const Profile: FC<IProfileProps> = () => {
                                 <div className="col-12 d-flex align-items-center mt-4">
                                     <div className="col-3">
                                         <Typography variant="h4"
-                                                    color="secondary"
-                                                    style={{opacity: 0.6}}>
+                                                    color="textSecondary">
                                             Nascita
                                         </Typography>
                                     </div>
@@ -170,8 +166,7 @@ const Profile: FC<IProfileProps> = () => {
                                 <div className="col-12 d-flex align-items-center mt-4">
                                     <div className="col-3">
                                         <Typography variant="h4"
-                                                    color="secondary"
-                                                    style={{opacity: 0.6}}>
+                                                    color="textSecondary">
                                             Sesso
                                         </Typography>
                                     </div>
@@ -212,8 +207,7 @@ const Profile: FC<IProfileProps> = () => {
                                 <div className="col-12 d-flex justify-content-end align-items-center mt-4">
                                     <div className="col-3">
                                         <Typography variant="h4"
-                                                    color="secondary"
-                                                    style={{opacity: 0.6}}>
+                                                    color="textSecondary">
                                             Email
                                         </Typography>
                                     </div>
@@ -230,8 +224,7 @@ const Profile: FC<IProfileProps> = () => {
                                 <div className="col-12 d-flex justify-content-end align-items-center mt-4">
                                     <div className="col-3">
                                         <Typography variant="h4"
-                                                    color="secondary"
-                                                    style={{opacity: 0.6}}>
+                                                    color="textSecondary">
                                             Password
                                         </Typography>
                                     </div>
@@ -267,4 +260,4 @@ const Profile: FC<IProfileProps> = () => {
         </div>
     )
 }
-export default Profile
+export default ProfileContainer

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {FC, useState} from 'react'
-import {createStyles, makeStyles, Typography} from '@material-ui/core'
+import {createStyles, Link, makeStyles, Typography} from '@material-ui/core'
 import FacebookLogo from '../../assets/img/facebookLogo.svg'
 import GoogleLogo from '../../assets/img/googleLogo.svg'
 import GitHubLogo from '../../assets/img/gitHubLogo.svg'
@@ -10,7 +10,7 @@ import {facebookProvider, gitHubProvider, googleProvider} from '../../commons/au
 import {socialMediaAuth} from '../../commons/autentication/service.auth'
 import {useDispatch} from 'react-redux'
 
-/*Login style*/
+/*LoginOrSignInContainer style*/
 const useStyles = makeStyles(() =>
     createStyles({
         divider: (isSingIn) => ({
@@ -33,9 +33,10 @@ const useStyles = makeStyles(() =>
 interface ILogin {
 }
 
-const Login: FC<ILogin> = () => {
+//TODO permettere il resetPassword
+const LoginOrSignInContainer: FC<ILogin> = () => {
 
-    const dispatch= useDispatch()
+    const dispatch = useDispatch()
     const [isSingIn, setIsSingIn] = useState<boolean>(false)
     const classes = useStyles(isSingIn)
 
@@ -73,7 +74,8 @@ const Login: FC<ILogin> = () => {
                 </div>
             </div>
 
-            <div className={`row mt-5 animate__animated ${!isSingIn ? ' animate__fadeInRight' : ' animate__fadeInLeft'}`}>
+            <div
+                className={`row mt-5 animate__animated ${!isSingIn ? ' animate__fadeInRight' : ' animate__fadeInLeft'}`}>
 
                 {/* SING IN or LOGIN */}
                 <LoginFields isSingIn={isSingIn}/>
@@ -118,7 +120,16 @@ const Login: FC<ILogin> = () => {
                     </div>
                 </div>
             </div>
+
+            <div className="row mt-5">
+                <div className="col-12">
+                    <Typography color="textSecondary">
+                        Password dimenticata?
+                        <Link className="ms-2">Recupera</Link>
+                    </Typography>
+                </div>
+            </div>
         </div>
     )
 }
-export default Login
+export default LoginOrSignInContainer

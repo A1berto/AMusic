@@ -1,5 +1,6 @@
-export const LOGIN_PATH = '/login'
+export const LOGIN_PATH = '/loginOrSignIn'
 export const EVENTS_PATH = '/events'
-export const INFO_APP_PATH = '/infoAMusic'
+export const INFO_APP_PATH = '/faq'
 export const PROFILE_PATH = '/profile'
 export const FRIENDS_LIST_PATH = '/friendList'
+export const EVENTS_HISTORY_PATH = '/eventsHistory'

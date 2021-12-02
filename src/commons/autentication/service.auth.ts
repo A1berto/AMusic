@@ -29,7 +29,7 @@ export const createProfileWithEmailAndPasswordAuth = (email: string, password: s
 export const loginProfileWithEmailAndPasswordAuth = (email: string, password: string, dispatch: any) => {
     return firebase.auth().signInWithEmailAndPassword(email, password)
         .then(response => {
-            console.log('Response Login>>>', response)
+            console.log('Response LoginOrSignInContainer>>>', response)
             //@ts-ignore
             loginOrSignInCompleted(response?.user?.multiFactor?.user?.accessToken, dispatch)
         })

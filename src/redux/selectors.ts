@@ -1,4 +1,4 @@
-import {IRootState} from './reducers'
+import {IRootState} from './reducer'
 import {IProfile} from '../containers/profile/profile.types'
 import {IEventReducer} from '../containers/events/redux/eventi.reducers'
 import {IFriendsCombineReducer} from '../containers/friends/redux/friends.reducers'
