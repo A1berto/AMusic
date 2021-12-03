@@ -14,6 +14,7 @@ import {
 } from '../containers/friends/redux/friends.actions'
 import {genericMessagesEpic} from '../commons/messages/messages.epics'
 import {
+    fetchAddFriendsSuccessEpic,
     fetchAllFriendsListSuccessEpic,
     fetchSuggestedFriendsListSuccessEpic
 } from '../containers/friends/redux/friends.epics'
@@ -28,6 +29,7 @@ export const rootEpics: Epic = combineEpics<Epic>(
     allEventsListSuccessEpic,
     fetchPaymentFailureEpic,
     fetchAllFriendsListSuccessEpic,
+    fetchAddFriendsSuccessEpic,
     fetchSuggestedFriendsListSuccessEpic,
 
     //fetch

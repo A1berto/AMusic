@@ -1,6 +1,6 @@
 import * as React from 'react'
-import {FC, useCallback} from 'react'
-import {Button, IconButton, Typography} from '@material-ui/core'
+import {FC, useCallback, useState} from 'react'
+import {Button, CircularProgress, IconButton, Typography} from '@material-ui/core'
 import {useDispatch} from 'react-redux'
 import {Field, Form, Formik} from 'formik'
 import CloseIcon from '@material-ui/icons/Close'
@@ -8,14 +8,16 @@ import {DropzoneField} from '../../DropezoneFields'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {DROPZONE_FORM_INIT_VALUES} from '../../../containers/profile/profile.constants'
 import {IProfileImageFields} from '../../../containers/profile/profile.types'
-import {HttpMethods} from 'fetch-with-redux-observable'
+import {DEFAULT_REQUEST_ID, HttpMethods} from 'fetch-with-redux-observable'
 import {addError, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
+import {fetchProfileAction} from '../../../containers/profile/redux/profile.actions'
 
 interface IEditProfileImageDialogProps {
 }
 
 const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
     const dispatch = useDispatch()
+    const [isInPending, setIsInPending] = useState<boolean>(false)
 
     const handleClose = useCallback(() => {
         dispatch(closeCurrentDialog())
@@ -27,16 +29,25 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
             const formData = new FormData()
             formData.append('file', values.dropzone)
 
-            console.log('qui')
-            fetch(`storage/upload`, {
+            // Setto spinner
+            setIsInPending(true)
+            
+            fetch(`private/user/uploadPhoto`, {
                 method: HttpMethods.POST,
                 body: formData,
             }).then(async (response) => {
+                console.log("response>>",response)
+                console.log("getReader>>>",response?.body?.getReader())
                 if (response.ok) {
+                    dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
                     dispatch(addSuccess({userMessage: 'Documento caricato con successo'}))
+                    dispatch(closeCurrentDialog())
                 } else {
                     dispatch(addError({userMessage: 'Ops! Errore durante il caricamento'}))
                 }
+
+            }).finally(() => {
+                setIsInPending(false)
             })
 
         }
@@ -72,6 +83,7 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
                                     component={DropzoneField}
                                     accept=".jpg, .jpeg, .svg, .png"
                                     multiple={false}
+                                    maxSize={2097152}   //2 Megabyte
                                 />
                             </div>
 
@@ -85,6 +97,9 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
                                 {/* SUBMIT */}
                                 <Button type="submit" variant="contained">
                                     CONFERMA
+                                    {
+                                        isInPending && <CircularProgress className="ms-2" color="inherit" size={20}/>
+                                    }
                                 </Button>
                             </div>
                         </Form>

@@ -8,8 +8,10 @@ import Typography from '@material-ui/core/Typography'
 import Marker from './components/Marker'
 import EventsList from './components/EventsList'
 import ArrowUpwardOutlinedIcon from '@material-ui/icons/ArrowUpwardOutlined'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {eventsListSelector} from './redux/eventi.selectors'
+import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
+import {CurrentDialogType} from '../../redux/dialogs/current-dialog.constants'
 
 export const infoAgenziaStyles = makeStyles(() =>
     createStyles({
@@ -66,6 +68,7 @@ const Events: FC<IEventsProps> = () => {
         },
     })
 
+    const dispatch = useDispatch()
     const eventsList = useSelector(eventsListSelector)
 
     /** @description When the user has scrolled at least 100px then I make the button go back up **/
@@ -95,6 +98,10 @@ const Events: FC<IEventsProps> = () => {
             zoom: 13,
         }))
     }, [])
+
+    const handleMarkerClick = (event: IEvent) => {
+        dispatch(setCurrentDialog(CurrentDialogType.LOCAL_DETAILS, {event}))
+    }
 
     return (
         <div style={{textAlign: 'center', width: '90%'}}>
@@ -144,9 +151,10 @@ const Events: FC<IEventsProps> = () => {
                                                     <Marker key={`marker${index}`}
                                                             lat={event?.geoPoint?.latitude}
                                                             lng={event?.geoPoint?.longitude}
-                                                            handleClick={() => console.log('clicked')}
                                                             title={'GoogleMaps Marker'}
-                                                            currentEvent={event}/>)
+                                                            currentEvent={event}
+                                                            handleClick={()=>handleMarkerClick(event)}/>
+                                                )
                                             }
                                         </GoogleMapsReact>
                                     </div>

@@ -1,5 +1,6 @@
 import {FieldInputProps} from 'formik/dist/types'
 import {useEffect, useRef} from 'react'
+import moment from 'moment/moment'
 
 /**
  * GENERIC DROPZONE FILE NAME NORMALIZER
@@ -31,3 +32,9 @@ export const usePrevious = (value: any): any => {
     })
     return ref.current
 }
+
+
+export const halfHour = 1800000
+
+export const actualDate= moment(new Date()).format('yyyy-MM-DD')
+export const hundredYearsAgo= moment(new Date()).subtract(100,'years').format('yyyy-MM-DD')

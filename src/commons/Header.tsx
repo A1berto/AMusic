@@ -14,7 +14,7 @@ import {useHistory} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchFriendsListAction, isFetchFriendsListPendingSelector} from '../containers/friends/redux/friends.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
-import {fetchProfileAction, isFetchProfilePendingSelector} from '../containers/profile/redux/profile.actions'
+import {isFetchProfilePendingSelector} from '../containers/profile/redux/profile.actions'
 import {fetchAllEventsListAction, isFetchALLEventsListPendingSelector} from '../containers/events/redux/eventi.actions'
 import {AMUSIC_PALETTE_COLORS} from '../AMusic_theme'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
@@ -48,7 +48,8 @@ const Header: FC<IHeaderProps> = () => {
 
             switch (path) {
                 case PROFILE_PATH:
-                    dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID, undefined, undefined, {setAnchorEl}))
+                    history.push(PROFILE_PATH)
+                    setAnchorEl(null)
                     break
                 case EVENTS_PATH:
                     dispatch(fetchAllEventsListAction.build(null, DEFAULT_REQUEST_ID, undefined, undefined, {setAnchorEl}))
@@ -60,6 +61,9 @@ const Header: FC<IHeaderProps> = () => {
                     /*
                                     dispatch()
                     */
+                    break
+                case INFO_APP_PATH:
+                    history.push(INFO_APP_PATH)
                     break
             }
         }

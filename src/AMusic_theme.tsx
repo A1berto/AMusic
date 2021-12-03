@@ -233,6 +233,7 @@ export const AMUSIC_THEME: Theme = createTheme({
                 fontWeight: 400,
                 fontSize: '1rem '/*'1.25rem'*/,
                 lineHeight: '24px',
+                paddingBottom:'2px'
             },
             // USATO PER TITOLI CARD SCURI (Es: quanti m2 ha l'iimobile) E ACCORDION RIEPILOGO POLIZZA (ES: Garanzie) E TITOLO RIEPILOGO POLIZZA E INFO AGENZIA TITOLO
             subtitle1: {
@@ -495,6 +496,9 @@ export const AMUSIC_THEME: Theme = createTheme({
                         backgroundColor: 'transparent',
                     },
                 },
+                icon:{
+                    color:AMUSIC_PALETTE_COLORS.WHITE
+                }
             },
             MuiListItem: {
                 root: {

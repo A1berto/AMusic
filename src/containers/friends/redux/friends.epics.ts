@@ -1,10 +1,10 @@
-import {fetchFriendsListAction, fetchSuggestedFriendsListAction} from './friends.actions'
+import {fetchAddFriendAction, fetchFriendsListAction, fetchSuggestedFriendsListAction} from './friends.actions'
 import {ofType} from 'redux-observable'
 import {map, mergeMap} from 'rxjs/operators'
 import {NEVER, Observable} from 'rxjs'
-import {IGenericResponse, ISuccessFetchAction} from 'fetch-with-redux-observable'
+import {DEFAULT_REQUEST_ID, IGenericResponse, ISuccessFetchAction} from 'fetch-with-redux-observable'
 import {CurrentDialogType} from '../../../redux/dialogs/current-dialog.constants'
-import {setCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
+import {closeCurrentDialog, setCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {FRIENDS_LIST_PATH} from '../../../routes'
 import {HashHistory} from '../../../index'
 
@@ -24,5 +24,14 @@ export const fetchAllFriendsListSuccessEpic = (action$: Observable<ISuccessFetch
             action.meta.meta.setAnchorEl && action.meta.meta.setAnchorEl(null)
             HashHistory.push(FRIENDS_LIST_PATH)
             return NEVER
+        })
+    )
+
+export const fetchAddFriendsSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<any>>>) =>
+    action$.pipe(
+        ofType(fetchAddFriendAction.successActionType),
+        mergeMap(() => {
+            //TODO piuttosto di chiamare fetchFriends, prendere il payload e modificare state
+            return [fetchFriendsListAction.build(null, DEFAULT_REQUEST_ID), closeCurrentDialog()]
         })
     )

@@ -4,9 +4,11 @@ import {Accordion, AccordionDetails, AccordionSummary, Typography} from '@materi
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 
+
+
 interface IInfoApplicazione {
     title: string
-    subtitle: string
+    subtitle: any
     expanded: string | false
     setExpanded: React.Dispatch<React.SetStateAction<string | false>>
 }

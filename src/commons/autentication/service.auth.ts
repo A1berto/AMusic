@@ -2,7 +2,6 @@ import firebase from './firebase.configs'
 import {DEFAULT_REQUEST_ID, setBaseRequestURL} from 'fetch-with-redux-observable'
 import {addError} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 import {fetchProfileAction} from '../../containers/profile/redux/profile.actions'
-import {fetchAllEventsListAction} from '../../containers/events/redux/eventi.actions'
 import {getAuth, updateProfile} from 'firebase/auth'
 import {ILoginFormProps} from '../../containers/login/login.types'
 
@@ -10,12 +9,7 @@ import {ILoginFormProps} from '../../containers/login/login.types'
 export const socialMediaAuth = (provider: any, dispatch: any) => {
     return firebase.auth().signInWithPopup(provider)
         .then((response) => {
-            console.info('response>>>', response)
             return response?.user?.getIdToken()
-            //@ts-ignore
-            /*
-                        const idToken = provider?.providerId.includes('google') ? response?.credential?.idToken : response?.credential?.accessToken
-            */
         }).then((idToken) => {
             idToken && loginOrSignInCompleted(idToken, dispatch)
         })
@@ -28,7 +22,7 @@ export const createProfileWithEmailAndPasswordAuth = (formValues: ILoginFormProp
     return firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(response => {
             //@ts-ignore
-            loginOrSignInCompleted(response?.user?.multiFactor?.user?.accessToken, dispatch,formValues)
+            loginOrSignInCompleted(response?.user?.multiFactor?.user?.accessToken, dispatch, formValues)
         })
         .catch((error) => LoginOrSignInError(error, dispatch))
 }
@@ -77,6 +71,5 @@ export const loginOrSignInCompleted = (idToken: string, dispatch: any, formValue
 
 const LoginOrSignInError = (error: any, dispatch: any) => {
     console.log('error>>>', error)
-
     dispatch(addError({userMessage: 'Ops! Errore durante la fase di autenticazione'}))
 }

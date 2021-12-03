@@ -19,7 +19,7 @@ export const FETCH_PROFILE_API: IRequestModel = {
  */
 export const UPDATE_PROFILE_API: IRequestModel = {
     url: `/private/user/update`,
-    method: HttpMethods.POST,
+    method: HttpMethods.PUT,
     headers: {
         'Content-Type': 'application/json'
     },
@@ -31,7 +31,7 @@ export const UPDATE_PROFILE_API: IRequestModel = {
  */
 export const CHANGE_PROFILE_PASSWORD_API: IRequestModel = {
     url: `/private/user/changePassword`,
-    method: HttpMethods.GET,
+    method: HttpMethods.POST,
     headers: {
         'Content-Type': 'application/json'
     },

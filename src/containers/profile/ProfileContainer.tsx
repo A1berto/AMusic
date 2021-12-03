@@ -1,33 +1,41 @@
 import * as React from 'react'
 import {FC, useState} from 'react'
-import {Avatar, Button, InputBase, MenuItem, Tooltip, Typography} from '@material-ui/core'
+import {Avatar, Button, CircularProgress, MenuItem, Tooltip, Typography} from '@material-ui/core'
 import {AMUSIC_PALETTE_COLORS} from '../../AMusic_theme'
 import {CurrentDialogType} from '../../redux/dialogs/current-dialog.constants'
 import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
 import {useDispatch, useSelector} from 'react-redux'
 import {Field, Form, Formik} from 'formik'
-import {PROFILE_FIELDS_NAMES, PROFILE_FORM_INIT_VALUES} from './profile.constants'
-import {changeProfilePasswordAction, updateProfileAction} from './redux/profile.actions'
+import {PROFILE_FIELDS_NAMES, PROFILE_FORM_INIT_VALUES, profileValidationSchema, sexOptions} from './profile.constants'
+import {
+    changeProfilePasswordAction,
+    isChangeProfilePasswordPendingSelector,
+    isUpdateProfilePendingSelector,
+    updateProfileAction
+} from './redux/profile.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {Select, TextField} from 'formik-material-ui'
 import {IProfileFormFields} from './profile.types'
-import {profileImageSelector} from './redux/profile.selectors'
+import {profileRootSelector} from '../../redux/selectors'
+import {actualDate, hundredYearsAgo} from '../../utils'
+
 
 interface IProfileProps {
 }
 
 const ProfileContainer: FC<IProfileProps> = () => {
 
-    const profileImage = useSelector(profileImageSelector)
-
     const [isEditProfileData, setIsEditProfileData] = useState<boolean>(false)
-    const [password, setPassword] = useState<string>()
 
     const dispatch = useDispatch()
 
+    const profile = useSelector(profileRootSelector)
+    const isChangeProfilePasswordPending = useSelector(isChangeProfilePasswordPendingSelector)
+    const isUpdateProfilePending = useSelector(isUpdateProfilePendingSelector)
+
     const handleEditFormSubmit = (values: IProfileFormFields) => {
-        setIsEditProfileData(prevState => !prevState)
         isEditProfileData && dispatch(updateProfileAction.build(values, DEFAULT_REQUEST_ID))
+        setIsEditProfileData(prevState => !prevState)
     }
 
     const handleChangeCredentials = () => {
@@ -39,11 +47,16 @@ const ProfileContainer: FC<IProfileProps> = () => {
         dispatch(setCurrentDialog(CurrentDialogType.EDIT_PROFILE_IMAGE))
     }
 
-    const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(event.target.value)
+    const normalizedFormValues = {
+        ...PROFILE_FORM_INIT_VALUES,
+        [PROFILE_FIELDS_NAMES.name]: profile?.name ?? '',
+        [PROFILE_FIELDS_NAMES.surname]: profile?.surname ?? '',
+        [PROFILE_FIELDS_NAMES.birthDate]: profile?.birthDate ?? '',
+        [PROFILE_FIELDS_NAMES.city]: profile?.city ?? '',
+        [PROFILE_FIELDS_NAMES.sex]: profile?.sex ?? '',
     }
 
-    //TODO non inserire i default value cosi. Prendere i dati dai selector e valorizzare gli initValues
+
     return (
         <div style={{width: '70%'}}>
             <div className="row">
@@ -54,7 +67,7 @@ const ProfileContainer: FC<IProfileProps> = () => {
                             className="profileImage"
                             variant="circle"
                             alt="ProfileContainer Image"
-                            src={profileImage}
+                            src={profile?.photoUrl}
                             onClick={handleOpenEditImageDialog}/>
                     </Tooltip>
                 </div>
@@ -70,9 +83,10 @@ const ProfileContainer: FC<IProfileProps> = () => {
                 </div>
             </div>
 
-            <Formik initialValues={PROFILE_FORM_INIT_VALUES}
+            <Formik initialValues={normalizedFormValues}
                     onSubmit={handleEditFormSubmit}
-                    validateOnChange={true}>
+                    validateOnChange={true}
+                    validationSchema={profileValidationSchema}>
                 <Form className="col-12" autoComplete="off">
                     <div className="row mt-5">
                         <div className="col-6">
@@ -98,7 +112,7 @@ const ProfileContainer: FC<IProfileProps> = () => {
                                             inputProps={{
                                                 placeholder: 'Inserisci il tuo nome'
                                             }}
-                                            disabled={!isEditProfileData}
+                                            disabled={!isEditProfileData || profile?.name}
                                             color="secondary"
                                         />
                                     </div>
@@ -152,14 +166,16 @@ const ProfileContainer: FC<IProfileProps> = () => {
                                     </div>
                                     <div className="col-6">
                                         <Field
-                                            type="text"
+                                            type="date"
                                             name={PROFILE_FIELDS_NAMES.birthDate}
                                             component={TextField}
-                                            inputProps={{
-                                                placeholder: 'Inserisci data di nascita'
-                                            }}
-                                            disabled={!isEditProfileData}
                                             color="secondary"
+                                            disabled={!isEditProfileData}
+                                            value={profile?.birthDate}
+                                            InputProps={{
+                                                inputProps: {min: hundredYearsAgo, max: actualDate}
+                                            }}
+                                            fullWidth
                                         />
                                     </div>
                                 </div>
@@ -180,9 +196,10 @@ const ProfileContainer: FC<IProfileProps> = () => {
                                             }}
                                             disabled={!isEditProfileData}
                                             color="secondary"
+                                            fullWidth
                                         >
                                             {
-                                                ['Maschio', 'Femmina', 'Altro'].map((sexType, index: number) =>
+                                                sexOptions.map((sexType: string, index: number) =>
                                                     <MenuItem value={sexType} key={index}>
                                                         {sexType}
                                                     </MenuItem>
@@ -204,53 +221,39 @@ const ProfileContainer: FC<IProfileProps> = () => {
                                         Credenziali
                                     </Typography>
                                 </div>
-                                <div className="col-12 d-flex justify-content-end align-items-center mt-4">
-                                    <div className="col-3">
+                                <div className="col-12 d-flex justify-content-end align-items-end mt-4 px-0">
+                                    <div className="col-auto me-3">
                                         <Typography variant="h4"
                                                     color="textSecondary">
                                             Email
                                         </Typography>
                                     </div>
-                                    <div className="col-4">
-                                        <Field
-                                            type="text"
-                                            component={InputBase}
-                                            name={PROFILE_FIELDS_NAMES.email}
-                                            disabled={true}
-                                            color="secondary"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="col-12 d-flex justify-content-end align-items-center mt-4">
-                                    <div className="col-3">
-                                        <Typography variant="h4"
-                                                    color="textSecondary">
-                                            Password
+                                    <div className="col-auto">
+                                        <Typography variant="h6"
+                                                    color="secondary">
+                                            {profile?.email}
                                         </Typography>
-                                    </div>
-                                    <div className="col-4">
-                                        <Field
-                                            type="password"
-                                            component={TextField}
-                                            name={PROFILE_FIELDS_NAMES.password}
-                                            color="secondary"
-                                            value={password}
-                                            InputProps={{readOnly: true}}
-                                            onChange={handlePasswordChange}
-                                        />
                                     </div>
                                 </div>
                             </div>
 
                             {/* EDIT BUTTONS */}
-                            <div className="row d-flex justify-content-end" style={{marginTop: '112px'}}>
+                            <div className="row d-flex justify-content-end" style={{marginTop: '176px'}}>
                                 <Button variant="contained" onClick={handleChangeCredentials}>
                                     Modifica password
+                                    {
+                                        isChangeProfilePasswordPending &&
+                                        <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>
+                                    }
                                 </Button>
                             </div>
                             <div className="row d-flex justify-content-end mt-2">
-                                <Button variant="contained" type={'submit'}>
+                                <Button variant="contained" type={'submit'} disabled={isUpdateProfilePending}>
                                     {isEditProfileData ? 'Conferma modifica' : 'Modifica dati'}
+                                    {
+                                        isUpdateProfilePending &&
+                                        <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>
+                                    }
                                 </Button>
                             </div>
                         </div>

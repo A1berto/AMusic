@@ -1,40 +1,25 @@
 import * as React from 'react'
-import {FC, useState} from 'react'
+import {FC} from 'react'
 import {IconButton, Link, Tooltip, Typography} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import {useDispatch, useSelector} from 'react-redux'
-import {isFetchFilteredFriendsListPendingSelector} from '../../../containers/friends/redux/friends.actions'
-import {filteredFriendsListSelector} from '../../../containers/friends/redux/friends.selectors'
+import {useDispatch} from 'react-redux'
 import {closeCurrentDialog, setCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {CurrentDialogType} from '../../../redux/dialogs/current-dialog.constants'
 import {IEvent} from '../../../containers/events/eventi.types'
+import {IFriend} from '../../../containers/friends/friends.types'
 
-interface IAddFriendsListDialogProps {
+interface IFriendInfoDialogProps {
+    friend: IFriend
 }
 
-const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
-
-    const [searchValue, setSearchValue] = useState<string>('')
-
+const FriendInfoDialog: FC<IFriendInfoDialogProps> = (props) => {
+    const {friend} = props
     const dispatch = useDispatch()
-    /*
-        const friendsList = useSelector(friendsListSelector)  TODO decommentare quando il be tornerà la lista
-    */
-    const filteredFriendsList = useSelector(filteredFriendsListSelector)
-    const isFetchFilteredFriendsListPending = useSelector(isFetchFilteredFriendsListPendingSelector)
-
-
-    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(event.target.value)
-    }
-
-    const handleAddFriend = (friend: any) => {
-        //TODO dispatch addFriend
-    }
 
     const handleClose = () => {
         dispatch(closeCurrentDialog())
     }
+
     const handleOpenEvent = (event: IEvent) => {
         dispatch(setCurrentDialog(CurrentDialogType.LOCAL_DETAILS, {event}))
     }
@@ -60,7 +45,7 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                     </div>
 
                     <div className="row pt-4">
-                        <div className="col-12 d-flex align-items-baseline">
+                        <div className="col-12 d-flex align-items-end">
                             <div className="col-auto">
                                 <Typography variant="h4"
                                             color="textSecondary">
@@ -71,7 +56,7 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                                 <Typography variant="h6"
                                             color="secondary"
                                             className="ms-3">
-                                    22/10/1999
+                                    {friend.friendSince}
                                 </Typography>
                             </div>
                         </div>
@@ -86,7 +71,7 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                                 <Typography variant="h6"
                                             color="secondary"
                                             className="ms-3">
-                                    date time
+                                    {friend.lastLogin}
                                 </Typography>
                             </div>
                         </div>
@@ -97,23 +82,22 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                             Lista iscrizione eventi
                         </Typography>
                         <div className="col-12 d-flex">
-                            {[{name: 'bar1'}, {name: 'bar2'}, {name: 'bar3'}, {name: 'bar4'}].map((event: any, index) =>
+                            {
+                                friend?.nextEvents?.map((event: IEvent, index) =>
                                 <Tooltip title="Clicca per visionare"
                                          className="c-pointer"
                                          onClick={() => handleOpenEvent(event)}>
                                     <Link className="me-2">
-                                        {event?.name}{[{name: 'bar1'}, {name: 'bar2'}, {name: 'bar3'}, {name: 'bar4'}].length - 1 !== index ? `,` : '.'}
+                                        {event?.eventName}{[{name: 'bar1'}, {name: 'bar2'}, {name: 'bar3'}, {name: 'bar4'}].length - 1 !== index ? `,` : '.'}
                                     </Link>
                                 </Tooltip>
                             )}
                         </div>
                     </div>
-
                 </div>
-
             </div>
 
         </>
     )
 }
-export default AddFriendsListDialog
+export default FriendInfoDialog

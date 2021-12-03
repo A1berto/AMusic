@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {FC, useCallback, useEffect, useState} from 'react'
+import {FC, useCallback, useState} from 'react'
 import {IEvent, IPartecipant} from '../../../containers/events/eventi.types'
 import {Avatar, Checkbox, CircularProgress, IconButton, Tooltip, Typography} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
@@ -31,7 +31,7 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
     const handleVisibleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setVisibleChecked(event.target.checked)
     }
-    
+
     const handleOpenPayment = useCallback(() => {
         !showPaymentForm && dispatch(fetchPaymentAction.build({
             provider: 'STRIPE',
@@ -70,7 +70,7 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                     </Typography>
                 </div>
 
-                <div className="col-12 d-flex align-items-center mt-3">
+                <div className="col-12 d-flex align-items-baseline mt-3">
                     <div className="col-2">
                         <Typography variant="h5"
                                     color="textSecondary">
@@ -133,10 +133,11 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                 <div className="col-12 pt-4">
 
                     <div className="row">
-                        {
-                            event.partecipants.map((partecipant: IPartecipant) =>
+                        {//TODO creare componente
+                            event?.partecipants.map((partecipant: IPartecipant) =>
                                 <div className="col-auto">
-                                    <Tooltip title={`${partecipant?.name} ${partecipant?.surname}`}>
+                                    <Tooltip title={`${partecipant?.name} ${partecipant?.surname}`}
+                                             className="c-pointer">
                                         <Avatar
                                             variant="circle"
                                             alt="Partecipant Image"

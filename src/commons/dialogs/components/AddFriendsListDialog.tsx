@@ -1,18 +1,21 @@
 import * as React from 'react'
 import {FC, useState} from 'react'
-import {Avatar, Button, CircularProgress, IconButton, TextField, Typography} from '@material-ui/core'
+import {Button, CircularProgress, IconButton, TextField, Typography} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import Image from '../../../assets/img/avatar-man.jpg'
 import {SearchOutlined} from '@material-ui/icons'
 import {useDispatch, useSelector} from 'react-redux'
 import {
-    fetchAddFriendAction,
     fetchFilteredFriendsListAction,
     isFetchFilteredFriendsListPendingSelector
 } from '../../../containers/friends/redux/friends.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
-import {filteredFriendsListSelector, friendsListSelector} from '../../../containers/friends/redux/friends.selectors'
+import {
+    filteredFriendsListSelector,
+    suggestedFriendsListSelector
+} from '../../../containers/friends/redux/friends.selectors'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
+import AddFriendList from '../../../containers/friends/components/AddFriendList'
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined'
 
 interface IAddFriendsListDialogProps {
 }
@@ -20,10 +23,11 @@ interface IAddFriendsListDialogProps {
 const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
 
     const [searchValue, setSearchValue] = useState<string>('')
+    const [isSuggestedShowed, setIsSuggestedShowed] = useState<boolean>(true)
 
     const dispatch = useDispatch()
 
-    const friendsList = useSelector(friendsListSelector)
+    const suggestedFriendsList = useSelector(suggestedFriendsListSelector)
     const filteredFriendsList = useSelector(filteredFriendsListSelector)
     const isFetchFilteredFriendsListPending = useSelector(isFetchFilteredFriendsListPendingSelector)
 
@@ -31,12 +35,17 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
         setSearchValue(event.target.value)
     }
 
-    const handleAddFriend = (friend: any) => {
-        dispatch(fetchAddFriendAction.build(null, DEFAULT_REQUEST_ID, undefined, {idUserDocument: friend?.id}))
-    }
-
     const handleSearch = () => {
+        setIsSuggestedShowed(false)
         dispatch(fetchFilteredFriendsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {search: searchValue}))
+    }
+    /*
+        useEffect(() => {
+            !!suggestedFriendsList.length ? setIsSuggestedShowed(true) : setIsSuggestedShowed(false)
+        }, [suggestedFriendsList])*/
+
+    const handleShowSuggestedFriend = () => {
+        setIsSuggestedShowed(prev => !prev)
     }
 
     const handleClose = () => {
@@ -71,13 +80,11 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
 
                     {/*CONTENT*/}
                     <div className="row pt-5">
+
                         {/*SUGGERITI*/}
                         <div className="col-12">
-
-
-                            {/*TITLE*/}
                             {
-                                !filteredFriendsList &&
+                                isSuggestedShowed &&
                                 <div className="row">
                                     <div className="col-12 d-flex justify-content-center">
                                         <Typography variant={'h4'} color="textSecondary">SUGGERITI</Typography>
@@ -93,20 +100,8 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                                      margin: 'auto'
                                  }}>
                                 {
-                                    (!!filteredFriendsList ? filteredFriendsList : friendsList)?.map((friend: any) =>
-                                        <div className="col-4 p-4 d-flex align-items-center c-pointer friend"
-                                             onClick={() => handleAddFriend(friend)}>
-                                            <Avatar
-                                                variant="circle"
-                                                alt="ProfileContainer Image"
-                                                src={Image}         //TODO friend.image
-                                                onClick={() => console.log('Cliccato avatar')}/>
-                                            <Typography variant="body2"
-                                                        color="secondary"
-                                                        className="ms-4">
-                                                {`${friend.name} ${friend.surname}`}
-                                            </Typography>
-                                        </div>
+                                    (isSuggestedShowed ? suggestedFriendsList : filteredFriendsList)?.map((friend: any) =>
+                                        <AddFriendList friend={friend}/>
                                     )
                                 }
                             </div>
@@ -114,6 +109,16 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                     </div>
                     <div className="row">
                         <div className="col-12 pt-5 d-flex align-items-end justify-content-center">
+
+                            {/*SUGGESTED FRIENDS*/}
+                            <Button variant={'contained'}
+                                    disabled={isSuggestedShowed}
+                                    onClick={handleShowSuggestedFriend}
+                                    className="me-3">
+                                SUGGERITI
+                                <VisibilityOutlinedIcon fontSize={'small'} className="ms-1 mb-1"/>
+                            </Button>
+
                             <TextField
                                 value={searchValue}
                                 onChange={handleSearchChange}

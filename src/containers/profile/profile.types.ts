@@ -1,9 +1,19 @@
 /*Interface used to identify user profile*/
 export interface IProfile extends IProfileFormFields {
-    id: string
-    image?: string
+    accountNonExpired: boolean
+    accountNonLocked: boolean
+    createDate: string
+    credentialsNonExpired: boolean
+    displayName: string
     email: string
-    password: string
+    emailVerified: boolean
+    enabled: boolean
+    id: string
+    lastLogin: string
+    name: string
+    phoneNumber: string
+    photoUrl: string
+    surname: string
 }
 
 export interface IProfileFormFields {

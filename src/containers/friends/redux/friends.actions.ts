@@ -20,4 +20,4 @@ export const isFetchFilteredFriendsListPendingSelector = isRequestInPending(fetc
 
 export const FETCH_ADD_FRIEND = 'FETCH_ADD_FRIEND'
 export const fetchAddFriendAction = fetchActionFactory(FETCH_ADD_FRIEND_API, FETCH_ADD_FRIEND)
-export const isFetchAddFriendPendingSelector = isRequestInPending(fetchAddFriendAction.pendingActionTypeWithSpinner, DEFAULT_REQUEST_ID)
+export const isFetchAddFriendPendingSelector = (idFriend:string)=> isRequestInPending(fetchAddFriendAction.pendingActionTypeWithSpinner, `${idFriend}`)

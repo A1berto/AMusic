@@ -3,7 +3,6 @@ import {FC} from 'react'
 import {Card, CardContent, CardMedia} from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import {IEvent} from '../eventi.types'
-import disco from '../../../assets/img/disco.jpg'
 import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {CurrentDialogType} from '../../../redux/dialogs/current-dialog.constants'
@@ -19,9 +18,6 @@ const EventsList: FC<IEventsListProps> = () => {
 
     /* Open the dialog to show local details */
     const handleCardClick = (event: IEvent) => {
-        console.log("eventsList>>>",eventsList)
-        console.log("event>>>",event)
-
         dispatch(setCurrentDialog(CurrentDialogType.LOCAL_DETAILS, {event}))
     }
 
@@ -42,7 +38,7 @@ const EventsList: FC<IEventsListProps> = () => {
                         <CardMedia
                             component="img"
                             height="140px"
-                            image={event.imageUrl ?? disco}
+                            image={event.imageUrl}
                             alt="eventImage"
                         />
                         <CardContent className="p-0">

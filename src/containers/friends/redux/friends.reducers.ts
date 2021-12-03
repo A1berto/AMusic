@@ -1,23 +1,37 @@
 import {genericResponseNormalizer, IAction, IGenericResponse} from 'fetch-with-redux-observable'
-import {fetchFilteredFriendsListAction, fetchFriendsListAction} from './friends.actions'
+import {
+    fetchFilteredFriendsListAction,
+    fetchFriendsListAction,
+    fetchSuggestedFriendsListAction
+} from './friends.actions'
 import {combineReducers} from 'redux'
+import {IFriend} from '../friends.types'
 
-//TODO cambiare interfaccia any
-type FriendsActionReducerTypes = IGenericResponse<any>
-export const friendsListReducer = (state: any | null = null, action: IAction<FriendsActionReducerTypes>): any | null => {
+type FriendsActionReducerTypes = IGenericResponse<IFriend[]>
+export const friendsListReducer = (state: IFriend[] = [], action: IAction<FriendsActionReducerTypes>): IFriend[] => {
     switch (action.type) {
         case fetchFriendsListAction.successActionType:
-            return genericResponseNormalizer(action.payload)
+            return genericResponseNormalizer(action.payload) ?? []
         default:
             return state
     }
 }
 
-type FilteredFriendsActionReducerTypes = IGenericResponse<any>
-export const filteredFriendsListReducer = (state: any | null = null, action: IAction<FilteredFriendsActionReducerTypes>): any | null => {
+type FilteredFriendsActionReducerTypes = IGenericResponse<IFriend[]>
+export const filteredFriendsListReducer = (state: IFriend[] = [], action: IAction<FilteredFriendsActionReducerTypes>): IFriend[] => {
     switch (action.type) {
         case fetchFilteredFriendsListAction.successActionType:
-            return genericResponseNormalizer(action.payload)
+            return genericResponseNormalizer(action.payload) ?? []
+        default:
+            return state
+    }
+}
+
+type suggestedFriendsListReducerTypes = IGenericResponse<IFriend[]>
+export const suggestedFriendsListReducer = (state: IFriend[] = [], action: IAction<suggestedFriendsListReducerTypes>): IFriend[] => {
+    switch (action.type) {
+        case fetchSuggestedFriendsListAction.successActionType:
+            return genericResponseNormalizer(action.payload) ?? []
         default:
             return state
     }
@@ -25,10 +39,12 @@ export const filteredFriendsListReducer = (state: any | null = null, action: IAc
 
 export const friendsCombineReducer = combineReducers<IFriendsCombineReducer>({
     friendsList: friendsListReducer,
-    filteredFriendsList: filteredFriendsListReducer
+    filteredFriendsList: filteredFriendsListReducer,
+    suggestedFriendList: suggestedFriendsListReducer
 })
 
 export interface IFriendsCombineReducer {
-    friendsList: any
-    filteredFriendsList: any
+    friendsList: IFriend[]
+    filteredFriendsList: IFriend[]
+    suggestedFriendList: IFriend[]
 }

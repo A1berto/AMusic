@@ -21,5 +21,30 @@ export const profileEmailSelector = createSelector(
 
 export const profileImageSelector = createSelector(
     profileRootSelector,
-    (profile: IProfile | null): any => profile?.image
+    (profile: IProfile | null): string => profile?.photoUrl ?? ''
+)
+
+export const nameImageSelector = createSelector(
+    profileRootSelector,
+    (profile: IProfile | null): string => profile?.name ?? ''
+)
+
+export const surnameImageSelector = createSelector(
+    profileRootSelector,
+    (profile: IProfile | null): string => profile?.surname ?? ''
+)
+
+export const sexImageSelector = createSelector(
+    profileRootSelector,
+    (profile: IProfile | null): string => profile?.sex ?? ''
+)
+
+export const birthDateImageSelector = createSelector(
+    profileRootSelector,
+    (profile: IProfile | null): string => profile?.birthDate ?? ''
+)
+
+export const cityImageSelector = createSelector(
+    profileRootSelector,
+    (profile: IProfile | null): string => profile?.city ?? ''
 )
