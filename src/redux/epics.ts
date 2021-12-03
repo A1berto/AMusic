@@ -17,7 +17,7 @@ import {
     fetchAllFriendsListSuccessEpic,
     fetchSuggestedFriendsListSuccessEpic
 } from '../containers/friends/redux/friends.epics'
-import {allEventsListSuccessEpic} from '../containers/events/redux/eventi.epics'
+import {allEventsListSuccessEpic, fetchPaymentFailureEpic} from '../containers/events/redux/eventi.epics'
 import {profileSuccessEpic} from '../containers/profile/redux/profile.epics'
 
 // root epics
@@ -26,6 +26,7 @@ export const rootEpics: Epic = combineEpics<Epic>(
     genericMessagesEpic,
     profileSuccessEpic,
     allEventsListSuccessEpic,
+    fetchPaymentFailureEpic,
     fetchAllFriendsListSuccessEpic,
     fetchSuggestedFriendsListSuccessEpic,
 

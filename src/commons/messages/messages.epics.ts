@@ -24,8 +24,6 @@ export const TYPES_TO_MESSAGES_MAPPER: IGenericEntities<string> = {
     [updateProfileAction.failureActionType]: 'Ops! Impossibile modificare dati profilo',
     //CHANGE PROFILE PASSWORD
     [changeProfilePasswordAction.failureActionType]: 'Ops! Impossibile modificare la password',
-    //FETCH PAYMENT
-    [fetchPaymentAction.failureActionType]: 'Ops! Impossibile effettuare il pagamento',
     //GET FRIENDS LIST
     [fetchFriendsListAction.failureActionType]: 'Ops! Impossibile recuperare la lista degli amici',
     //GET SUGGESTED FRIENDS LIST

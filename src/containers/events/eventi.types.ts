@@ -8,12 +8,12 @@ export interface IEvent {
     eventDatePublished: string
     imageUrl: string
     maxPartecipants: number
-    partecipants: IPartecipants[]
+    partecipants: IPartecipant[]
     ticketPrice: number
     address: string
 }
 
-export interface IPartecipants{
+export interface IPartecipant {
     id: string
     name: string
     photoUrl: string

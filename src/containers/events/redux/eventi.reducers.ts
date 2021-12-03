@@ -10,6 +10,8 @@ export const paymentClientSecretReducer = (state: any | null = null, action: IAc
     switch (action.type) {
         case fetchPaymentAction.successActionType:
             return genericResponseNormalizer(action.payload).clientSecret
+        case fetchPaymentAction.failureActionType:
+            return null
         case RESET_STRIPE_CLIENT_SECRET_ACTION:
             return action.payload
         default:

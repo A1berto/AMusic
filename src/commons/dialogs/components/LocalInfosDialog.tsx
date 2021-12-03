@@ -1,7 +1,7 @@
 import * as React from 'react'
-import {FC, useCallback, useState} from 'react'
-import {IEvent} from '../../../containers/events/eventi.types'
-import {CircularProgress, IconButton, Tooltip, Typography} from '@material-ui/core'
+import {FC, useCallback, useEffect, useState} from 'react'
+import {IEvent, IPartecipant} from '../../../containers/events/eventi.types'
+import {Avatar, Checkbox, CircularProgress, IconButton, Tooltip, Typography} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import Fab from '@material-ui/core/Fab'
 import PaymentOutlinedIcon from '@material-ui/icons/PaymentOutlined'
@@ -11,7 +11,6 @@ import StripeContainer from '../../../containers/events/Payment/StripeContainer'
 import {fetchPaymentAction, isFetchPaymentPendingSelector} from '../../../containers/events/redux/eventi.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {paymentClientSecretSelector} from '../../../containers/events/redux/eventi.selectors'
-import {profileEmailSelector} from '../../../containers/profile/redux/profile.selectors'
 
 interface ILocalInfosProps {
     event: IEvent
@@ -23,24 +22,29 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
 
     //REACT STATE
     const [showPaymentForm, setPaymentForm] = useState<boolean>(false)
+    const [visibleChecked, setVisibleChecked] = useState<boolean>(true)
 
     const dispatch = useDispatch()
     const clientSecret = useSelector(paymentClientSecretSelector)
     const isFetchPaymentPending = useSelector(isFetchPaymentPendingSelector)
 
-    const handleClose = useCallback(() => {
-        dispatch(closeCurrentDialog())
-    }, [dispatch])
-
+    const handleVisibleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setVisibleChecked(event.target.checked)
+    }
+    
     const handleOpenPayment = useCallback(() => {
         !showPaymentForm && dispatch(fetchPaymentAction.build({
             provider: 'STRIPE',
             eventDocumentId: event?.id,
-            visible:true
+            visible: visibleChecked
         }, DEFAULT_REQUEST_ID))
-        setPaymentForm(prev => !prev)
-    }, [dispatch, event?.id, showPaymentForm])
 
+        clientSecret && setPaymentForm(prev => !prev)
+    }, [clientSecret, dispatch, event?.id, showPaymentForm, visibleChecked])
+
+    const handleClose = useCallback(() => {
+        dispatch(closeCurrentDialog())
+    }, [dispatch])
 
     return (
         <>
@@ -126,7 +130,35 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                     </div>
                 </div>
 
+                <div className="col-12 pt-4">
 
+                    <div className="row">
+                        {
+                            event.partecipants.map((partecipant: IPartecipant) =>
+                                <div className="col-auto">
+                                    <Tooltip title={`${partecipant?.name} ${partecipant?.surname}`}>
+                                        <Avatar
+                                            variant="circle"
+                                            alt="Partecipant Image"
+                                            src={partecipant?.photoUrl}/>
+                                    </Tooltip>
+                                </div>
+                            )}
+                    </div>
+
+                </div>
+
+                {/* VISIBLE PARTICIPATION*/}
+                <div className="col-12 pt-4 d-flex align-items-center">
+                    <Typography variant="h6"
+                                color="secondary">
+                        Rendo visibile agli altri utenti la partecipazione a questo evento
+                    </Typography>
+                    <Checkbox
+                        color="primary"
+                        checked={visibleChecked}
+                        onChange={handleVisibleChange}/>
+                </div>
 
                 {/*PAYMENT BUTTON*/}
                 <div className="col-12">
@@ -142,6 +174,8 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                     </Tooltip>
                 </div>
             </div>
+
+
             {/*PAYMENT COMPONENT*/}
             {
                 !!clientSecret && showPaymentForm &&

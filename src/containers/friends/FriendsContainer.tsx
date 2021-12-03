@@ -99,7 +99,7 @@ const FriendsContainer: FC<IFriendsListProps> = () => {
                                 <Avatar
                                     variant="circle"
                                     alt="ProfileContainer Image"
-                                    src={Image}         //TODO friend.image
+                                    src={friend.image}
                                     onClick={() => console.log('Cliccato avatar')}/>
                                 <Typography variant="body2"
                                             color="secondary"

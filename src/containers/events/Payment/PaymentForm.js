@@ -6,7 +6,8 @@ import {useDispatch} from 'react-redux'
 import {addError, addInfo, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 import {useHistory} from 'react-router-dom'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
-import {resetStripeClienteSecretAction} from '../redux/eventi.actions'
+import {fetchAllEventsListAction, resetStripeClienteSecretAction} from '../redux/eventi.actions'
+import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 
 
 const PaymentForm = () => {
@@ -78,6 +79,7 @@ const PaymentForm = () => {
                 dispatch(addError({userMessage: 'Ops! Errore durante il pagamento'}))
             } else {
                 dispatch(closeCurrentDialog())
+                dispatch(fetchAllEventsListAction.build(null,DEFAULT_REQUEST_ID))
                 dispatch(addSuccess({userMessage: 'Pagamento avvenuto con successo!'}))
             }
         })
