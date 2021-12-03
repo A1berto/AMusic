@@ -1,20 +1,20 @@
-/**
- *   Ricarico il preventivo a partire dall'idPreve come queryParams
- *   i dati del preventivo sono salvati direttamente sui reducer, al netto di dati CAP la cui azione e' collegata a diversi EPICS
- */
-import {Observable} from 'rxjs'
-import {ISuccessFetchAction} from 'fetch-with-redux-observable'
+import {NEVER, Observable} from 'rxjs'
+import {IGenericResponse, ISuccessFetchAction} from 'fetch-with-redux-observable'
 import {ofType} from 'redux-observable'
-import {fetchPaymentAction} from './eventi.actions'
-import {map} from 'rxjs/operators'
+import {fetchAllEventsListAction} from './eventi.actions'
+import {mergeMap} from 'rxjs/operators'
+import {HashHistory} from '../../../index'
+import {EVENTS_PATH} from '../../../routes'
 
-/*
-export const paymentIntentEpic = (action$: Observable<ISuccessFetchAction>) =>
+export const allEventsListSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<any>>>) =>
     action$.pipe(
-        ofType(fetchPaymentAction.successActionType),
-        map((action: any) => {
+        ofType(fetchAllEventsListAction.successActionType),
+        mergeMap((action) => {
+            console.info(`Redirect to ${EVENTS_PATH}`)
+            //@ts-ignore
+            action.meta.meta.setAnchorEl && action.meta.meta.setAnchorEl(null)
+            HashHistory.push(EVENTS_PATH)
+            return NEVER
+        })
+    )
 
-
-            }
-        ))
-*/

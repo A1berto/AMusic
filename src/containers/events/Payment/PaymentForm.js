@@ -2,12 +2,19 @@ import * as React from 'react'
 import {useEffect, useState} from 'react'
 import {PaymentElement, useElements, useStripe} from '@stripe/react-stripe-js'
 import {Button} from '@material-ui/core'
-
+import {useDispatch} from 'react-redux'
+import {addError, addInfo, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
+import {useHistory} from 'react-router-dom'
+import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
+import {resetStripeClienteSecretAction} from '../redux/eventi.actions'
 
 
 const PaymentForm = () => {
+
     const stripe = useStripe()
     const elements = useElements()
+    const dispatch = useDispatch()
+    const history = useHistory()
 
     const [message, setMessage] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
@@ -28,20 +35,24 @@ const PaymentForm = () => {
         stripe.retrievePaymentIntent(clientSecret).then(({paymentIntent}) => {
             switch (paymentIntent.status) {
                 case 'succeeded':
-                    setMessage('Payment succeeded!')
+                    dispatch(addSuccess({userMessage: 'Pagamento avvenuto con successo!'}))
+                    setMessage('Pagamento avvenuto con successo!')
                     break
                 case 'processing':
-                    setMessage('Your payment is processing.')
+                    dispatch(addInfo({userMessage: 'Pagamento in elaborazione'}))
+                    setMessage('Pagamento in elaborazione')
                     break
                 case 'requires_payment_method':
-                    setMessage('Your payment was not successful, please try again.')
+                    dispatch(addError({userMessage: 'Il tuo pagamento non è andato a buon fine, riprova'}))
+                    setMessage('Il tuo pagamento non è andato a buon fine, riprova')
                     break
                 default:
-                    setMessage('Something went wrong.')
+                    dispatch(addError({userMessage: 'Ops! Qualcosa è andato storto'}))
+                    setMessage('Ops! Qualcosa è andato storto')
                     break
             }
         })
-    }, [stripe])
+    }, [dispatch, stripe])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -54,41 +65,43 @@ const PaymentForm = () => {
 
         setIsLoading(true)
 
-        const {error} = await stripe.confirmPayment({
+        await stripe.confirmPayment({
             elements,
             confirmParams: {
                 // Make sure to change this to your payment completion page
-                return_url: 'http://localhost:3000',
+                return_url: 'http://localhost:3000/#/events',
             },
+            redirect: 'if_required'
+        }).then((paymentIntent) => {
+            if (!!paymentIntent.error) {
+                dispatch(resetStripeClienteSecretAction(''))
+                dispatch(addError({userMessage: 'Ops! Errore durante il pagamento'}))
+            } else {
+                dispatch(closeCurrentDialog())
+                dispatch(addSuccess({userMessage: 'Pagamento avvenuto con successo!'}))
+            }
         })
-
-        // This point will only be reached if there is an immediate error when
-        // confirming the payment. Otherwise, your customer will be redirected to
-        // your `return_url`. For some payment methods like iDEAL, your customer will
-        // be redirected to an intermediate site first to authorize the payment, then
-        // redirected to the `return_url`.
-        if (error.type === 'card_error' || error.type === 'validation_error') {
-            setMessage(error.message)
-        } else {
-            setMessage('An unexpected error occured.')
-        }
 
         setIsLoading(false)
     }
 
     return (
         <>
-            <div style={{width: '50%', paddingTop: '30px'}}>
-                <form>
-                    <PaymentElement id="payment-element"/>
-                    <Button variant="contained" color="primary" disabled={isLoading || !stripe || !elements}
-                            onClick={handleSubmit}>
+            <div style={{background: 'rgba(229, 229, 229, 0.95)', borderRadius: 8}}>
+                <form className="p-3">
+                    <PaymentElement id="payment-element" className="p-0"/>
+                    <div className="col-12 pt-3 d-flex justify-content-center">
+                        <Button variant="contained"
+                                color="primary"
+                                disabled={isLoading || !stripe || !elements}
+                                onClick={handleSubmit}>
                         <span id="button-text">
                             {
                                 isLoading ? <div className="spinner" id="spinner"/> : 'Paga'
                             }
                         </span>
-                    </Button>
+                        </Button>
+                    </div>
                     {/* Show any error or success messages */}
                     {message && <div id="payment-message">{message}</div>}
                 </form>

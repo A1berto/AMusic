@@ -1,17 +1,21 @@
-import React, {lazy, Suspense} from 'react'
+import React, {lazy, Suspense, useEffect} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
-import {EVENTS_HISTORY_PATH, EVENTS_PATH, FRIENDS_LIST_PATH, INFO_APP_PATH, LOGIN_PATH, PROFILE_PATH} from './routes'
+import {EVENTS_HISTORY_PATH, EVENTS_PATH, FRIENDS_LIST_PATH, INFO_APP_PATH, LOGIN_OR_SIGNIN_PATH, PROFILE_PATH} from './routes'
 import {AMusicContainer} from './commons/AMusicContainer'
 import {FallbackSpinner} from './commons/fallback-spinner/FallbackSpinner'
 import 'animate.css'
 import DialogProvider from './commons/dialogs/DialogProvider'
 import {SnackbarProvider} from 'notistack'
 import {SnackbarConsumer} from './commons/SnackbarConsumer'
+import {fetchProfileAction} from './containers/profile/redux/profile.actions'
+import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
+import {useDispatch} from 'react-redux'
+import {loginOrSignInCompleted} from './commons/autentication/service.auth'
 
 /* Lazy loading of principle components*/
 const LoginComponent = lazy(() => import('./containers/login/LoginOrSignInContainer'))
 const ProfileComponent = lazy(() => import('./containers/profile/ProfileContainer'))
-const EventiComponent = lazy(() => import('./containers/events/EventsContainer'))
+const EventiComponent = lazy(() => import('./containers/events/EventsListContainer'))
 const FriendsListComponent = lazy(() => import('./containers/friends/FriendsContainer'))
 const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosContainer'))
 const EventsHistoryComponent = lazy(() => import('./containers/infoApp/InfosContainer'))
@@ -25,7 +29,7 @@ function App() {
                     <Switch>
 
                         {/*LOGIN*/}
-                        <Route path={LOGIN_PATH} component={LoginComponent}/>
+                        <Route path={LOGIN_OR_SIGNIN_PATH} component={LoginComponent}/>
 
                         {/*EVENTI*/}
                         <Route path={EVENTS_PATH} component={EventiComponent}/>
@@ -43,7 +47,7 @@ function App() {
                         <Route path={EVENTS_HISTORY_PATH} component={EventsHistoryComponent}/>
 
                         {/*DEFAULT*/}
-                        <Redirect to={LOGIN_PATH}/>
+                        <Redirect to={LOGIN_OR_SIGNIN_PATH}/>
 
                     </Switch>
 

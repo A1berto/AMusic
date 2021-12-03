@@ -2,26 +2,33 @@ import firebase from './firebase.configs'
 import {DEFAULT_REQUEST_ID, setBaseRequestURL} from 'fetch-with-redux-observable'
 import {addError} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 import {fetchProfileAction} from '../../containers/profile/redux/profile.actions'
+import {fetchAllEventsListAction} from '../../containers/events/redux/eventi.actions'
+import {getAuth, updateProfile} from 'firebase/auth'
+import {ILoginFormProps} from '../../containers/login/login.types'
 
 
 export const socialMediaAuth = (provider: any, dispatch: any) => {
     return firebase.auth().signInWithPopup(provider)
         .then((response) => {
             console.info('response>>>', response)
+            return response?.user?.getIdToken()
             //@ts-ignore
-            const idToken = provider?.providerId.includes('google') ? response?.credential?.idToken : response?.credential?.accessToken
-            loginOrSignInCompleted(idToken, dispatch)
-            return response.user
+            /*
+                        const idToken = provider?.providerId.includes('google') ? response?.credential?.idToken : response?.credential?.accessToken
+            */
+        }).then((idToken) => {
+            idToken && loginOrSignInCompleted(idToken, dispatch)
         })
         .catch((error) => LoginOrSignInError(error, dispatch))
 }
 
-export const createProfileWithEmailAndPasswordAuth = (email: string, password: string, dispatch: any) => {
+export const createProfileWithEmailAndPasswordAuth = (formValues: ILoginFormProps, dispatch: any) => {
+    const {email, password} = formValues
+
     return firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(response => {
-            console.log('Response Registrazione>>>', response)
             //@ts-ignore
-            loginOrSignInCompleted(response?.user?.multiFactor?.user?.accessToken, dispatch)
+            loginOrSignInCompleted(response?.user?.multiFactor?.user?.accessToken, dispatch,formValues)
         })
         .catch((error) => LoginOrSignInError(error, dispatch))
 }
@@ -29,7 +36,6 @@ export const createProfileWithEmailAndPasswordAuth = (email: string, password: s
 export const loginProfileWithEmailAndPasswordAuth = (email: string, password: string, dispatch: any) => {
     return firebase.auth().signInWithEmailAndPassword(email, password)
         .then(response => {
-            console.log('Response LoginOrSignInContainer>>>', response)
             //@ts-ignore
             loginOrSignInCompleted(response?.user?.multiFactor?.user?.accessToken, dispatch)
         })
@@ -37,13 +43,16 @@ export const loginProfileWithEmailAndPasswordAuth = (email: string, password: st
 }
 
 
-const loginOrSignInCompleted = (idToken: string, dispatch: any) => {
+export const loginOrSignInCompleted = (idToken: string, dispatch: any, formValues?: ILoginFormProps) => {
+
+    console.log('Authentication')
+
     setBaseRequestURL({
         devUrl: process.env.REACT_APP_BACKEND_URL || '',
         prodUrl: process.env.REACT_APP_BACKEND_URL || '.',
         headers: {
             //@ts-ignore
-            Autorization: `Bearer ${idToken}`
+            Authorization: `Bearer ${idToken}`
         },
         retryStrategy: {
             attempts: 0,
@@ -51,25 +60,23 @@ const loginOrSignInCompleted = (idToken: string, dispatch: any) => {
         }
     })
 
+    //If formValues are passed it means that the user is signedIn
+    if (formValues) {
+        const auth = getAuth()
+        const formattedName = !!formValues.name ? formValues.name?.charAt(0).toUpperCase() + formValues.name.slice(1) : ''
+        const formattedSurname = !!formValues.surname ? formValues.surname?.charAt(0).toUpperCase() + formValues.surname.slice(1) : ''
+        !!auth.currentUser && updateProfile(auth.currentUser, {
+            displayName: `${formattedName} ${formattedSurname}`,
+            photoURL: ''
+        })
+    }
+
     dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
-    /* TODO aggiungere
-        dispatch(fetchEventsAction.build(null, DEFAULT_REQUEST_ID))
-        e quando torna fetchEventAction.success faccio il redirect alla pagina di EVENTS_PATH
-    */
-
-
-    /*
-        store.dispatch(addSuccess({userMessage: 'Accesso effettuato '}))
-    */
 
 }
 
 const LoginOrSignInError = (error: any, dispatch: any) => {
     console.log('error>>>', error)
 
-    dispatch(addError({userMessage: 'Errrrroreee235432532'}))
-
-    /*
-        addError({userMessage: 'Ops! Errore durante l\'accesso'})
-    */
+    dispatch(addError({userMessage: 'Ops! Errore durante la fase di autenticazione'}))
 }

@@ -7,7 +7,10 @@ import {HttpMethods, IRequestModel} from 'fetch-with-redux-observable'
  */
 export const FETCH_PROFILE_API: IRequestModel = {
     url: `/profile`,
-    method: HttpMethods.GET
+    method: HttpMethods.GET,
+    headers: {
+        'Content-Type': 'application/json'
+    },
 }
 
 /**
@@ -15,7 +18,7 @@ export const FETCH_PROFILE_API: IRequestModel = {
  * @method GET
  */
 export const UPDATE_PROFILE_API: IRequestModel = {
-    url: `/user/update`,
+    url: `/private/user/update`,
     method: HttpMethods.POST,
     headers: {
         'Content-Type': 'application/json'
@@ -27,8 +30,11 @@ export const UPDATE_PROFILE_API: IRequestModel = {
  * @method GET
  */
 export const CHANGE_PROFILE_PASSWORD_API: IRequestModel = {
-    url: `/user/changePassword`,
+    url: `/private/user/changePassword`,
     method: HttpMethods.GET,
+    headers: {
+        'Content-Type': 'application/json'
+    },
 }
 
 /**
@@ -36,7 +42,7 @@ export const CHANGE_PROFILE_PASSWORD_API: IRequestModel = {
  * @method GET
  */
 export const FETCH_PAYMENT_API: IRequestModel = {
-    url: `/pay`,
+    url: `/private/pay`,
     method: HttpMethods.POST,
     headers: {
         'Content-Type': 'application/json'
@@ -48,8 +54,11 @@ export const FETCH_PAYMENT_API: IRequestModel = {
  * @method GET
  */
 export const FETCH_FRIENDS_LIST_API: IRequestModel = {
-    url: `/user/friends`,
+    url: `/private/user/friends`,
     method: HttpMethods.GET,
+    headers: {
+        'Content-Type': 'application/json'
+    },
 }
 
 /**
@@ -57,8 +66,11 @@ export const FETCH_FRIENDS_LIST_API: IRequestModel = {
  * @method GET
  */
 export const FETCH_SUGGESTED_FRIENDS_LIST_API: IRequestModel = {
-    url: `/user/suggestedFriends`,
+    url: `/private/user/suggestedFriends`,
     method: HttpMethods.GET,
+    headers: {
+        'Content-Type': 'application/json'
+    },
 }
 
 /**
@@ -66,8 +78,11 @@ export const FETCH_SUGGESTED_FRIENDS_LIST_API: IRequestModel = {
  * @method GET
  */
 export const FETCH_FILTERED_FRIENDS_LIST_API: IRequestModel = {
-    url: `/user`,
+    url: `/private/user`,
     method: HttpMethods.GET,
+    headers: {
+        'Content-Type': 'application/json'
+    },
 }
 
 /**
@@ -75,6 +90,22 @@ export const FETCH_FILTERED_FRIENDS_LIST_API: IRequestModel = {
  * @method POST
  */
 export const FETCH_ADD_FRIEND_API: IRequestModel = {
-    url: `/user/addFriend`,
+    url: `/private/user/addFriend`,
     method: HttpMethods.POST,
+    headers: {
+        'Content-Type': 'application/json'
+    },
+}
+
+
+/**
+ * @description Get events list
+ * @method GET
+ */
+export const FETCH_ALL_EVENTS_LIST_API: IRequestModel = {
+    url: `/private/events/all`,
+    method: HttpMethods.GET,
+    headers: {
+        'Content-Type': 'application/json'
+    },
 }

@@ -13,6 +13,7 @@ import {
 } from './redux/friends.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import Image from '../../assets/img/avatar-man.jpg'
+import {friendsListSelector} from './redux/friends.selectors'
 
 export const friendsStyles = makeStyles(() =>
     createStyles({
@@ -28,6 +29,7 @@ export const friendsStyles = makeStyles(() =>
 )
 
 
+/*
 export const friendsList = [
     {name: 'Andrea', surname: 'Messina'},
     {name: 'Lorenzo', surname: 'Castorina'},
@@ -49,6 +51,7 @@ export const friendsList = [
     {name: 'Anna Maria', surname: 'Urso'},
     {name: 'Ciccio', surname: 'Urso'},
 ]
+*/
 
 interface IFriendsListProps {
 }
@@ -58,11 +61,8 @@ const FriendsContainer: FC<IFriendsListProps> = () => {
     const classes = friendsStyles()
     const dispatch = useDispatch()
 
+    const friendsList = useSelector(friendsListSelector)
     const isFetchSuggestedFriendsListPending = useSelector(isFetchSuggestedFriendsListPendingSelector)
-
-    useEffect(() => {
-        dispatch(fetchFriendsListAction.build(null, DEFAULT_REQUEST_ID))
-    }, [dispatch])
 
     const handleAddFriendsClick = () => {
         dispatch(fetchSuggestedFriendsListAction.build(null, DEFAULT_REQUEST_ID))

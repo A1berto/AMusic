@@ -8,7 +8,10 @@ import PaymentOutlinedIcon from '@material-ui/icons/PaymentOutlined'
 import {useDispatch, useSelector} from 'react-redux'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import StripeContainer from '../../../containers/events/Payment/StripeContainer'
-import {isFetchPaymentPendingSelector} from '../../../containers/events/redux/eventi.actions'
+import {fetchPaymentAction, isFetchPaymentPendingSelector} from '../../../containers/events/redux/eventi.actions'
+import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
+import {paymentClientSecretSelector} from '../../../containers/events/redux/eventi.selectors'
+import {profileEmailSelector} from '../../../containers/profile/redux/profile.selectors'
 
 interface ILocalInfosProps {
     event: IEvent
@@ -22,16 +25,21 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
     const [showPaymentForm, setPaymentForm] = useState<boolean>(false)
 
     const dispatch = useDispatch()
+    const clientSecret = useSelector(paymentClientSecretSelector)
     const isFetchPaymentPending = useSelector(isFetchPaymentPendingSelector)
-
 
     const handleClose = useCallback(() => {
         dispatch(closeCurrentDialog())
     }, [dispatch])
 
     const handleOpenPayment = useCallback(() => {
+        !showPaymentForm && dispatch(fetchPaymentAction.build({
+            provider: 'STRIPE',
+            eventDocumentId: event?.id,
+            visible:true
+        }, DEFAULT_REQUEST_ID))
         setPaymentForm(prev => !prev)
-    }, [])
+    }, [dispatch, event?.id, showPaymentForm])
 
 
     return (
@@ -40,7 +48,7 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                 <div className="col-12 d-flex justify-content-center align-items-center">
 
                     {/* TITLE */}
-                    <Typography variant={'h3'} color="primary">{event.localName}</Typography>
+                    <Typography variant={'h3'} color="primary">{event.eventName}</Typography>
 
                     {/* CLOSE BUTTON*/}
                     <div style={{position: 'absolute', right: 16}}>
@@ -58,15 +66,67 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                     </Typography>
                 </div>
 
-
-                {/*PAYMENT COMPONENT*/}
-                {/*TODO allineare questo field sempre in basso*/}
-                {
-                    showPaymentForm &&
-                    <div className="col-12">
-                        <StripeContainer/>
+                <div className="col-12 d-flex align-items-center mt-3">
+                    <div className="col-2">
+                        <Typography variant="h5"
+                                    color="textSecondary">
+                            Data
+                        </Typography>
                     </div>
-                }
+                    <div className="col ms-2">
+                        <Typography variant="h6"
+                                    color="secondary">
+                            {event?.eventDate}
+                        </Typography>
+                    </div>
+                </div>
+
+                <div className="col-12 d-flex align-items-center mt-1">
+                    <div className="col-2">
+                        <Typography variant="h5"
+                                    color="textSecondary">
+                            Indirizzo
+                        </Typography>
+                    </div>
+                    <div className="col ms-2">
+                        <Typography variant="h6"
+                                    color="secondary">
+                            {event?.address}
+                        </Typography>
+                    </div>
+                </div>
+
+                <div className="col-12 d-flex align-items-center mt-1">
+                    <div className="col-2">
+                        <Typography variant="h5"
+                                    color="textSecondary">
+                            Telefono
+                        </Typography>
+                    </div>
+                    <div className="col ms-2">
+                        <Typography variant="h6"
+                                    color="secondary">
+                            {event?.phoneNumber}
+                        </Typography>
+                    </div>
+                </div>
+
+                <div className="col-12 d-flex align-items-center mt-1">
+                    <div className="col-2">
+                        <Typography variant="h5"
+                                    color="textSecondary">
+                            Prezzo
+                        </Typography>
+                    </div>
+                    <div className="col ms-2">
+                        <Typography variant="h6"
+                                    color="secondary">
+                            {event?.ticketPrice}
+                        </Typography>
+                    </div>
+                </div>
+
+
 
                 {/*PAYMENT BUTTON*/}
                 <div className="col-12">
@@ -82,6 +142,13 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                     </Tooltip>
                 </div>
             </div>
+            {/*PAYMENT COMPONENT*/}
+            {
+                !!clientSecret && showPaymentForm &&
+                <div style={{left: 0, right: 0, top: '29%', margin: 'auto', position: 'absolute', width: '50%'}}>
+                    <StripeContainer clientSecret={clientSecret}/>
+                </div>
+            }
         </>
     )
 }

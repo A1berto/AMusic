@@ -1,16 +1,23 @@
 export interface IEvent {
-    lat: number
-    lng: number
     description: string
-    localName:string
-    id: number
+    id: string
+    geoPoint: IGeoLocation
+    phoneNumber: string
+    eventName:string
+    eventDate: string
+    eventDatePublished: string
+    imageUrl: string
+    maxPartecipants: number
+    partecipants: IPartecipants[]
+    ticketPrice: number
     address: string
-    cap: string
-    comune: string
-    phone: string
-    email: string
-    localCode: string
-    image:string
+}
+
+export interface IPartecipants{
+    id: string
+    name: string
+    photoUrl: string
+    surname: string
 }
 
 export interface IGeoLocation {

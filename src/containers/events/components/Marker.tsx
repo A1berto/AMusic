@@ -1,9 +1,9 @@
 import * as React from 'react'
 import {FC} from 'react'
 import {Card, CardContent, Icon, Typography} from '@material-ui/core'
-import {infoAgenziaStyles} from '../EventsContainer'
+import {infoAgenziaStyles} from '../EventsListContainer'
 
-const Marker: FC<{ lat: number, lng: number, title: string, handleClick?: any, open?: boolean, agenziaCorrente?: any }> = (props) => {
+const Marker: FC<{ lat: number, lng: number, title: string, handleClick?: any, open?: boolean, currentEvent?: any }> = (props) => {
 
     const classes = infoAgenziaStyles()
 
@@ -22,15 +22,15 @@ const Marker: FC<{ lat: number, lng: number, title: string, handleClick?: any, o
 
                 <Card className={classes.cardStyle}>
                     <CardContent className="p-3">
-                        {!!props.agenziaCorrente ?
+                        {!!props.currentEvent ?
                             <>
-                                {props.agenziaCorrente?.indirizzo &&
+                                {props.currentEvent?.indirizzo &&
                                 <Typography variant="h6"
                                             className={`${classes.rootColor} ${classes.typography}`}>
-                                    {`${props.agenziaCorrente?.indirizzo || ''}, ${props.agenziaCorrente?.comune || ''} - ${props.agenziaCorrente?.cap || ''}`}
+                                    {`${props.currentEvent?.indirizzo || ''}, ${props.currentEvent?.comune || ''} - ${props.currentEvent?.cap || ''}`}
                                 </Typography>
                                 }
-                                {(!!props.agenziaCorrente?.phone || !!props.agenziaCorrente?.fax) &&
+                                {(!!props.currentEvent?.phone || !!props.currentEvent?.fax) &&
                                 <div className="d-flex">
                                     <Typography variant="h6"
                                                 className={`${classes.rootColor} ${classes.typography}`}>
@@ -42,24 +42,24 @@ const Marker: FC<{ lat: number, lng: number, title: string, handleClick?: any, o
                                                 color="inherit">
                                         <a style={{color: 'orange'}}
                                            className={classes.typography}
-                                           href={`tel:${props.agenziaCorrente?.phone}`}>
-                                            {props.agenziaCorrente?.phone}
+                                           href={`tel:${props.currentEvent?.phone}`}>
+                                            {props.currentEvent?.phone}
                                         </a>
                                         {
-                                            props.agenziaCorrente?.fax &&
+                                            props.currentEvent?.fax &&
                                             <>
                                                 <span>{` | `}</span>
                                                 <a className={classes.typography}
                                                    style={{color: 'orange'}}
-                                                   href={`tel:${props.agenziaCorrente?.fax}`}>
-                                                    {props.agenziaCorrente?.fax}
+                                                   href={`tel:${props.currentEvent?.fax}`}>
+                                                    {props.currentEvent?.fax}
                                                 </a>
                                             </>
                                         }
                                     </Typography>
                                 </div>
                                 }
-                                {!!props.agenziaCorrente?.email &&
+                                {!!props.currentEvent?.email &&
                                 <div className="d-flex">
                                     <Typography variant="h6"
                                                 className={`${classes.rootColor} ${classes.typography}`}>
@@ -75,9 +75,9 @@ const Marker: FC<{ lat: number, lng: number, title: string, handleClick?: any, o
                                         variant="h6"
                                         color="secondary">
                                         <a style={{color: 'orange'}}
-                                           href={`mailTo:${props.agenziaCorrente?.email}`}
+                                           href={`mailTo:${props.currentEvent?.email}`}
                                            className={`${classes.link} ${classes.typography}`}>
-                                            {props.agenziaCorrente?.email}
+                                            {props.currentEvent?.email}
                                         </a>
                                     </Typography>
                                 </div>

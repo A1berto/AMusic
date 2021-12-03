@@ -41,8 +41,6 @@ export const TYPES_TO_MESSAGES_MAPPER: IGenericEntities<string> = {
     [updateProfileAction.successActionType]: 'Modifiche apportate con successo!',
     //CHANGE PROFILE PASSWORD
     [changeProfilePasswordAction.successActionType]: 'Controlla la tua posta elettronica',
-    //FETCH PAYMENT
-    [fetchPaymentAction.successActionType]: 'Pagamento effettuato con successo!',
     //GET FILTERED FRIENDS LIST
     [fetchAddFriendAction.successActionType]: 'Amico aggiunto alla lista degli amici',
 }

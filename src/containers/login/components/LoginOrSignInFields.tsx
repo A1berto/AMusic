@@ -15,14 +15,15 @@ interface ILoginFields {
     isSingIn: boolean
 }
 
-const LoginFields: FC<ILoginFields> = (props: ILoginFields) => {
+const LoginOrSignInFields: FC<ILoginFields> = (props: ILoginFields) => {
 
     const {isSingIn = false} = props
     const dispatch= useDispatch()
 
+    //TODO scoppia quandol'email è già presente su firebase
     const handleAuthenticationEmailClick = async (formValues: ILoginFormProps) => {
-        isSingIn ?
-            await createProfileWithEmailAndPasswordAuth(formValues?.email, formValues?.password,dispatch) :
+         isSingIn ?
+            await createProfileWithEmailAndPasswordAuth(formValues,dispatch) :
             await loginProfileWithEmailAndPasswordAuth(formValues?.email, formValues?.password,dispatch)
     }
 
@@ -101,4 +102,4 @@ const LoginFields: FC<ILoginFields> = (props: ILoginFields) => {
     )
 }
 
-export default LoginFields
+export default LoginOrSignInFields

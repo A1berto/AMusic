@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography'
 import Marker from './components/Marker'
 import EventsList from './components/EventsList'
 import ArrowUpwardOutlinedIcon from '@material-ui/icons/ArrowUpwardOutlined'
+import {useSelector} from 'react-redux'
+import {eventsListSelector} from './redux/eventi.selectors'
 
 export const infoAgenziaStyles = makeStyles(() =>
     createStyles({
@@ -43,104 +45,11 @@ export const infoAgenziaStyles = makeStyles(() =>
 )
 
 
-export const eventsContainer: IEvent[] = [
-    {
-        lat: 23,
-        lng: 24,
-        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-        id: 23,
-        address: 'VIa non so che 22',
-        cap: '91100',
-        comune: 'Trapani',
-        phone: '3286655726',
-        email: 'alberto@gmail.it',
-        localCode: '23',
-        localName: 'DiscoPub La Quercia',
-        image: ''
-    }, {
-        lat: 23,
-        lng: 24,
-        description: 'evento2',
-        id: 23,
-        address: 'VIa non so che 22',
-        cap: '91100',
-        comune: 'Trapani',
-        phone: '3286655726',
-        email: 'alberto@gmail.it',
-        localCode: '23',
-        localName: 'Bar Casantini',
-        image: ''
-    }, {
-        lat: 23,
-        lng: 24,
-        description: 'evento2',
-        id: 23,
-        address: 'VIa non so che 22',
-        cap: '91100',
-        comune: 'Trapani',
-        phone: '3286655726',
-        email: 'alberto@gmail.it',
-        localCode: '23',
-        localName: 'La Giovinezza',
-        image: ''
-    }, {
-        lat: 23,
-        lng: 24,
-        description: 'evento2',
-        id: 23,
-        address: 'VIa non so che 22',
-        cap: '91100',
-        comune: 'Trapani',
-        phone: '3286655726',
-        email: 'alberto@gmail.it',
-        localCode: '23',
-        localName: 'La Giovinezza',
-        image: ''
-    }, {
-        lat: 23,
-        lng: 24,
-        description: 'evento2',
-        id: 23,
-        address: 'VIa non so che 22',
-        cap: '91100',
-        comune: 'Trapani',
-        phone: '3286655726',
-        email: 'alberto@gmail.it',
-        localCode: '23',
-        localName: 'La Giovinezza',
-        image: ''
-    }, {
-        lat: 23,
-        lng: 24,
-        description: 'evento2',
-        id: 23,
-        address: 'VIa non so che 22',
-        cap: '91100',
-        comune: 'Trapani',
-        phone: '3286655726',
-        email: 'alberto@gmail.it',
-        localCode: '23',
-        localName: 'La Giovinezza',
-        image: ''
-    }, {
-        lat: 23,
-        lng: 24,
-        description: 'evento2',
-        id: 23,
-        address: 'VIa non so che 22',
-        cap: '91100',
-        comune: 'Trapani',
-        phone: '3286655726',
-        email: 'alberto@gmail.it',
-        localCode: '23',
-        localName: 'La Giovinezza',
-        image: ''
-    }]
-
 interface IEventsProps {
 }
 
 const Events: FC<IEventsProps> = () => {
+
     const [isButtonComeBackUpVisible, setButtonComeBackUpVisible] = useState<boolean>(false)
     const [mapsProps, setMapsPros] = useState<GoogleMapsReactProps>({
         center: {
@@ -157,9 +66,11 @@ const Events: FC<IEventsProps> = () => {
         },
     })
 
+    const eventsList = useSelector(eventsListSelector)
+
     /** @description When the user has scrolled at least 100px then I make the button go back up **/
     useEffect(() => {
-        window.addEventListener('scroll',()=>
+        window.addEventListener('scroll', () =>
             window.pageYOffset > 100 ? setButtonComeBackUpVisible(true) : setButtonComeBackUpVisible(false)
         )
     }, [])
@@ -184,7 +95,6 @@ const Events: FC<IEventsProps> = () => {
             zoom: 13,
         }))
     }, [])
-
 
     return (
         <div style={{textAlign: 'center', width: '90%'}}>
@@ -224,18 +134,20 @@ const Events: FC<IEventsProps> = () => {
                                         {/* GOOGLE MAPS REACT */}
                                         <GoogleMapsReact
                                             bootstrapURLKeys={{
-                                                key: "AIzaSyAJw3ne1rGwjdNEhyQsMlIZ-lO3_XG5_k0",  //TODO passare dal be durante la chiamata config
+                                                key: 'AIzaSyAJw3ne1rGwjdNEhyQsMlIZ-lO3_XG5_k0',  //TODO passare dal be durante la chiamata config
                                                 language: 'it',
                                                 libraries: ['places', 'geometry'],
                                             }}
                                             {...mapsProps}>
-                                            {eventsContainer?.map((evento: IEvent, index) =>
-                                                <Marker key={`marker${index}`}
-                                                        lat={evento.lat}
-                                                        lng={evento.lng}
-                                                        handleClick={() => console.log('cliccato')}
-                                                        title={'descrizione'}
-                                                        agenziaCorrente={evento}/>)}
+                                            {
+                                                eventsList?.map((event: IEvent, index) =>
+                                                    <Marker key={`marker${index}`}
+                                                            lat={event?.geoPoint?.latitude}
+                                                            lng={event?.geoPoint?.longitude}
+                                                            handleClick={() => console.log('clicked')}
+                                                            title={'GoogleMaps Marker'}
+                                                            currentEvent={event}/>)
+                                            }
                                         </GoogleMapsReact>
                                     </div>
                                 </div>

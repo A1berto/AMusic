@@ -1,4 +1,4 @@
-export const LOGIN_PATH = '/loginOrSignIn'
+export const LOGIN_OR_SIGNIN_PATH = '/loginOrSignIn'
 export const EVENTS_PATH = '/events'
 export const INFO_APP_PATH = '/faq'
 export const PROFILE_PATH = '/profile'

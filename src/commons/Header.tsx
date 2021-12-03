@@ -1,12 +1,24 @@
 import * as React from 'react'
 import {FC, useState} from 'react'
-import {IconButton, Menu, MenuItem, Tooltip, useMediaQuery} from '@material-ui/core'
+import {CircularProgress, IconButton, Menu, MenuItem, Tooltip, Typography} from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
-import Typography from '@material-ui/core/Typography'
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
-import {EVENTS_PATH, FRIENDS_LIST_PATH, INFO_APP_PATH, LOGIN_PATH, PROFILE_PATH} from '../routes'
+import {
+    EVENTS_HISTORY_PATH,
+    EVENTS_PATH,
+    FRIENDS_LIST_PATH,
+    INFO_APP_PATH,
+    LOGIN_OR_SIGNIN_PATH,
+    PROFILE_PATH
+} from '../routes'
 import {useHistory} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {fetchFriendsListAction, isFetchFriendsListPendingSelector} from '../containers/friends/redux/friends.actions'
+import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
+import {fetchProfileAction, isFetchProfilePendingSelector} from '../containers/profile/redux/profile.actions'
+import {fetchAllEventsListAction, isFetchALLEventsListPendingSelector} from '../containers/events/redux/eventi.actions'
 import {AMUSIC_PALETTE_COLORS} from '../AMusic_theme'
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
+
 
 interface IHeaderProps {
 }
@@ -16,11 +28,15 @@ const Header: FC<IHeaderProps> = () => {
     //ReactState
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
-    const isTabletDevice = useMediaQuery('max-width:767px')
     const history = useHistory()
+    const dispatch = useDispatch()
+
+    const isFetchProfilePending = useSelector(isFetchProfilePendingSelector)
+    const isFetchALLEventsListPending = useSelector(isFetchALLEventsListPendingSelector)
+    const isFetchFriendsListPending = useSelector(isFetchFriendsListPendingSelector)
 
     const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-        !history.location.pathname.includes(LOGIN_PATH) && setAnchorEl(event.currentTarget)
+        !history.location.pathname.includes(LOGIN_OR_SIGNIN_PATH) && setAnchorEl(event.currentTarget)
     }
 
     const handleClose = () => {
@@ -28,11 +44,29 @@ const Header: FC<IHeaderProps> = () => {
     }
 
     const handleOpenSection = (path: string) => {
-        if (!history.location.pathname.includes(LOGIN_PATH)) {
-            history.push(path)
-            console.info(`Redirect to ${path}`)
-            handleClose()
+        if (!history.location.pathname.includes(LOGIN_OR_SIGNIN_PATH)) {
+
+            switch (path) {
+                case PROFILE_PATH:
+                    dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID, undefined, undefined, {setAnchorEl}))
+                    break
+                case EVENTS_PATH:
+                    dispatch(fetchAllEventsListAction.build(null, DEFAULT_REQUEST_ID, undefined, undefined, {setAnchorEl}))
+                    break
+                case FRIENDS_LIST_PATH:
+                    dispatch(fetchFriendsListAction.build(null, DEFAULT_REQUEST_ID, undefined, undefined, {setAnchorEl}))
+                    break
+                case EVENTS_HISTORY_PATH:
+                    /*
+                                    dispatch()
+                    */
+                    break
+            }
         }
+    }
+
+    const isSectionDisabled = (path: string) => {
+        return !window.location.hash.includes(path)
     }
 
     return (
@@ -62,9 +96,26 @@ const Header: FC<IHeaderProps> = () => {
                         horizontal: 'left',
                     }}
                 >
-                    <MenuItem onClick={() => handleOpenSection(PROFILE_PATH)}>Profilo</MenuItem>
-                    <MenuItem onClick={() => handleOpenSection(EVENTS_PATH)}>Eventi</MenuItem>
-                    <MenuItem onClick={() => handleOpenSection(FRIENDS_LIST_PATH)}>Lista amici</MenuItem>
+                    {
+                        isSectionDisabled(PROFILE_PATH) && <MenuItem onClick={() => handleOpenSection(PROFILE_PATH)}>
+                            Profilo {isFetchProfilePending &&
+                            <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>}
+                        </MenuItem>
+                    }
+                    {
+                        isSectionDisabled(EVENTS_PATH) &&
+                        <MenuItem onClick={() => handleOpenSection(EVENTS_PATH)}>
+                            Eventi {isFetchALLEventsListPending &&
+                            <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>}
+                        </MenuItem>
+                    }
+                    {
+                        isSectionDisabled(FRIENDS_LIST_PATH) &&
+                        <MenuItem onClick={() => handleOpenSection(FRIENDS_LIST_PATH)}>
+                            Lista amici {isFetchFriendsListPending &&
+                            <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>}
+                        </MenuItem>
+                    }
                     <MenuItem onClick={handleClose}>Cronologia eventi</MenuItem>
                 </Menu>
 
@@ -73,7 +124,7 @@ const Header: FC<IHeaderProps> = () => {
                     variant="h1"
                     color="secondary"
                     style={{
-                        fontSize: isTabletDevice ? '20px' : '24px',
+                        fontSize: '24px',
                         fontWeight: 'bold',
                     }}>
                     A<span style={{color: AMUSIC_PALETTE_COLORS.PURPLE}}>M</span>usic

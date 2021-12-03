@@ -5,7 +5,7 @@ import FacebookLogo from '../../assets/img/facebookLogo.svg'
 import GoogleLogo from '../../assets/img/googleLogo.svg'
 import GitHubLogo from '../../assets/img/gitHubLogo.svg'
 import {AMUSIC_PALETTE_COLORS} from '../../AMusic_theme'
-import LoginFields from './components/LoginFields'
+import LoginOrSignInFields from './components/LoginOrSignInFields'
 import {facebookProvider, gitHubProvider, googleProvider} from '../../commons/autentication/authMethods'
 import {socialMediaAuth} from '../../commons/autentication/service.auth'
 import {useDispatch} from 'react-redux'
@@ -33,7 +33,6 @@ const useStyles = makeStyles(() =>
 interface ILogin {
 }
 
-//TODO permettere il resetPassword
 const LoginOrSignInContainer: FC<ILogin> = () => {
 
     const dispatch = useDispatch()
@@ -48,6 +47,10 @@ const LoginOrSignInContainer: FC<ILogin> = () => {
     const handleAuthenticationClick = async (provider: any) => {
         const response = await socialMediaAuth(provider, dispatch)
         console.info('AUTHENTICATION: ', response)
+    }
+
+    const handleForgotPassword = () => {
+
     }
 
     return (
@@ -78,7 +81,7 @@ const LoginOrSignInContainer: FC<ILogin> = () => {
                 className={`row mt-5 animate__animated ${!isSingIn ? ' animate__fadeInRight' : ' animate__fadeInLeft'}`}>
 
                 {/* SING IN or LOGIN */}
-                <LoginFields isSingIn={isSingIn}/>
+                <LoginOrSignInFields isSingIn={isSingIn}/>
 
                 {/*DIVIDER*/}
                 <div className="col-2 d-flex align-items-center justify-content-center">
@@ -119,13 +122,10 @@ const LoginOrSignInContainer: FC<ILogin> = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div className="row mt-5">
-                <div className="col-12">
+                <div className="col-12 mt-5">
                     <Typography color="textSecondary">
                         Password dimenticata?
-                        <Link className="ms-2">Recupera</Link>
+                        <Link className="ms-2" onClick={handleForgotPassword}>Recupera</Link>
                     </Typography>
                 </div>
             </div>

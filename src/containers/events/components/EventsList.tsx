@@ -3,11 +3,11 @@ import {FC} from 'react'
 import {Card, CardContent, CardMedia} from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import {IEvent} from '../eventi.types'
-import {eventsContainer} from '../EventsContainer'
 import disco from '../../../assets/img/disco.jpg'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {CurrentDialogType} from '../../../redux/dialogs/current-dialog.constants'
+import {eventsListSelector} from '../redux/eventi.selectors'
 
 interface IEventsListProps {
 }
@@ -15,18 +15,20 @@ interface IEventsListProps {
 const EventsList: FC<IEventsListProps> = () => {
 
     const dispatch = useDispatch()
-
-    const eventsList: IEvent[] = []
+    const eventsList = useSelector(eventsListSelector)
 
     /* Open the dialog to show local details */
     const handleCardClick = (event: IEvent) => {
-        dispatch(setCurrentDialog(CurrentDialogType.LOCAL_DETAILS, {event: event}))
+        console.log("eventsList>>>",eventsList)
+        console.log("event>>>",event)
+
+        dispatch(setCurrentDialog(CurrentDialogType.LOCAL_DETAILS, {event}))
     }
 
     return (
         <>
             {
-                eventsContainer?.map((event: IEvent, index) =>
+                eventsList?.map((event: IEvent, index) =>
                     <Card key={index}
                           className="col-12 col-sm-6 col-md-4 m-4 p-0 localCard c-pointer"
                           onClick={() => handleCardClick(event)}
@@ -40,7 +42,7 @@ const EventsList: FC<IEventsListProps> = () => {
                         <CardMedia
                             component="img"
                             height="140px"
-                            image={disco}
+                            image={event.imageUrl ?? disco}
                             alt="eventImage"
                         />
                         <CardContent className="p-0">
@@ -49,7 +51,7 @@ const EventsList: FC<IEventsListProps> = () => {
 
                                     {/* LOCAL NAME*/}
                                     <Typography variant="h5" component="div" color={'textSecondary'}>
-                                        {event.localName}
+                                        {event.eventName}
                                     </Typography>
                                 </div>
                             </div>

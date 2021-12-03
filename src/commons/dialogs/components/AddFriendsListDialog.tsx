@@ -11,8 +11,7 @@ import {
     isFetchFilteredFriendsListPendingSelector
 } from '../../../containers/friends/redux/friends.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
-import {filteredFriendsListSelector} from '../../../containers/friends/redux/friends.selectors'
-import {friendsList} from '../../../containers/friends/FriendsContainer'
+import {filteredFriendsListSelector, friendsListSelector} from '../../../containers/friends/redux/friends.selectors'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 
 interface IAddFriendsListDialogProps {
@@ -23,9 +22,8 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
     const [searchValue, setSearchValue] = useState<string>('')
 
     const dispatch = useDispatch()
-    /*
-        const friendsList = useSelector(friendsListSelector)  TODO decommentare quando il be tornerà la lista
-    */
+
+    const friendsList = useSelector(friendsListSelector)
     const filteredFriendsList = useSelector(filteredFriendsListSelector)
     const isFetchFilteredFriendsListPending = useSelector(isFetchFilteredFriendsListPendingSelector)
 
