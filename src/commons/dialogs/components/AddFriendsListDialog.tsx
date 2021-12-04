@@ -5,6 +5,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import {SearchOutlined} from '@material-ui/icons'
 import {useDispatch, useSelector} from 'react-redux'
 import {
+    fetchAddFriendAction,
     fetchFilteredFriendsListAction,
     isFetchFilteredFriendsListPendingSelector
 } from '../../../containers/friends/redux/friends.actions'
@@ -14,8 +15,9 @@ import {
     suggestedFriendsListSelector
 } from '../../../containers/friends/redux/friends.selectors'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
-import AddFriendList from '../../../containers/friends/components/AddFriendList'
+import GenericFriend from '../../../containers/friends/components/GenericFriend'
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined'
+import {IFriend} from '../../../containers/friends/friends.types'
 
 interface IAddFriendsListDialogProps {
 }
@@ -39,10 +41,6 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
         setIsSuggestedShowed(false)
         dispatch(fetchFilteredFriendsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {search: searchValue}))
     }
-    /*
-        useEffect(() => {
-            !!suggestedFriendsList.length ? setIsSuggestedShowed(true) : setIsSuggestedShowed(false)
-        }, [suggestedFriendsList])*/
 
     const handleShowSuggestedFriend = () => {
         setIsSuggestedShowed(prev => !prev)
@@ -50,6 +48,10 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
 
     const handleClose = () => {
         dispatch(closeCurrentDialog())
+    }
+
+    const handleAddFriend = (friend: any) => {
+        dispatch(fetchAddFriendAction.build({idUserFriendDocument: friend?.id}, friend.id))
     }
 
     return (
@@ -100,8 +102,11 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                                      margin: 'auto'
                                  }}>
                                 {
-                                    (isSuggestedShowed ? suggestedFriendsList : filteredFriendsList)?.map((friend: any) =>
-                                        <AddFriendList friend={friend}/>
+                                    (isSuggestedShowed ? suggestedFriendsList : filteredFriendsList)?.map((friend: IFriend) =>
+                                        <GenericFriend sectionId="addFriendsDialog"
+                                                       friend={friend}
+                                                       tooltipTitle="Clicca per aggiungerlo!"
+                                                       handleClick={() => handleAddFriend(friend)}/>
                                     )
                                 }
                             </div>

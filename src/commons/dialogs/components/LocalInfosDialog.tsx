@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {FC, useCallback, useState} from 'react'
+import {FC, useCallback, useEffect, useState} from 'react'
 import {IEvent, IPartecipant} from '../../../containers/events/eventi.types'
 import {Avatar, Checkbox, CircularProgress, IconButton, Tooltip, Typography} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
@@ -28,19 +28,26 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
     const clientSecret = useSelector(paymentClientSecretSelector)
     const isFetchPaymentPending = useSelector(isFetchPaymentPendingSelector)
 
+
+    useEffect(() => {
+        !!clientSecret && setPaymentForm(true)
+    }, [clientSecret])
+
     const handleVisibleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setVisibleChecked(event.target.checked)
     }
 
     const handleOpenPayment = useCallback(() => {
-        !showPaymentForm && dispatch(fetchPaymentAction.build({
-            provider: 'STRIPE',
-            eventDocumentId: event?.id,
-            visible: visibleChecked
-        }, DEFAULT_REQUEST_ID))
-
-        clientSecret && setPaymentForm(prev => !prev)
-    }, [clientSecret, dispatch, event?.id, showPaymentForm, visibleChecked])
+        if (!showPaymentForm) {
+            dispatch(fetchPaymentAction.build({
+                provider: 'STRIPE',
+                eventDocumentId: event?.id,
+                visible: visibleChecked
+            }, DEFAULT_REQUEST_ID))
+        } else {
+            setPaymentForm(false)
+        }
+    }, [dispatch, event?.id, showPaymentForm, visibleChecked])
 
     const handleClose = useCallback(() => {
         dispatch(closeCurrentDialog())
@@ -135,7 +142,7 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                     <div className="row">
                         {//TODO creare componente
                             event?.partecipants.map((partecipant: IPartecipant) =>
-                                <div className="col-auto">
+                               <div className="col-auto  mt-2">
                                     <Tooltip title={`${partecipant?.name} ${partecipant?.surname}`}
                                              className="c-pointer">
                                         <Avatar

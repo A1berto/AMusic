@@ -7,15 +7,15 @@ import {CurrentDialogType} from '../../../redux/dialogs/current-dialog.constants
 import {closeCurrentDialog, setCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {FRIENDS_LIST_PATH} from '../../../routes'
 import {HashHistory} from '../../../index'
+import {IFriend} from '../friends.types'
 
-//TODO inserire la giusta interfaccia (parlare con andrea)
-export const fetchSuggestedFriendsListSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<any>>>) =>
+export const fetchSuggestedFriendsListSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<IFriend[]>>>) =>
     action$.pipe(
         ofType(fetchSuggestedFriendsListAction.successActionType),
         map(() => setCurrentDialog(CurrentDialogType.ADD_FRIENDS_LIST)))
 
 
-export const fetchAllFriendsListSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<any>>>) =>
+export const fetchAllFriendsListSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<IFriend[]>>>) =>
     action$.pipe(
         ofType(fetchFriendsListAction.successActionType),
         mergeMap((action) => {
@@ -27,7 +27,7 @@ export const fetchAllFriendsListSuccessEpic = (action$: Observable<ISuccessFetch
         })
     )
 
-export const fetchAddFriendsSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<any>>>) =>
+export const fetchAddFriendsSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<IFriend[]>>>) =>
     action$.pipe(
         ofType(fetchAddFriendAction.successActionType),
         mergeMap(() => {

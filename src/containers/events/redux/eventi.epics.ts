@@ -1,5 +1,5 @@
 import {NEVER, Observable} from 'rxjs'
-import {genericResponseNormalizer, IGenericResponse, ISuccessFetchAction} from 'fetch-with-redux-observable'
+import {IFailureFetchAction, IGenericResponse, ISuccessFetchAction} from 'fetch-with-redux-observable'
 import {ofType} from 'redux-observable'
 import {fetchAllEventsListAction, fetchPaymentAction} from './eventi.actions'
 import {map, mergeMap} from 'rxjs/operators'
@@ -19,13 +19,14 @@ export const allEventsListSuccessEpic = (action$: Observable<ISuccessFetchAction
         })
     )
 
-export const fetchPaymentFailureEpic = (action$: Observable<ISuccessFetchAction<any>>) =>
+export const fetchPaymentFailureEpic = (action$: Observable<IFailureFetchAction>) =>
     action$.pipe(
         ofType(fetchPaymentAction.failureActionType),
-        map((action)=>action.payload),
-        mergeMap((payload) => {
-            const errorMessage= payload.response.messages[0].text
-            return [addError({userMessage:errorMessage})]
+        map((action:IFailureFetchAction) => action.payload),
+        map((payload) => {
+            const errorMessage = payload.response.messages[0].text ?? ''
+            //TODO chiedere a vito perchè non miparte questo error e mi parte uno generico
+            return addError({userMessage: errorMessage})
         })
     )
 

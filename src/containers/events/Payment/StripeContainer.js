@@ -11,7 +11,7 @@ const StripeContainer = (props) => {
     const {clientSecret} = props
 
     const appearance = {
-        theme: 'night', //TODO provare stripe o flat
+        theme: 'night',
         variables: {
             colorPrimary: '#0570de',
             colorBackground: '#ffffff',
@@ -20,7 +20,6 @@ const StripeContainer = (props) => {
             fontFamily: 'Ideal Sans, system-ui, sans-serif',
             spacingUnit: '2px',
             borderRadius: '4px',
-            // See all possible variables below
         },
         labels: 'floating',
     }

@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {FC, useCallback, useEffect, useState} from 'react'
-import {Button, Card, CardContent, CardHeader, createStyles, makeStyles,} from '@material-ui/core'
-import GoogleMapsReact, {Props as GoogleMapsReactProps} from 'google-map-react'
+import {Button, Card, CardContent, CardHeader,} from '@material-ui/core'
 import {GoogleMapsAutocomplete} from './components/GoogleMapsAutocomplete'
 import {IEvent, IGeoLocation} from './eventi.types'
 import Typography from '@material-ui/core/Typography'
@@ -12,40 +11,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {eventsListSelector} from './redux/eventi.selectors'
 import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
 import {CurrentDialogType} from '../../redux/dialogs/current-dialog.constants'
-
-export const infoAgenziaStyles = makeStyles(() =>
-    createStyles({
-        rootColor: {
-            color: '#5A5A5A',
-        },
-        typography: {
-            fontSize: '13px',
-        },
-        cardHeaderLabel: {
-            fontWeight: 400,
-        },
-        cardHeaderAgencyDescription: {
-            fontSize: '20px',
-            fontWeight: 700,
-            textTransform: 'uppercase',
-        },
-        link: {
-            color: 'orange',
-            '&:hover': {
-                color: 'blue',
-            },
-        },
-        cardStyle: {
-            maxWidth: '75vw',
-            position: 'absolute',
-            border: `1px solid orange`,
-            borderRadius: '5px',
-            transform: 'translate(-50%, 2%)',
-            zIndex: 9
-        },
-    }),
-)
-
+import GoogleMapsReact, {Props as GoogleMapsReactProps} from 'google-map-react'
 
 interface IEventsProps {
 }
@@ -153,7 +119,7 @@ const Events: FC<IEventsProps> = () => {
                                                             lng={event?.geoPoint?.longitude}
                                                             title={'GoogleMaps Marker'}
                                                             currentEvent={event}
-                                                            handleClick={()=>handleMarkerClick(event)}/>
+                                                            handleClick={() => handleMarkerClick(event)}/>
                                                 )
                                             }
                                         </GoogleMapsReact>

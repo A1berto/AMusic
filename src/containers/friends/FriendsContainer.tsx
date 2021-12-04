@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {FC} from 'react'
 import Typography from '@material-ui/core/Typography'
-import {Avatar, Button, CircularProgress, createStyles, makeStyles, Tooltip} from '@material-ui/core'
+import {Button, CircularProgress, createStyles, makeStyles} from '@material-ui/core'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
@@ -10,6 +10,7 @@ import {fetchSuggestedFriendsListAction, isFetchSuggestedFriendsListPendingSelec
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {friendsListSelector} from './redux/friends.selectors'
 import {IFriend} from './friends.types'
+import GenericFriend from './components/GenericFriend'
 
 export const friendsStyles = makeStyles(() =>
     createStyles({
@@ -65,22 +66,10 @@ const FriendsContainer: FC<IFriendsListProps> = () => {
                 <div className={`row px-2 ${classes.friendsList}`}>
                     {
                         friendsList?.map((friend: IFriend) =>
-                            <div className="col-4 p-4 d-flex align-items-center friend c-pointer"
-                                 onClick={() => handleOpenInfoFriend(friend)}>
-                                <Tooltip title="Visualizza il dettaglio">
-                                    <div className="d-flex align-items-center">
-                                        <Avatar
-                                            variant="circle"
-                                            alt="ProfileContainer Image"
-                                            src={friend.photoUrl}/>
-                                        <Typography variant="body2"
-                                                    color="secondary"
-                                                    className="ms-4">
-                                            {friend.displayName}
-                                        </Typography>
-                                    </div>
-                                </Tooltip>
-                            </div>
+                            <GenericFriend sectionId="friendsContainer"
+                                           tooltipTitle="Visualizza il dettaglio"
+                                           friend={friend}
+                                           handleClick={()=>handleOpenInfoFriend(friend)}/>
                         )
                     }
 

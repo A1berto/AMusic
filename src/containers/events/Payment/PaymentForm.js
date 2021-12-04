@@ -4,7 +4,6 @@ import {PaymentElement, useElements, useStripe} from '@stripe/react-stripe-js'
 import {Button} from '@material-ui/core'
 import {useDispatch} from 'react-redux'
 import {addError, addInfo, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
-import {useHistory} from 'react-router-dom'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {fetchAllEventsListAction, resetStripeClienteSecretAction} from '../redux/eventi.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
@@ -15,7 +14,6 @@ const PaymentForm = () => {
     const stripe = useStripe()
     const elements = useElements()
     const dispatch = useDispatch()
-    const history = useHistory()
 
     const [message, setMessage] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
@@ -60,7 +58,6 @@ const PaymentForm = () => {
 
         if (!stripe || !elements) {
             // Stripe.js has not yet loaded.
-            // Make sure to disable form submission until Stripe.js has loaded.
             return
         }
 
@@ -69,13 +66,12 @@ const PaymentForm = () => {
         await stripe.confirmPayment({
             elements,
             confirmParams: {
-                // Make sure to change this to your payment completion page
                 return_url: 'http://localhost:3000/#/events',
             },
             redirect: 'if_required'
         }).then((paymentIntent) => {
+            dispatch(resetStripeClienteSecretAction(''))
             if (!!paymentIntent.error) {
-                dispatch(resetStripeClienteSecretAction(''))
                 dispatch(addError({userMessage: 'Ops! Errore durante il pagamento'}))
             } else {
                 dispatch(closeCurrentDialog())
