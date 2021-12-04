@@ -1,8 +1,12 @@
 import * as React from 'react'
 import {FC, useMemo, useState} from 'react'
 import {Avatar, CircularProgress, IconButton, Tooltip, Typography} from '@material-ui/core'
-import {useSelector} from 'react-redux'
-import {isFetchAddFriendPendingSelector} from '../redux/friends.actions'
+import {useDispatch, useSelector} from 'react-redux'
+import {
+    fetchDeleteFriendAction,
+    isFetchAddFriendPendingSelector,
+    isFetchDeleteFriendPendingSelector
+} from '../redux/friends.actions'
 import {IFriend} from '../friends.types'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
 
@@ -18,6 +22,9 @@ const GenericFriend: FC<IAddFriendListProps> = (props) => {
 
     const [isDeleteFriendPossible, setIsDeleteFriendPossible] = useState<boolean>(false)
     const isFetchAddFriendPending = useSelector(isFetchAddFriendPendingSelector(friend.id))
+    const isFetchDeleteFriendPending = useSelector(isFetchDeleteFriendPendingSelector(friend.id))
+
+    const dispatch = useDispatch()
 
     const isAddFriendDialogSection = useMemo(() => {
         return sectionId === 'addFriendsDialog'
@@ -31,6 +38,10 @@ const GenericFriend: FC<IAddFriendListProps> = (props) => {
         !isAddFriendDialogSection && setIsDeleteFriendPossible(false)
     }
 
+    const handleDeleteFriend = () => {
+        console.log('friend>>>', friend)
+        dispatch(fetchDeleteFriendAction.build({idUserFriendDocument: friend?.id}, friend.id))
+    }
 
     return (
         <>
@@ -39,9 +50,10 @@ const GenericFriend: FC<IAddFriendListProps> = (props) => {
                  onMouseEnter={onMouseEnter}
                  onMouseLeave={onMouseLeave}>
                 <div className="row d-flex c-pointer">
-                    <Tooltip title={tooltipTitle}>
-                        <div className="col-auto d-flex"
-                             onClick={handleClick}>
+                    <div className="col-auto d-flex"
+                         onClick={handleClick}>
+                        <Tooltip title={tooltipTitle}>
+
                             <div className="d-flex align-items-center">
                                 {
                                     isFetchAddFriendPending ?
@@ -49,7 +61,7 @@ const GenericFriend: FC<IAddFriendListProps> = (props) => {
                                                           style={{color: 'white'}}/> :
                                         <Avatar variant="circle"
                                                 alt="Friend Image"
-                                                src={friend.photoUrl}/>
+                                                src={friend?.photoUrl}/>
                                 }
                                 <Typography variant="body2"
                                             color="secondary"
@@ -57,15 +69,19 @@ const GenericFriend: FC<IAddFriendListProps> = (props) => {
                                     {friend?.displayName}
                                 </Typography>
                             </div>
-                        </div>
-                    </Tooltip>
-
+                        </Tooltip>
+                    </div>
                     <div className="col d-flex justify-content-center">
                         {
                             isDeleteFriendPossible &&
                             <Tooltip title={'Elimina amico'}>
-                                <IconButton onClick={() => console.log('cliccato cancella')} color="primary">
-                                    <DeleteOutlineIcon/>
+                                <IconButton onClick={handleDeleteFriend} color="primary">
+                                    {
+                                        isFetchDeleteFriendPending ?
+                                            <CircularProgress className="ms-2" size={20}
+                                                              style={{color: 'white'}}/> :
+                                            <DeleteOutlineIcon/>
+                                    }
                                 </IconButton>
                             </Tooltip>
                         }

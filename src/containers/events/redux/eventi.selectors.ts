@@ -12,3 +12,8 @@ export const eventsListSelector = createSelector(
     eventsRootSelector,
     (events: IEventReducer | null): IEvent[] => events?.eventsList ?? []
 )
+
+export const eventsHistoryListSelector = createSelector(
+    eventsRootSelector,
+    (events: IEventReducer | null): IEvent[] => events?.eventsHistory ?? []
+)

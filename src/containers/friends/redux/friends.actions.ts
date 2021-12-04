@@ -1,6 +1,6 @@
 import {DEFAULT_REQUEST_ID, fetchActionFactory, isRequestInPending} from 'fetch-with-redux-observable'
 import {
-    FETCH_ADD_FRIEND_API,
+    FETCH_ADD_FRIEND_API, FETCH_DELETE_FRIEND_API,
     FETCH_FILTERED_FRIENDS_LIST_API,
     FETCH_FRIENDS_LIST_API,
     FETCH_SUGGESTED_FRIENDS_LIST_API
@@ -21,3 +21,7 @@ export const isFetchFilteredFriendsListPendingSelector = isRequestInPending(fetc
 export const FETCH_ADD_FRIEND = 'FETCH_ADD_FRIEND'
 export const fetchAddFriendAction = fetchActionFactory(FETCH_ADD_FRIEND_API, FETCH_ADD_FRIEND)
 export const isFetchAddFriendPendingSelector = (idFriend:string)=> isRequestInPending(fetchAddFriendAction.pendingActionTypeWithSpinner, `${idFriend}`)
+
+export const FETCH_DELETE_FRIEND = 'FETCH_DELETE_FRIEND'
+export const fetchDeleteFriendAction = fetchActionFactory(FETCH_DELETE_FRIEND_API, FETCH_DELETE_FRIEND)
+export const isFetchDeleteFriendPendingSelector = (idFriend:string)=> isRequestInPending(fetchDeleteFriendAction.pendingActionTypeWithSpinner, `${idFriend}`)

@@ -3,18 +3,18 @@ import {FC} from 'react'
 import {Card, CardContent, CardMedia} from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import {IEvent} from '../eventi.types'
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {setCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {CurrentDialogType} from '../../../redux/dialogs/current-dialog.constants'
-import {eventsListSelector} from '../redux/eventi.selectors'
 
 interface IEventsListProps {
+    eventsList: IEvent[]
 }
 
-const EventsList: FC<IEventsListProps> = () => {
+const EventsList: FC<IEventsListProps> = (props) => {
 
+    const {eventsList} = props
     const dispatch = useDispatch()
-    const eventsList = useSelector(eventsListSelector)
 
     /* Open the dialog to show local details */
     const handleCardClick = (event: IEvent) => {
@@ -32,7 +32,7 @@ const EventsList: FC<IEventsListProps> = () => {
                               background: '#252525',
                               height: '180px',
                               width: '360px',
-                              boxShadow: '0px 0px 10px rgba(256, 256, 256, 0.6)',
+                              boxShadow: '0px 0px 10px rgba(256, 256, 256, 0.4)',
                               borderRadius: 10
                           }}>
                         <CardMedia

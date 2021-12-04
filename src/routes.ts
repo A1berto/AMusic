@@ -1,5 +1,5 @@
 export const LOGIN_OR_SIGNIN_PATH = '/loginOrSignIn'
-export const EVENTS_PATH = '/events'
+export const EVENTS_PATH = '/eventsList'
 export const INFO_APP_PATH = '/faq'
 export const PROFILE_PATH = '/profile'
 export const FRIENDS_LIST_PATH = '/friendList'

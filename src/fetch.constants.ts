@@ -97,6 +97,18 @@ export const FETCH_ADD_FRIEND_API: IRequestModel = {
     },
 }
 
+/**
+ * @description Remove friend
+ * @method POST
+ */
+export const FETCH_DELETE_FRIEND_API: IRequestModel = {
+    url: `/private/user/removeFriend`,
+    method: HttpMethods.DELETE,
+    headers: {
+        'Content-Type': 'application/json'
+    },
+}
+
 
 /**
  * @description Get events list
@@ -104,6 +116,18 @@ export const FETCH_ADD_FRIEND_API: IRequestModel = {
  */
 export const FETCH_ALL_EVENTS_LIST_API: IRequestModel = {
     url: `/private/events/all`,
+    method: HttpMethods.GET,
+    headers: {
+        'Content-Type': 'application/json'
+    },
+}
+
+/**
+ * @description Get events history list
+ * @method GET
+ */
+export const FETCH_EVENTS_HISTORY_LIST_API: IRequestModel = {
+    url: `/private/events/history`,
     method: HttpMethods.GET,
     headers: {
         'Content-Type': 'application/json'

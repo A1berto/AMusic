@@ -23,8 +23,8 @@ const LoginComponent = lazy(() => import('./containers/login/LoginOrSignInContai
 const ProfileComponent = lazy(() => import('./containers/profile/ProfileContainer'))
 const EventiComponent = lazy(() => import('./containers/events/EventsListContainer'))
 const FriendsListComponent = lazy(() => import('./containers/friends/FriendsContainer'))
+const EventsHistoryComponent = lazy(() => import('./containers/eventsHistory/EventsHistory'))
 const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosContainer'))
-const EventsHistoryComponent = lazy(() => import('./containers/infoApp/InfosContainer'))
 
 
 function App() {

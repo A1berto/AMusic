@@ -7,6 +7,9 @@ import LocationOnIcon from '@material-ui/icons/LocationOn'
 import parse from 'autosuggest-highlight/parse'
 import {AMUSIC_PALETTE_COLORS} from '../../../AMusic_theme'
 import {IGeoLocation} from '../eventi.types'
+import {fetchAllEventsListAction} from '../redux/eventi.actions'
+import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
+import {useDispatch} from 'react-redux'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,6 +41,7 @@ const autocompleteService = {current: null}
 
 export interface IGoogleMapsAutocomplete {
     onPlaceChange?: (location: IGeoLocation) => void
+    distance: number
 }
 
 
@@ -48,6 +52,7 @@ export const GoogleMapsAutocomplete: React.FC<IGoogleMapsAutocomplete> = props =
     const [inputValue, setInputValue] = React.useState('')
     const [options, setOptions] = React.useState<PlaceType[]>([])
 
+    const dispatch = useDispatch()
 
     const fetch = React.useMemo(
         () =>
@@ -68,6 +73,16 @@ export const GoogleMapsAutocomplete: React.FC<IGoogleMapsAutocomplete> = props =
                         latitude: results[0].geometry.location.lat(),
                         longitude: results[0].geometry.location.lng(),
                     })
+                    dispatch(fetchAllEventsListAction.build(
+                        null,
+                        DEFAULT_REQUEST_ID,
+                        undefined,
+                        {
+                            lat: results[0].geometry.location.lat(),
+                            lon: results[0].geometry.location.lng(),
+                            distance: props.distance
+                        }
+                    ))
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status)
                 }
@@ -95,7 +110,6 @@ export const GoogleMapsAutocomplete: React.FC<IGoogleMapsAutocomplete> = props =
 
 
         fetch({input: inputValue, componentRestrictions: {country: 'it'}}, (results?: PlaceType[]) => {
-            console.log('results', results)
             if (active) {
                 let newOptions = [] as PlaceType[]
 
@@ -137,6 +151,7 @@ export const GoogleMapsAutocomplete: React.FC<IGoogleMapsAutocomplete> = props =
             }}
             onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue)
+                !newInputValue && dispatch(fetchAllEventsListAction.build(null, DEFAULT_REQUEST_ID,undefined,{distance:props.distance}))
             }}
             renderInput={(params) => (
                 <TextField

@@ -5,9 +5,13 @@ import {
     fetchProfileAction,
     updateProfileAction
 } from '../containers/profile/redux/profile.actions'
-import {fetchAllEventsListAction, fetchPaymentAction} from '../containers/events/redux/eventi.actions'
 import {
-    fetchAddFriendAction,
+    fetchAllEventsListAction,
+    fetchEventsHistoryListAction,
+    fetchPaymentAction
+} from '../containers/events/redux/eventi.actions'
+import {
+    fetchAddFriendAction, fetchDeleteFriendAction,
     fetchFilteredFriendsListAction,
     fetchFriendsListAction,
     fetchSuggestedFriendsListAction
@@ -18,7 +22,11 @@ import {
     fetchAllFriendsListSuccessEpic,
     fetchSuggestedFriendsListSuccessEpic
 } from '../containers/friends/redux/friends.epics'
-import {allEventsListSuccessEpic, fetchPaymentFailureEpic} from '../containers/events/redux/eventi.epics'
+import {
+    allEventsListSuccessEpic,
+    fetcheventsHistoryListSuccessEpic,
+    fetchPaymentFailureEpic
+} from '../containers/events/redux/eventi.epics'
 import {profileSuccessEpic} from '../containers/profile/redux/profile.epics'
 
 // root epics
@@ -29,6 +37,7 @@ export const rootEpics: Epic = combineEpics<Epic>(
     allEventsListSuccessEpic,
     fetchPaymentFailureEpic,
     fetchAllFriendsListSuccessEpic,
+    fetcheventsHistoryListSuccessEpic,
     fetchAddFriendsSuccessEpic,
     fetchSuggestedFriendsListSuccessEpic,
 
@@ -38,10 +47,12 @@ export const rootEpics: Epic = combineEpics<Epic>(
     switchMapFetchEpics(changeProfilePasswordAction.pendingActionTypeWithSpinner),
 
     switchMapFetchEpics(fetchAllEventsListAction.pendingActionTypeWithSpinner),
+    switchMapFetchEpics(fetchEventsHistoryListAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(fetchPaymentAction.pendingActionTypeWithSpinner),
 
     switchMapFetchEpics(fetchFriendsListAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(fetchFilteredFriendsListAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(fetchSuggestedFriendsListAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(fetchAddFriendAction.pendingActionTypeWithSpinner),
+    switchMapFetchEpics(fetchDeleteFriendAction.pendingActionTypeWithSpinner),
 )

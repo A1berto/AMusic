@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {FC, useCallback, useEffect, useState} from 'react'
+import {FC, useCallback, useEffect, useMemo, useState} from 'react'
 import {IEvent, IPartecipant} from '../../../containers/events/eventi.types'
 import {Avatar, Checkbox, CircularProgress, IconButton, Tooltip, Typography} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
@@ -11,6 +11,8 @@ import StripeContainer from '../../../containers/events/Payment/StripeContainer'
 import {fetchPaymentAction, isFetchPaymentPendingSelector} from '../../../containers/events/redux/eventi.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {paymentClientSecretSelector} from '../../../containers/events/redux/eventi.selectors'
+import {EVENTS_HISTORY_PATH} from '../../../routes'
+import HelpIcon from '@material-ui/icons/Help'
 
 interface ILocalInfosProps {
     event: IEvent
@@ -28,6 +30,9 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
     const clientSecret = useSelector(paymentClientSecretSelector)
     const isFetchPaymentPending = useSelector(isFetchPaymentPendingSelector)
 
+    const isInHistorySection = useMemo(() => {
+        return window.location.hash.includes(EVENTS_HISTORY_PATH)
+    }, [])
 
     useEffect(() => {
         !!clientSecret && setPaymentForm(true)
@@ -92,7 +97,7 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                     </div>
                 </div>
 
-                <div className="col-12 d-flex align-items-center mt-1">
+                <div className="col-12 d-flex align-items-center mt-2">
                     <div className="col-2">
                         <Typography variant="h5"
                                     color="textSecondary">
@@ -107,7 +112,7 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                     </div>
                 </div>
 
-                <div className="col-12 d-flex align-items-center mt-1">
+                <div className="col-12 d-flex align-items-center mt-2">
                     <div className="col-2">
                         <Typography variant="h5"
                                     color="textSecondary">
@@ -122,27 +127,32 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                     </div>
                 </div>
 
-                <div className="col-12 d-flex align-items-center mt-1">
+                <div className="col-12 d-flex align-items-center mt-2">
                     <div className="col-2">
                         <Typography variant="h5"
                                     color="textSecondary">
                             Prezzo
                         </Typography>
                     </div>
-                    <div className="col ms-2">
+                    <div className="col d-flex ms-2">
                         <Typography variant="h6"
                                     color="secondary">
-                            {event?.ticketPrice}
+                            {event?.ticketPrice} €
                         </Typography>
+                        {   //TODO
+                            isInHistorySection &&
+                            <Tooltip className="ms-3" title={'Andrea tornerà le info che faccio visualizzare qui'}>
+                                <HelpIcon color="secondary"/>
+                            </Tooltip>
+                        }
                     </div>
                 </div>
 
                 <div className="col-12 pt-4">
-
                     <div className="row">
-                        {//TODO creare componente
+                        {
                             event?.partecipants.map((partecipant: IPartecipant) =>
-                               <div className="col-auto  mt-2">
+                                <div className="col-auto  mt-2">
                                     <Tooltip title={`${partecipant?.name} ${partecipant?.surname}`}
                                              className="c-pointer">
                                         <Avatar
@@ -156,31 +166,36 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
 
                 </div>
 
-                {/* VISIBLE PARTICIPATION*/}
-                <div className="col-12 pt-4 d-flex align-items-center">
-                    <Typography variant="h6"
-                                color="secondary">
-                        Rendo visibile agli altri utenti la partecipazione a questo evento
-                    </Typography>
-                    <Checkbox
-                        color="primary"
-                        checked={visibleChecked}
-                        onChange={handleVisibleChange}/>
-                </div>
+                {
+                    !isInHistorySection &&
+                    <>
+                        {/* VISIBLE PARTICIPATION*/}
+                        <div className="col-12 pt-4 d-flex align-items-center">
+                            <Typography variant="h6"
+                                        color="secondary">
+                                Rendo visibile agli altri utenti la partecipazione a questo evento
+                            </Typography>
+                            <Checkbox
+                                color="primary"
+                                checked={visibleChecked}
+                                onChange={handleVisibleChange}/>
+                        </div>
 
-                {/*PAYMENT BUTTON*/}
-                <div className="col-12">
-                    <Tooltip title={'Iscrizione e Pagamento'} placement="left">
-                        <Fab style={{position: 'absolute', right: 25, bottom: 25}} color="primary"
-                             onClick={handleOpenPayment}>
+                        {/*PAYMENT BUTTON*/}
+                        <div className="col-12">
+                            <Tooltip title={'Iscrizione e Pagamento'} placement="left">
+                                <Fab style={{position: 'absolute', right: 25, bottom: 25}} color="primary"
+                                     onClick={handleOpenPayment}>
 
-                            {
-                                isFetchPaymentPending ?
-                                    <CircularProgress style={{color: 'white'}}/> : <PaymentOutlinedIcon/>
-                            }
-                        </Fab>
-                    </Tooltip>
-                </div>
+                                    {
+                                        isFetchPaymentPending ?
+                                            <CircularProgress style={{color: 'white'}}/> : <PaymentOutlinedIcon/>
+                                    }
+                                </Fab>
+                            </Tooltip>
+                        </div>
+                    </>
+                }
             </div>
 
 

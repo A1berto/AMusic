@@ -2,7 +2,7 @@ import {fetchAddFriendAction, fetchFriendsListAction, fetchSuggestedFriendsListA
 import {ofType} from 'redux-observable'
 import {map, mergeMap} from 'rxjs/operators'
 import {NEVER, Observable} from 'rxjs'
-import {DEFAULT_REQUEST_ID, IGenericResponse, ISuccessFetchAction} from 'fetch-with-redux-observable'
+import {IGenericResponse, ISuccessFetchAction} from 'fetch-with-redux-observable'
 import {CurrentDialogType} from '../../../redux/dialogs/current-dialog.constants'
 import {closeCurrentDialog, setCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {FRIENDS_LIST_PATH} from '../../../routes'
@@ -31,7 +31,6 @@ export const fetchAddFriendsSuccessEpic = (action$: Observable<ISuccessFetchActi
     action$.pipe(
         ofType(fetchAddFriendAction.successActionType),
         mergeMap(() => {
-            //TODO piuttosto di chiamare fetchFriends, prendere il payload e modificare state
-            return [fetchFriendsListAction.build(null, DEFAULT_REQUEST_ID), closeCurrentDialog()]
+            return [closeCurrentDialog()]
         })
     )

@@ -1,5 +1,7 @@
 import {genericResponseNormalizer, IAction, IGenericResponse} from 'fetch-with-redux-observable'
 import {
+    fetchAddFriendAction,
+    fetchDeleteFriendAction,
     fetchFilteredFriendsListAction,
     fetchFriendsListAction,
     fetchSuggestedFriendsListAction
@@ -11,6 +13,8 @@ type FriendsActionReducerTypes = IGenericResponse<IFriend[]>
 export const friendsListReducer = (state: IFriend[] = [], action: IAction<FriendsActionReducerTypes>): IFriend[] => {
     switch (action.type) {
         case fetchFriendsListAction.successActionType:
+        case fetchDeleteFriendAction.successActionType:
+        case fetchAddFriendAction.successActionType:
             return genericResponseNormalizer(action.payload) ?? []
         default:
             return state

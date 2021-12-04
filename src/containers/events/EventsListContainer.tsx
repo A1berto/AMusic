@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {FC, useCallback, useEffect, useState} from 'react'
-import {Button, Card, CardContent, CardHeader,} from '@material-ui/core'
+import {Button, Card, CardContent, CardHeader, Slider, withStyles,} from '@material-ui/core'
 import {GoogleMapsAutocomplete} from './components/GoogleMapsAutocomplete'
 import {IEvent, IGeoLocation} from './eventi.types'
 import Typography from '@material-ui/core/Typography'
@@ -13,12 +13,43 @@ import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
 import {CurrentDialogType} from '../../redux/dialogs/current-dialog.constants'
 import GoogleMapsReact, {Props as GoogleMapsReactProps} from 'google-map-react'
 
+const AMusicSlider = withStyles({
+    root: {
+        color: '#936F9D',
+        height: 4,
+    },
+    thumb: {
+        height: 18,
+        width: 18,
+        backgroundColor: '#fff',
+        border: '2px solid currentColor',
+        marginTop: -5,
+        marginLeft: -12,
+        '&:focus, &:hover, &$active': {
+            boxShadow: 'inherit',
+        },
+    },
+    active: {},
+    valueLabel: {
+        left: 'calc(-50% - 2px)',
+    },
+    track: {
+        height: 7,
+        borderRadius: 4,
+    },
+    rail: {
+        height: 6,
+        borderRadius: 4,
+    },
+})(Slider)
+
 interface IEventsProps {
 }
 
 const Events: FC<IEventsProps> = () => {
 
     const [isButtonComeBackUpVisible, setButtonComeBackUpVisible] = useState<boolean>(false)
+    const [distanceValue, setDistanceValue] = React.useState<number>(30)
     const [mapsProps, setMapsPros] = useState<GoogleMapsReactProps>({
         center: {
             lat: 41.9027835,
@@ -36,6 +67,10 @@ const Events: FC<IEventsProps> = () => {
 
     const dispatch = useDispatch()
     const eventsList = useSelector(eventsListSelector)
+
+    const handleDistanceChange = (event: any, newValue: number | number[]) => {
+        setDistanceValue(newValue as number)
+    }
 
     /** @description When the user has scrolled at least 100px then I make the button go back up **/
     useEffect(() => {
@@ -92,7 +127,7 @@ const Events: FC<IEventsProps> = () => {
                         <Card style={{width: '80%', backgroundColor: '#382940'}}>
 
                             {/* GOOGLE MAPS AUTOCOMPLETE*/}
-                            <CardHeader title={<GoogleMapsAutocomplete onPlaceChange={handleAutocompleChangePlace}/>}/>
+                            <CardHeader title={<GoogleMapsAutocomplete onPlaceChange={handleAutocompleChangePlace} distance={distanceValue}/>}/>
 
                             <CardContent>
                                 <div className="row">
@@ -129,12 +164,27 @@ const Events: FC<IEventsProps> = () => {
                         </Card>
                     </div>
                 </div>
+
+                <div className="row">
+                    <div className="col-12">
+                        <Typography id="discrete-slider" color="secondary" gutterBottom>
+                            Distanza di ricerca amico (km)
+                        </Typography>
+                        <AMusicSlider
+                            defaultValue={30}
+                            value={distanceValue}
+                            onChange={handleDistanceChange}
+                            valueLabelDisplay="auto"
+                            min={10}
+                            max={110}
+                        />
+                    </div>
+                </div>
             </div>
 
             <div className="row d-flex justify-content-center pt-2">
-
                 {/* Events list based on google maps place */}
-                <EventsList/>
+                <EventsList eventsList={eventsList}/>
             </div>
 
             {

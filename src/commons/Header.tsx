@@ -15,7 +15,11 @@ import {useDispatch, useSelector} from 'react-redux'
 import {fetchFriendsListAction, isFetchFriendsListPendingSelector} from '../containers/friends/redux/friends.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {isFetchProfilePendingSelector} from '../containers/profile/redux/profile.actions'
-import {fetchAllEventsListAction, isFetchALLEventsListPendingSelector} from '../containers/events/redux/eventi.actions'
+import {
+    fetchAllEventsListAction,
+    fetchEventsHistoryListAction,
+    isFetchALLEventsListPendingSelector, isFetchEventsHistoryListPendingSelector
+} from '../containers/events/redux/eventi.actions'
 import {AMUSIC_PALETTE_COLORS} from '../AMusic_theme'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
 
@@ -33,6 +37,7 @@ const Header: FC<IHeaderProps> = () => {
 
     const isFetchProfilePending = useSelector(isFetchProfilePendingSelector)
     const isFetchALLEventsListPending = useSelector(isFetchALLEventsListPendingSelector)
+    const isFetchEventsHistoryListPending = useSelector(isFetchEventsHistoryListPendingSelector)
     const isFetchFriendsListPending = useSelector(isFetchFriendsListPendingSelector)
 
     const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -45,7 +50,6 @@ const Header: FC<IHeaderProps> = () => {
 
     const handleOpenSection = (path: string) => {
         if (!history.location.pathname.includes(LOGIN_OR_SIGNIN_PATH)) {
-
             switch (path) {
                 case PROFILE_PATH:
                     history.push(PROFILE_PATH)
@@ -58,9 +62,7 @@ const Header: FC<IHeaderProps> = () => {
                     dispatch(fetchFriendsListAction.build(null, DEFAULT_REQUEST_ID, undefined, undefined, {setAnchorEl}))
                     break
                 case EVENTS_HISTORY_PATH:
-                    /*
-                                    dispatch()
-                    */
+                    dispatch(fetchEventsHistoryListAction.build(null, DEFAULT_REQUEST_ID, undefined, undefined, {setAnchorEl}))
                     break
                 case INFO_APP_PATH:
                     history.push(INFO_APP_PATH)
@@ -120,7 +122,13 @@ const Header: FC<IHeaderProps> = () => {
                             <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>}
                         </MenuItem>
                     }
-                    <MenuItem onClick={handleClose}>Cronologia eventi</MenuItem>
+                    {
+                        isSectionDisabled(EVENTS_HISTORY_PATH) &&
+                        <MenuItem onClick={() => handleOpenSection(EVENTS_HISTORY_PATH)}>
+                            Cronologia eventi {isFetchEventsHistoryListPending &&
+                            <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>}
+                        </MenuItem>
+                    }
                 </Menu>
 
                 {/*APP TITLE*/}
