@@ -1,5 +1,5 @@
-import React, {lazy, Suspense, useEffect} from 'react'
-import {Redirect, Route, Switch} from 'react-router-dom'
+import React, {lazy, Suspense, useCallback, useEffect} from 'react'
+import {Redirect, Route, Switch, useHistory} from 'react-router-dom'
 import {
     EVENTS_HISTORY_PATH,
     EVENTS_PATH,
@@ -17,6 +17,8 @@ import {SnackbarConsumer} from './commons/SnackbarConsumer'
 import {setBaseRequestURL} from 'fetch-with-redux-observable'
 import {getAuth} from 'firebase/auth'
 import {halfHour} from './utils'
+import {useSelector} from 'react-redux'
+import {profileIdSelector} from './containers/profile/redux/profile.selectors'
 
 /* Lazy loading of principle components*/
 const LoginComponent = lazy(() => import('./containers/login/LoginOrSignInContainer'))
@@ -29,10 +31,14 @@ const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosContainer'
 
 function App() {
 
+    const profileId = useSelector(profileIdSelector)
+    const history = useHistory()
+
+    /*Every 30 minutes we set the header with setBaseRequestUrl to allow user to be recognized*/
     useEffect(() => {
         const subscription = setInterval(() => {
             const auth = getAuth()
-            console.log("auth.currentUser>>>",auth.currentUser)
+
             auth.currentUser && auth?.currentUser?.getIdToken(true)
                 .then((idToken: string) => setBaseRequestURL({
                     devUrl: process.env.REACT_APP_BACKEND_URL || '',
@@ -47,11 +53,24 @@ function App() {
                     }
                 }))
         }, halfHour)
-        /*clearInterval all'unMount*/
+        /*clearInterval during unMount*/
         return () => clearInterval(subscription)
     }, [])
 
-    return (<>
+    //TODO controllare se funziona
+    useEffect(() => {
+        window.addEventListener('popstate', () => {
+            history.go(1)
+        })
+    }, [history])
+
+    /*Grant path*/
+    const canGoToSpecificSectionExpectLogin = useCallback(() => {
+        return !!profileId
+    }, [profileId])
+
+    return (
+        <>
             <Suspense fallback={<FallbackSpinner/>}>
                 <AMusicContainer>
                     <Switch>
@@ -59,20 +78,30 @@ function App() {
                         {/*LOGIN*/}
                         <Route path={LOGIN_OR_SIGNIN_PATH} component={LoginComponent}/>
 
-                        {/*EVENTI*/}
-                        <Route path={EVENTS_PATH} component={EventiComponent}/>
+                        {/*EVENTS*/}
+                        <Route path={EVENTS_PATH}
+                               render={() => canGoToSpecificSectionExpectLogin() ? <EventiComponent/> :
+                                   <Redirect to={`${LOGIN_OR_SIGNIN_PATH}`}/>}/>
 
                         {/*PROFILE*/}
-                        <Route path={PROFILE_PATH} component={ProfileComponent}/>
+                        <Route path={PROFILE_PATH}
+                               render={() => canGoToSpecificSectionExpectLogin() ? <ProfileComponent/> :
+                                   <Redirect to={`${LOGIN_OR_SIGNIN_PATH}`}/>}/>
 
                         {/*INFO APP*/}
-                        <Route path={INFO_APP_PATH} component={InfoAppComponent}/>
+                        <Route path={INFO_APP_PATH}
+                               render={() => canGoToSpecificSectionExpectLogin() ? <InfoAppComponent/> :
+                                   <Redirect to={`${LOGIN_OR_SIGNIN_PATH}`}/>}/>
 
                         {/*FRIENDS LIST*/}
-                        <Route path={FRIENDS_LIST_PATH} component={FriendsListComponent}/>
+                        <Route path={FRIENDS_LIST_PATH}
+                               render={() => canGoToSpecificSectionExpectLogin() ? <FriendsListComponent/> :
+                                   <Redirect to={`${LOGIN_OR_SIGNIN_PATH}`}/>}/>
 
                         {/*EVENTS HISTORY*/}
-                        <Route path={EVENTS_HISTORY_PATH} component={EventsHistoryComponent}/>
+                        <Route path={EVENTS_HISTORY_PATH}
+                               render={() => canGoToSpecificSectionExpectLogin() ? <EventsHistoryComponent/> :
+                                   <Redirect to={`${LOGIN_OR_SIGNIN_PATH}`}/>}/>
 
                         {/*DEFAULT*/}
                         <Redirect to={LOGIN_OR_SIGNIN_PATH}/>

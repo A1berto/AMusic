@@ -1,6 +1,9 @@
 import {createTheme, Theme} from '@material-ui/core'
 import {itIT} from '@material-ui/core/locale'
 
+/**
+ * @description Custom palette colors
+ * */
 export const AMUSIC_PALETTE_COLORS = {
     /*USUALLY USED*/
     WHITE: '#f5f5eb',
@@ -15,13 +18,6 @@ export const AMUSIC_PALETTE_COLORS = {
     GRIGIO_BKGD: '#F4F7F6',
     GRIGIO_CHIARO: '#F2F2F2',
     GRIGIO_SCURO: '#5B5B5B',
-
-    /*PRIMARY COLOR*/
-    DARK_GREEN: '#006750',
-    DARK_MEDIUM_GREEN: '#649301',
-
-    /*SECONDARY COLOR*/
-    MEDIUM_ORANGE: '#F4850F',
 
     /*ERROR COLOR*/
     ROSSO_LIGHT: '#EF5350',
@@ -47,6 +43,9 @@ export const AMUSIC_PALETTE_COLORS = {
 
 
 // @ts-ignore
+/**
+ * @description Custom Material Ui theme
+ * */
 export const AMUSIC_THEME: Theme = createTheme({
         breakpoints: {
             values: {
@@ -513,9 +512,9 @@ export const AMUSIC_THEME: Theme = createTheme({
                 },
             },
             MuiAvatar: {
-                circle: {
-                    width: '80px',
-                    height: '80px',
+                root: {
+                    width: '80px !important',
+                    height: '80px !important',
                 }
             },
             MuiDialog: {
@@ -554,28 +553,6 @@ export const AMUSIC_THEME: Theme = createTheme({
                 },
             },
             /*@ts-ignore*/
-            MuiPickersToolbar: {
-                toolbar: {
-                    backgroundColor: AMUSIC_PALETTE_COLORS.DARK_GREEN,
-                },
-            },
-            MuiPickersCalendarHeader: {
-                switchHeader: {
-                    color: AMUSIC_PALETTE_COLORS.DARK_GREEN,
-                },
-            },
-            MuiPickersDay: {
-                day: {
-                    color: AMUSIC_PALETTE_COLORS.NERO,
-                },
-                daySelected: {
-                    backgroundImage: AMUSIC_PALETTE_COLORS.VIOLET,
-                },
-                current: {
-                    color: AMUSIC_PALETTE_COLORS.DARK_GREEN,
-                },
-            },
-
             MuiAutocomplete: {
                 endAdornment: {
                     paddingRight: '10px'

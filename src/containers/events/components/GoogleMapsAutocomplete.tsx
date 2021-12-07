@@ -7,7 +7,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn'
 import parse from 'autosuggest-highlight/parse'
 import {AMUSIC_PALETTE_COLORS} from '../../../AMusic_theme'
 import {IGeoLocation} from '../eventi.types'
-import {fetchAllEventsListAction} from '../redux/eventi.actions'
+import {fetchEventsListAction, fetchNearEventsListAction} from '../redux/eventi.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {useDispatch} from 'react-redux'
 
@@ -64,7 +64,7 @@ export const GoogleMapsAutocomplete: React.FC<IGoogleMapsAutocomplete> = props =
     )
 
     useEffect(() => {
-        // se si vuole intercettare in cambio di location allora si puo passare onPlaceChange
+        // if you want to intercept in exchange for location then you can pass onPlaceChange
         if (value && props.onPlaceChange) {
             const geocoder = new (window as any).google.maps.Geocoder()
             geocoder.geocode({placeId: value?.place_id}, (results: any, status: any) => {
@@ -73,14 +73,14 @@ export const GoogleMapsAutocomplete: React.FC<IGoogleMapsAutocomplete> = props =
                         latitude: results[0].geometry.location.lat(),
                         longitude: results[0].geometry.location.lng(),
                     })
-                    dispatch(fetchAllEventsListAction.build(
+                    dispatch(fetchNearEventsListAction.build(
                         null,
                         DEFAULT_REQUEST_ID,
                         undefined,
                         {
                             lat: results[0].geometry.location.lat(),
                             lon: results[0].geometry.location.lng(),
-                            distance: props.distance
+                            dist: props.distance
                         }
                     ))
                 } else {
@@ -88,7 +88,7 @@ export const GoogleMapsAutocomplete: React.FC<IGoogleMapsAutocomplete> = props =
                 }
             })
         }
-        //NON MODIFICARE LE PROPS. Inserire come deps ( "props" ) chiama infinitamente questa funzione
+        //DO NOT MODIFY THE PROPS. Entering as deps ("props") infinitely calls this functionN
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.onPlaceChange, value])
 
@@ -151,7 +151,7 @@ export const GoogleMapsAutocomplete: React.FC<IGoogleMapsAutocomplete> = props =
             }}
             onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue)
-                !newInputValue && dispatch(fetchAllEventsListAction.build(null, DEFAULT_REQUEST_ID,undefined,{distance:props.distance}))
+                !newInputValue && dispatch(fetchEventsListAction.build(null, DEFAULT_REQUEST_ID,undefined,{distance:props.distance}))
             }}
             renderInput={(params) => (
                 <TextField

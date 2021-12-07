@@ -16,9 +16,9 @@ import {fetchFriendsListAction, isFetchFriendsListPendingSelector} from '../cont
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {isFetchProfilePendingSelector} from '../containers/profile/redux/profile.actions'
 import {
-    fetchAllEventsListAction,
+    fetchEventsListAction,
     fetchEventsHistoryListAction,
-    isFetchALLEventsListPendingSelector, isFetchEventsHistoryListPendingSelector
+    isFetchEventsListPendingSelector, isFetchEventsHistoryListPendingSelector
 } from '../containers/events/redux/eventi.actions'
 import {AMUSIC_PALETTE_COLORS} from '../AMusic_theme'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
@@ -36,7 +36,7 @@ const Header: FC<IHeaderProps> = () => {
     const dispatch = useDispatch()
 
     const isFetchProfilePending = useSelector(isFetchProfilePendingSelector)
-    const isFetchALLEventsListPending = useSelector(isFetchALLEventsListPendingSelector)
+    const isFetchALLEventsListPending = useSelector(isFetchEventsListPendingSelector)
     const isFetchEventsHistoryListPending = useSelector(isFetchEventsHistoryListPendingSelector)
     const isFetchFriendsListPending = useSelector(isFetchFriendsListPendingSelector)
 
@@ -56,7 +56,7 @@ const Header: FC<IHeaderProps> = () => {
                     setAnchorEl(null)
                     break
                 case EVENTS_PATH:
-                    dispatch(fetchAllEventsListAction.build(null, DEFAULT_REQUEST_ID, undefined, undefined, {setAnchorEl}))
+                    dispatch(fetchEventsListAction.build(null, DEFAULT_REQUEST_ID, undefined, undefined, {setAnchorEl}))
                     break
                 case FRIENDS_LIST_PATH:
                     dispatch(fetchFriendsListAction.build(null, DEFAULT_REQUEST_ID, undefined, undefined, {setAnchorEl}))

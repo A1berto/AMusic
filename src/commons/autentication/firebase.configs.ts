@@ -1,7 +1,7 @@
 import firebase from 'firebase/compat'
 
 
-// BETTO
+// ALBERTO
 /*const firebaseConfig = {
     apiKey: "AIzaSyCUkwEovSweqUvkqEEJCdZbeM14A1F3qMc",
     authDomain: "amusic-329813.firebaseapp.com",

@@ -36,6 +36,7 @@ const FriendsContainer: FC<IFriendsListProps> = () => {
     const friendsList = useSelector(friendsListSelector)
     const isFetchSuggestedFriendsListPending = useSelector(isFetchSuggestedFriendsListPendingSelector)
 
+    /**@description To go to addFriend section firstly I check if there are suggested friends*/
     const handleAddFriendsClick = () => {
         dispatch(fetchSuggestedFriendsListAction.build(null, DEFAULT_REQUEST_ID))
     }

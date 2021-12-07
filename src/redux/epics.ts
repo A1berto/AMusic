@@ -6,9 +6,9 @@ import {
     updateProfileAction
 } from '../containers/profile/redux/profile.actions'
 import {
-    fetchAllEventsListAction,
+    fetchEventsListAction,
     fetchEventsHistoryListAction,
-    fetchPaymentAction
+    fetchPaymentAction, fetchNearEventsListAction
 } from '../containers/events/redux/eventi.actions'
 import {
     fetchAddFriendAction, fetchDeleteFriendAction,
@@ -46,7 +46,8 @@ export const rootEpics: Epic = combineEpics<Epic>(
     switchMapFetchEpics(updateProfileAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(changeProfilePasswordAction.pendingActionTypeWithSpinner),
 
-    switchMapFetchEpics(fetchAllEventsListAction.pendingActionTypeWithSpinner),
+    switchMapFetchEpics(fetchEventsListAction.pendingActionTypeWithSpinner),
+    switchMapFetchEpics(fetchNearEventsListAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(fetchEventsHistoryListAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(fetchPaymentAction.pendingActionTypeWithSpinner),
 

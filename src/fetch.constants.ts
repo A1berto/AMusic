@@ -109,13 +109,24 @@ export const FETCH_DELETE_FRIEND_API: IRequestModel = {
     },
 }
 
-
 /**
  * @description Get events list
  * @method GET
  */
-export const FETCH_ALL_EVENTS_LIST_API: IRequestModel = {
-    url: `/private/events/all`,
+export const FETCH_EVENTS_LIST_API: IRequestModel = {
+    url: `/private/events`,
+    method: HttpMethods.GET,
+    headers: {
+        'Content-Type': 'application/json'
+    },
+}
+
+/**
+ * @description Get near events list
+ * @method GET
+ */
+export const FETCH_NEAR_EVENTS_LIST_API: IRequestModel = {
+    url: `/private/events/near`,
     method: HttpMethods.GET,
     headers: {
         'Content-Type': 'application/json'
@@ -127,7 +138,7 @@ export const FETCH_ALL_EVENTS_LIST_API: IRequestModel = {
  * @method GET
  */
 export const FETCH_EVENTS_HISTORY_LIST_API: IRequestModel = {
-    url: `/private/events/history`,
+    url: `/private/payment/history`,
     method: HttpMethods.GET,
     headers: {
         'Content-Type': 'application/json'

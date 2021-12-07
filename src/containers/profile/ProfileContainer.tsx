@@ -1,12 +1,12 @@
 import * as React from 'react'
-import {FC, useState} from 'react'
-import {Avatar, Button, CircularProgress, MenuItem, Tooltip, Typography} from '@material-ui/core'
+import {FC, useMemo, useState} from 'react'
+import {Avatar, Button, CircularProgress, Tooltip, Typography} from '@material-ui/core'
 import {AMUSIC_PALETTE_COLORS} from '../../AMusic_theme'
 import {CurrentDialogType} from '../../redux/dialogs/current-dialog.constants'
 import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
 import {useDispatch, useSelector} from 'react-redux'
-import {Field, Form, Formik} from 'formik'
-import {PROFILE_FIELDS_NAMES, PROFILE_FORM_INIT_VALUES, profileValidationSchema, sexOptions} from './profile.constants'
+import {Form, Formik} from 'formik'
+import {PROFILE_FIELDS_NAMES, PROFILE_FORM_INIT_VALUES, profileValidationSchema} from './profile.constants'
 import {
     changeProfilePasswordAction,
     isChangeProfilePasswordPendingSelector,
@@ -14,10 +14,9 @@ import {
     updateProfileAction
 } from './redux/profile.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
-import {Select, TextField} from 'formik-material-ui'
 import {IProfileFormFields} from './profile.types'
 import {profileRootSelector} from '../../redux/selectors'
-import {actualDate, hundredYearsAgo} from '../../utils'
+import ProfileContent from './components/ProfileContent'
 
 
 interface IProfileProps {
@@ -27,17 +26,13 @@ const ProfileContainer: FC<IProfileProps> = () => {
 
     const [isEditProfileData, setIsEditProfileData] = useState<boolean>(false)
 
-    const dispatch = useDispatch()
-
     const profile = useSelector(profileRootSelector)
     const isChangeProfilePasswordPending = useSelector(isChangeProfilePasswordPendingSelector)
     const isUpdateProfilePending = useSelector(isUpdateProfilePendingSelector)
 
-    const handleEditFormSubmit = (values: IProfileFormFields) => {
-        isEditProfileData && dispatch(updateProfileAction.build(values, DEFAULT_REQUEST_ID))
-        setIsEditProfileData(prevState => !prevState)
-    }
+    const dispatch = useDispatch()
 
+    /* Fetch to be to send an email to user to change email */
     const handleChangeCredentials = () => {
         dispatch(changeProfilePasswordAction.build(null, DEFAULT_REQUEST_ID))
     }
@@ -47,15 +42,24 @@ const ProfileContainer: FC<IProfileProps> = () => {
         dispatch(setCurrentDialog(CurrentDialogType.EDIT_PROFILE_IMAGE))
     }
 
-    const normalizedFormValues = {
+    const normalizedFormValues = useMemo(() => ({
         ...PROFILE_FORM_INIT_VALUES,
         [PROFILE_FIELDS_NAMES.name]: profile?.name ?? '',
         [PROFILE_FIELDS_NAMES.surname]: profile?.surname ?? '',
-        [PROFILE_FIELDS_NAMES.birthDate]: profile?.birthDate ?? '',
+        [PROFILE_FIELDS_NAMES.birthDay]: profile?.birthDay ?? '',
         [PROFILE_FIELDS_NAMES.city]: profile?.city ?? '',
         [PROFILE_FIELDS_NAMES.sex]: profile?.sex ?? '',
-    }
+    }), [profile])
 
+    /* check if the user has changed any data and after fetch to be */
+    const handleEditFormSubmit = (values: IProfileFormFields) => {
+        if (isEditProfileData) {
+            //@ts-ignore
+            const differences = Object.keys(values).filter((key: string) => values[key] !== normalizedFormValues[key]) ?? ''
+            differences.length && dispatch(updateProfileAction.build(values, DEFAULT_REQUEST_ID))
+        }
+        setIsEditProfileData(prevState => !prevState)
+    }
 
     return (
         <div style={{width: '70%'}}>
@@ -65,14 +69,14 @@ const ProfileContainer: FC<IProfileProps> = () => {
                     <Tooltip title="Change profile image" placement="right" className="c-pointer">
                         <Avatar
                             className="profileImage"
-                            variant="circle"
+                            variant="circular"
                             alt="ProfileContainer Image"
                             src={profile?.photoUrl}
                             onClick={handleOpenEditImageDialog}/>
                     </Tooltip>
                 </div>
 
-                {/* PROFILE NAME*/}
+                {/* TITLE*/}
                 <div className="col-12 d-flex justify-content-center"
                      style={{
                          marginTop: '-10px',
@@ -89,128 +93,9 @@ const ProfileContainer: FC<IProfileProps> = () => {
                     validationSchema={profileValidationSchema}>
                 <Form className="col-12" autoComplete="off">
                     <div className="row mt-5">
-                        <div className="col-6">
-                            {/* PROFILE INFOS */}
-                            <div className="row">
-                                <div className="col-12 px-1 mb-2">
-                                    <Typography variant="h2" color="secondary">
-                                        Dati
-                                    </Typography>
-                                </div>
-                                <div className="col-12 d-flex align-items-center mt-4">
-                                    <div className="col-3">
-                                        <Typography variant="h4"
-                                                    color="textSecondary">
-                                            Nome
-                                        </Typography>
-                                    </div>
-                                    <div className="col-6">
-                                        <Field
-                                            type="text"
-                                            name={PROFILE_FIELDS_NAMES.name}
-                                            component={TextField}
-                                            inputProps={{
-                                                placeholder: 'Inserisci il tuo nome'
-                                            }}
-                                            disabled={!isEditProfileData || profile?.name}
-                                            color="secondary"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="col-12 d-flex align-items-center mt-4">
-                                    <div className="col-3">
-                                        <Typography variant="h4"
-                                                    color="textSecondary">
-                                            Cognome
-                                        </Typography>
-                                    </div>
-                                    <div className="col-6">
-                                        <Field
-                                            type="text"
-                                            name={PROFILE_FIELDS_NAMES.surname}
-                                            component={TextField}
-                                            inputProps={{
-                                                placeholder: 'Inserisci il tuo cognome'
-                                            }}
-                                            disabled={!isEditProfileData}
-                                            color="secondary"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="col-12 d-flex align-items-center mt-4">
-                                    <div className="col-3">
-                                        <Typography variant="h4"
-                                                    color="textSecondary">
-                                            Città
-                                        </Typography>
-                                    </div>
-                                    <div className="col-6">
-                                        <Field
-                                            type="text"
-                                            name={PROFILE_FIELDS_NAMES.city}
-                                            component={TextField}
-                                            inputProps={{
-                                                placeholder: 'Inserisci una città'
-                                            }}
-                                            disabled={!isEditProfileData}
-                                            color="secondary"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="col-12 d-flex align-items-center mt-4">
-                                    <div className="col-3">
-                                        <Typography variant="h4"
-                                                    color="textSecondary">
-                                            Nascita
-                                        </Typography>
-                                    </div>
-                                    <div className="col-6">
-                                        <Field
-                                            type="date"
-                                            name={PROFILE_FIELDS_NAMES.birthDate}
-                                            component={TextField}
-                                            color="secondary"
-                                            disabled={!isEditProfileData}
-                                            value={profile?.birthDate}
-                                            InputProps={{
-                                                inputProps: {min: hundredYearsAgo, max: actualDate}
-                                            }}
-                                            fullWidth
-                                        />
-                                    </div>
-                                </div>
-                                <div className="col-12 d-flex align-items-center mt-4">
-                                    <div className="col-3">
-                                        <Typography variant="h4"
-                                                    color="textSecondary">
-                                            Sesso
-                                        </Typography>
-                                    </div>
-                                    <div className="col-6">
-                                        <Field
-                                            type="text"
-                                            name={PROFILE_FIELDS_NAMES.sex}
-                                            component={Select}
-                                            inputProps={{
-                                                placeholder: 'Inserisci il tuo sesso'
-                                            }}
-                                            disabled={!isEditProfileData}
-                                            color="secondary"
-                                            fullWidth
-                                        >
-                                            {
-                                                sexOptions.map((sexType: string, index: number) =>
-                                                    <MenuItem value={sexType} key={index}>
-                                                        {sexType}
-                                                    </MenuItem>
-                                                )
-                                            }
-                                        </Field>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
+                        {/* PROFILE CONTENT */}
+                        <ProfileContent isEditProfileData={isEditProfileData} profile={profile}/>
 
                         <div className="col-6">
                             <div className="row">

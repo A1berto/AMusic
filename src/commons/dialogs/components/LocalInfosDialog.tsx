@@ -16,24 +16,26 @@ import HelpIcon from '@material-ui/icons/Help'
 
 interface ILocalInfosProps {
     event: IEvent
+    paymentInfo?: any
 }
 
 const LocalInfosDialog: FC<ILocalInfosProps> = props => {
-    //PROPS
-    const {event} = props
 
-    //REACT STATE
+    const {event, paymentInfo} = props
+
     const [showPaymentForm, setPaymentForm] = useState<boolean>(false)
     const [visibleChecked, setVisibleChecked] = useState<boolean>(true)
 
-    const dispatch = useDispatch()
     const clientSecret = useSelector(paymentClientSecretSelector)
     const isFetchPaymentPending = useSelector(isFetchPaymentPendingSelector)
+    const dispatch = useDispatch()
 
+    /* Boolean to understand which infos to be showed */
     const isInHistorySection = useMemo(() => {
         return window.location.hash.includes(EVENTS_HISTORY_PATH)
     }, [])
 
+    /* When client secret isn't null I can show Payment Form */
     useEffect(() => {
         !!clientSecret && setPaymentForm(true)
     }, [clientSecret])
@@ -42,6 +44,7 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
         setVisibleChecked(event.target.checked)
     }
 
+    /* Create stripe intent to permit user payment*/
     const handleOpenPayment = useCallback(() => {
         if (!showPaymentForm) {
             dispatch(fetchPaymentAction.build({
@@ -139,31 +142,37 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                                     color="secondary">
                             {event?.ticketPrice} €
                         </Typography>
-                        {   //TODO
+                        {
                             isInHistorySection &&
-                            <Tooltip className="ms-3" title={'Andrea tornerà le info che faccio visualizzare qui'}>
+                            <Tooltip className="ms-3"
+                                     title={
+                                         <>
+                                             <div>Id pagamento : {paymentInfo.idPayment}</div>
+                                             <div>Data del pagamento : {paymentInfo.datePayment}</div>
+                                             <div>Vendor : {paymentInfo.vendor}</div>
+                                         </>
+                                     }>
                                 <HelpIcon color="secondary"/>
                             </Tooltip>
                         }
                     </div>
                 </div>
 
+                {/* PARTECIPANTS LIST*/}
                 <div className="col-12 pt-4">
                     <div className="row">
                         {
-                            event?.partecipants.map((partecipant: IPartecipant) =>
-                                <div className="col-auto  mt-2">
+                            event?.partecipants.map((partecipant: IPartecipant, index: number) =>
+                                <div className="col-auto  mt-2" key={index}>
                                     <Tooltip title={`${partecipant?.name} ${partecipant?.surname}`}
                                              className="c-pointer">
-                                        <Avatar
-                                            variant="circle"
-                                            alt="Partecipant Image"
-                                            src={partecipant?.photoUrl}/>
+                                        <Avatar variant="circular"
+                                                alt="Partecipant Image"
+                                                src={partecipant?.photoUrl}/>
                                     </Tooltip>
                                 </div>
                             )}
                     </div>
-
                 </div>
 
                 {

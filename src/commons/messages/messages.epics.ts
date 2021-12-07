@@ -8,7 +8,7 @@ import {
     fetchProfileAction,
     updateProfileAction
 } from '../../containers/profile/redux/profile.actions'
-import {fetchAllEventsListAction, fetchEventsHistoryListAction} from '../../containers/events/redux/eventi.actions'
+import {fetchEventsListAction, fetchEventsHistoryListAction} from '../../containers/events/redux/eventi.actions'
 import {
     fetchAddFriendAction,
     fetchFilteredFriendsListAction,
@@ -25,7 +25,7 @@ export const TYPES_TO_MESSAGES_MAPPER: IGenericEntities<string> = {
     //CHANGE PROFILE PASSWORD
     [changeProfilePasswordAction.failureActionType]: 'Ops! Impossibile modificare la password',
     //GET EVENTS
-    [fetchAllEventsListAction.failureActionType]: 'Ops! Impossibile recuperare la lista degli eventi',
+    [fetchEventsListAction.failureActionType]: 'Ops! Impossibile recuperare la lista degli eventi',
     //GET EVENTS HISTORY
     [fetchEventsHistoryListAction.failureActionType]: 'Ops! Impossibile recuperare la cronologia degli eventi',
     //GET FRIENDS LIST

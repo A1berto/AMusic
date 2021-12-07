@@ -20,7 +20,7 @@ export interface IProfileFormFields {
     name: string
     surname: string
     sex?: string
-    birthDate?: string
+    birthDay?: string
     city?: string
 }
 

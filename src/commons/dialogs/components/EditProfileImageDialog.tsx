@@ -6,7 +6,10 @@ import {Field, Form, Formik} from 'formik'
 import CloseIcon from '@material-ui/icons/Close'
 import {DropzoneField} from '../../DropezoneFields'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
-import {DROPZONE_FORM_INIT_VALUES} from '../../../containers/profile/profile.constants'
+import {
+    DROPZONE_FORM_INIT_VALUES,
+    GENERIC_DROPZONE_VALIDATION_SCHEMA
+} from '../../../containers/profile/profile.constants'
 import {IProfileImageFields} from '../../../containers/profile/profile.types'
 import {DEFAULT_REQUEST_ID, HttpMethods} from 'fetch-with-redux-observable'
 import {addError, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
@@ -16,8 +19,10 @@ interface IEditProfileImageDialogProps {
 }
 
 const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
-    const dispatch = useDispatch()
+
     const [isInPending, setIsInPending] = useState<boolean>(false)
+
+    const dispatch = useDispatch()
 
     const handleClose = useCallback(() => {
         dispatch(closeCurrentDialog())
@@ -29,15 +34,15 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
             const formData = new FormData()
             formData.append('file', values.dropzone)
 
-            // Setto spinner
+            // Set spinner
             setIsInPending(true)
             
             fetch(`private/user/uploadPhoto`, {
                 method: HttpMethods.POST,
                 body: formData,
             }).then(async (response) => {
-                console.log("response>>",response)
-                console.log("getReader>>>",response?.body?.getReader())
+                console.log("response Upload Photo>>",response)
+
                 if (response.ok) {
                     dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
                     dispatch(addSuccess({userMessage: 'Documento caricato con successo'}))
@@ -75,15 +80,19 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
                 </div>
 
                 <div className="row">
-                    <Formik initialValues={DROPZONE_FORM_INIT_VALUES} onSubmit={handleSubmit}>
+                    <Formik initialValues={DROPZONE_FORM_INIT_VALUES}
+                            onSubmit={handleSubmit}
+                            validationSchema={GENERIC_DROPZONE_VALIDATION_SCHEMA}>
                         <Form>
+
+                            {/* UPLOAD FILE IMAGE */}
                             <div className="col-12 p-3">
                                 <Field
                                     name={'dropzone'}
                                     component={DropzoneField}
                                     accept=".jpg, .jpeg, .svg, .png"
                                     multiple={false}
-                                    maxSize={2097152}   //2 Megabyte
+                                    maxSize={5000000}   //5 Megabyte
                                 />
                             </div>
 

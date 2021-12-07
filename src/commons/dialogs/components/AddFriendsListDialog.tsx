@@ -27,11 +27,11 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
     const [searchValue, setSearchValue] = useState<string>('')
     const [isSuggestedShowed, setIsSuggestedShowed] = useState<boolean>(true)
 
-    const dispatch = useDispatch()
-
     const suggestedFriendsList = useSelector(suggestedFriendsListSelector)
     const filteredFriendsList = useSelector(filteredFriendsListSelector)
     const isFetchFilteredFriendsListPending = useSelector(isFetchFilteredFriendsListPendingSelector)
+
+    const dispatch = useDispatch()
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value)
@@ -83,7 +83,7 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                     {/*CONTENT*/}
                     <div className="row pt-5">
 
-                        {/*SUGGERITI*/}
+                        {/* SUGGESTED */}
                         <div className="col-12">
                             {
                                 isSuggestedShowed &&

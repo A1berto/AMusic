@@ -5,7 +5,7 @@ import {Button} from '@material-ui/core'
 import {useDispatch} from 'react-redux'
 import {addError, addInfo, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
-import {fetchAllEventsListAction, resetStripeClienteSecretAction} from '../redux/eventi.actions'
+import {fetchEventsListAction, resetStripeClienteSecretAction} from '../redux/eventi.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 
 
@@ -18,6 +18,7 @@ const PaymentForm = () => {
     const [message, setMessage] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
 
+    /* Intercept payment status */
     useEffect(() => {
         if (!stripe) {
             return
@@ -53,6 +54,7 @@ const PaymentForm = () => {
         })
     }, [dispatch, stripe])
 
+    /* Confirm payment if it is all right*/
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -75,7 +77,7 @@ const PaymentForm = () => {
                 dispatch(addError({userMessage: 'Ops! Errore durante il pagamento'}))
             } else {
                 dispatch(closeCurrentDialog())
-                dispatch(fetchAllEventsListAction.build(null,DEFAULT_REQUEST_ID))
+                dispatch(fetchEventsListAction.build(null,DEFAULT_REQUEST_ID))
                 dispatch(addSuccess({userMessage: 'Pagamento avvenuto con successo!'}))
             }
         })
@@ -87,7 +89,9 @@ const PaymentForm = () => {
         <>
             <div style={{background: 'rgba(229, 229, 229, 0.95)', borderRadius: 8}}>
                 <form className="p-3">
+
                     <PaymentElement id="payment-element" className="p-0"/>
+
                     <div className="col-12 pt-3 d-flex justify-content-center">
                         <Button variant="contained"
                                 color="primary"
@@ -100,7 +104,8 @@ const PaymentForm = () => {
                         </span>
                         </Button>
                     </div>
-                    {/* Show any error or success messages */}
+
+                    {/* SHOW ANY ERROR OR SUCCESS MESSAGES */}
                     {message && <div id="payment-message">{message}</div>}
                 </form>
             </div>

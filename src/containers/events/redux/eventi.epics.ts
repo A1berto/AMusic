@@ -1,16 +1,15 @@
 import {NEVER, Observable} from 'rxjs'
-import {IFailureFetchAction, IGenericResponse, ISuccessFetchAction} from 'fetch-with-redux-observable'
+import {IGenericResponse, ISuccessFetchAction} from 'fetch-with-redux-observable'
 import {ofType} from 'redux-observable'
-import {fetchAllEventsListAction, fetchEventsHistoryListAction, fetchPaymentAction} from './eventi.actions'
+import {fetchEventsHistoryListAction, fetchEventsListAction, fetchPaymentAction} from './eventi.actions'
 import {map, mergeMap} from 'rxjs/operators'
 import {HashHistory} from '../../../index'
 import {EVENTS_HISTORY_PATH, EVENTS_PATH} from '../../../routes'
-import {addError} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 import {IEvent} from '../eventi.types'
 
 export const allEventsListSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<any>>>) =>
     action$.pipe(
-        ofType(fetchAllEventsListAction.successActionType),
+        ofType(fetchEventsListAction.successActionType),
         mergeMap((action) => {
             console.info(`Redirect to ${EVENTS_PATH}`)
             //@ts-ignore
@@ -20,14 +19,16 @@ export const allEventsListSuccessEpic = (action$: Observable<ISuccessFetchAction
         })
     )
 
-export const fetchPaymentFailureEpic = (action$: Observable<IFailureFetchAction>) =>
+
+export const fetchPaymentFailureEpic = (action$: Observable<any>) =>
     action$.pipe(
         ofType(fetchPaymentAction.failureActionType),
-        map((action: IFailureFetchAction) => action.payload),
-        map((payload) => {
+        map((action: any) => action.payload),
+        mergeMap((payload) => {
             const errorMessage = payload.response.messages[0].text ?? ''
+            console.log('errorMessageASDSA>>>', errorMessage)
             //TODO chiedere a vito perchè non miparte questo error e mi parte uno generico
-            return addError({userMessage: errorMessage})
+            return NEVER
         })
     )
 

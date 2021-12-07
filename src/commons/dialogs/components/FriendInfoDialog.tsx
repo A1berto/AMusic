@@ -88,7 +88,7 @@ const FriendInfoDialog: FC<IFriendInfoDialogProps> = (props) => {
                                          className="c-pointer"
                                          onClick={() => handleOpenEvent(event)}>
                                     <Link className="me-2">
-                                        {event?.eventName}{[{name: 'bar1'}, {name: 'bar2'}, {name: 'bar3'}, {name: 'bar4'}].length - 1 !== index ? `,` : '.'}
+                                        {event?.eventName}{friend?.nextEvents?.length - 1 !== index ? `,` : '.'}
                                     </Link>
                                 </Tooltip>
                             )}

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {FC, useCallback, useEffect, useState} from 'react'
-import {Button, Card, CardContent, CardHeader, Slider, withStyles,} from '@material-ui/core'
+import {Button, Card, CardContent, CardHeader} from '@material-ui/core'
 import {GoogleMapsAutocomplete} from './components/GoogleMapsAutocomplete'
 import {IEvent, IGeoLocation} from './eventi.types'
 import Typography from '@material-ui/core/Typography'
@@ -12,36 +12,8 @@ import {eventsListSelector} from './redux/eventi.selectors'
 import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
 import {CurrentDialogType} from '../../redux/dialogs/current-dialog.constants'
 import GoogleMapsReact, {Props as GoogleMapsReactProps} from 'google-map-react'
+import {AMusicSlider} from '../../commons/AMusicSlider'
 
-const AMusicSlider = withStyles({
-    root: {
-        color: '#936F9D',
-        height: 4,
-    },
-    thumb: {
-        height: 18,
-        width: 18,
-        backgroundColor: '#fff',
-        border: '2px solid currentColor',
-        marginTop: -5,
-        marginLeft: -12,
-        '&:focus, &:hover, &$active': {
-            boxShadow: 'inherit',
-        },
-    },
-    active: {},
-    valueLabel: {
-        left: 'calc(-50% - 2px)',
-    },
-    track: {
-        height: 7,
-        borderRadius: 4,
-    },
-    rail: {
-        height: 6,
-        borderRadius: 4,
-    },
-})(Slider)
 
 interface IEventsProps {
 }
@@ -49,7 +21,7 @@ interface IEventsProps {
 const Events: FC<IEventsProps> = () => {
 
     const [isButtonComeBackUpVisible, setButtonComeBackUpVisible] = useState<boolean>(false)
-    const [distanceValue, setDistanceValue] = React.useState<number>(30)
+    const [distanceValue, setDistanceValue] = React.useState<number>(1)
     const [mapsProps, setMapsPros] = useState<GoogleMapsReactProps>({
         center: {
             lat: 41.9027835,
@@ -65,8 +37,8 @@ const Events: FC<IEventsProps> = () => {
         },
     })
 
-    const dispatch = useDispatch()
     const eventsList = useSelector(eventsListSelector)
+    const dispatch = useDispatch()
 
     const handleDistanceChange = (event: any, newValue: number | number[]) => {
         setDistanceValue(newValue as number)
@@ -80,7 +52,7 @@ const Events: FC<IEventsProps> = () => {
     }, [])
 
     /** @description Come back with animation to the top of page **/
-    const handleCameBackUp = () => {
+    const handleComeBackUp = () => {
         window.scrollTo({
             top: 0,
             left: 0,
@@ -127,8 +99,9 @@ const Events: FC<IEventsProps> = () => {
                         <Card style={{width: '80%', backgroundColor: '#382940'}}>
 
                             {/* GOOGLE MAPS AUTOCOMPLETE*/}
-                            <CardHeader title={<GoogleMapsAutocomplete onPlaceChange={handleAutocompleChangePlace} distance={distanceValue}/>}/>
-
+                            <CardHeader title={
+                                <GoogleMapsAutocomplete onPlaceChange={handleAutocompleChangePlace}
+                                                        distance={distanceValue}/>}/>
                             <CardContent>
                                 <div className="row">
                                     <div className="col-12"
@@ -146,6 +119,7 @@ const Events: FC<IEventsProps> = () => {
                                                 language: 'it',
                                                 libraries: ['places', 'geometry'],
                                             }}
+                                            yesIWantToUseGoogleMapApiInternals={true}
                                             {...mapsProps}>
                                             {
                                                 eventsList?.map((event: IEvent, index) =>
@@ -168,31 +142,42 @@ const Events: FC<IEventsProps> = () => {
                 <div className="row">
                     <div className="col-12">
                         <Typography id="discrete-slider" color="secondary" gutterBottom>
-                            Distanza di ricerca amico (km)
+                            Distanza di ricerca evento (km)
                         </Typography>
                         <AMusicSlider
-                            defaultValue={30}
                             value={distanceValue}
                             onChange={handleDistanceChange}
                             valueLabelDisplay="auto"
-                            min={10}
-                            max={110}
+                            min={1}
+                            max={15}
                         />
                     </div>
                 </div>
             </div>
 
-            <div className="row d-flex justify-content-center pt-2">
-                {/* Events list based on google maps place */}
-                <EventsList eventsList={eventsList}/>
-            </div>
+            {
+                !!eventsList.length ?
+                    <div className="row d-flex justify-content-center pt-2">
+                        {/* EVENTS LIST BASED ON GOOGLE MAPS PLACE */}
+                        <EventsList eventsList={eventsList}/>
+                    </div> :
+                    <div className="col-12 mt-4">
+                        <div className="row d-flex justify-content-center">
+                            <div className="col-auto" style={{border: '0.5px solid #f57c00', borderRadius: 4}}>
+                                <Typography color="secondary">
+                                    NESSUN ELEMENTRO TROVATO IN ZONA
+                                </Typography>
+                            </div>
+                        </div>
+                    </div>
 
+            }
             {
                 isButtonComeBackUpVisible &&
                 <div style={{position: 'fixed', right: 20, bottom: 20}}>
 
                     {/* COME BACK UP BUTTON */}
-                    <Button variant={'contained'} onClick={handleCameBackUp}>
+                    <Button variant={'contained'} onClick={handleComeBackUp}>
                         TORNA SU
                         <ArrowUpwardOutlinedIcon fontSize={'small'} className="ms-1 mb-1"/>
                     </Button>

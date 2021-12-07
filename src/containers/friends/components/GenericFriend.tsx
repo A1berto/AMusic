@@ -59,7 +59,7 @@ const GenericFriend: FC<IAddFriendListProps> = (props) => {
                                     isFetchAddFriendPending ?
                                         <CircularProgress className="ms-2" size={80}
                                                           style={{color: 'white'}}/> :
-                                        <Avatar variant="circle"
+                                        <Avatar variant="circular"
                                                 alt="Friend Image"
                                                 src={friend?.photoUrl}/>
                                 }

@@ -38,12 +38,12 @@ interface IDropzoneFieldProps extends FieldProps, DropzoneOptions {
 }
 
 /**
- * @describe Gestione dropzone-formik per single e multi file
- * Possibilità di eliminare i file caricati nel caso in cui la dropzone sia di tipo multiple,
- * nel caso in cui non lo fosse ogni volta che viene caricato un file, viene "sovrascritto" quello precedente.
- * Gestione della visualizzazione degli errori relativi alla dropzone separata da quella del form (formik).
- * Possibilità di aggiunta di ulteriori errori attraverso l'utilizzo della prop customErrors.
- * Per una corretta visualizzazione del componte è NECESSARIO bootstrap.
+ * @description Dropzone-formik management for single and multi files
+ * Ability to delete the uploaded files in case the dropzone is of multiple type,
+ * if it isn't every time a file is loaded, the previous one is "overwritten".
+ * Management of the display of errors relating to the dropzone separate from that of the form (formik).
+ * Possibility of adding further errors through the use of the customErrors prop.
+ * Bootstrap is REQUIRED for a correct display of the component.
  */
 export const DropzoneField: FC<IDropzoneFieldProps> = props => {
     const {field, meta, form, baseStyle = defaultBaseStyle, customErrors, ...dropzoneOptions} = props
@@ -82,13 +82,13 @@ export const DropzoneField: FC<IDropzoneFieldProps> = props => {
         ...(isDragActive ? activeStyle : {}),
         ...(isDragAccept ? acceptStyle : {}),
         ...(isDragReject ? rejectStyle : {})
-    }), [isDragActive, isDragReject, isDragAccept])
+    }), [baseStyle, isDragActive, isDragAccept, isDragReject])
 
     const handleDeleteFile = useCallback((current: File) =>
             form.setFieldValue(
                 field.name,
                 field?.value.length === 1 ? '' : field?.value.filter((value: File) => value !== current))
-        , [field])
+        , [field.name, field?.value, form])
 
     const getFileList = useCallback((files: File[]) => files?.map((current: File,index) =>
         <li className="ml-2" key={index}>
@@ -97,11 +97,11 @@ export const DropzoneField: FC<IDropzoneFieldProps> = props => {
                 className="c-pointer"
                 onClick={() => handleDeleteFile(current)}/>
         </li>
-    ), [field])
+    ), [handleDeleteFile])
 
     const getFileRejectionsList = useCallback((fileRejections) => fileRejections.map((current: FileRejection,index:number) =>
         <li className="ml-2" key={index}>{current.file?.name} - {dropzoneErrorsMapper[current.errors[0]?.code]}</li>
-    ), [])
+    ), [dropzoneErrorsMapper])
 
     return (
         <div className="container">
@@ -134,7 +134,7 @@ export const DropzoneField: FC<IDropzoneFieldProps> = props => {
                                 </div>
                                 <div className="col-2 d-flex justify-content-center">
                                     <img src={URL.createObjectURL(field.value)}
-                                         alt="Image Uploaded"
+                                         alt="Uploaded file"
                                          style={{
                                              borderRadius: '50%',
                                              objectFit: 'cover',

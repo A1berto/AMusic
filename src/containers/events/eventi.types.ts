@@ -13,6 +13,16 @@ export interface IEvent {
     address: string
 }
 
+export interface IEventHistory{
+    amount: number
+    datePayment: string
+    event: IEvent
+    id: string
+    idPayment: string
+    status: string
+    vendor: string
+}
+
 export interface IPartecipant {
     id: string
     name: string

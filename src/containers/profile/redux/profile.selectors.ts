@@ -41,7 +41,7 @@ export const sexImageSelector = createSelector(
 
 export const birthDateImageSelector = createSelector(
     profileRootSelector,
-    (profile: IProfile | null): string => profile?.birthDate ?? ''
+    (profile: IProfile | null): string => profile?.birthDay ?? ''
 )
 
 export const cityImageSelector = createSelector(

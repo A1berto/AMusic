@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect'
 import {eventsRootSelector} from '../../../redux/selectors'
 import {IEventReducer} from './eventi.reducers'
-import {IEvent} from '../eventi.types'
+import {IEvent, IEventHistory} from '../eventi.types'
 
 export const paymentClientSecretSelector = createSelector(
     eventsRootSelector,
@@ -15,5 +15,5 @@ export const eventsListSelector = createSelector(
 
 export const eventsHistoryListSelector = createSelector(
     eventsRootSelector,
-    (events: IEventReducer | null): IEvent[] => events?.eventsHistory ?? []
+    (events: IEventReducer | null): IEventHistory[] => events?.eventsHistory ?? []
 )

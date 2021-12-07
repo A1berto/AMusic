@@ -34,6 +34,7 @@ export const usePrevious = (value: any): any => {
 }
 
 
+export const YUP_DEFAULT_ERROR_VALUE = 'Campo obbligatorio'
 export const halfHour = 1800000
 
 export const actualDate= moment(new Date()).format('yyyy-MM-DD')

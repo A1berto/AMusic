@@ -1,5 +1,6 @@
 import {ILoginFormProps} from './login.types'
 import * as Yup from 'yup'
+import {YUP_DEFAULT_ERROR_VALUE} from '../../utils'
 
 
 export enum LOGIN_FIELDS_NAMES {
@@ -22,17 +23,17 @@ export const loginValidationSchema = (isSignIn: boolean) => {
     const validationLoginForm = {
         [LOGIN_FIELDS_NAMES.email]: Yup.string()
             .email('Email non valida')
-            .required('Campo obbligatorio'),
+            .required(YUP_DEFAULT_ERROR_VALUE),
         [LOGIN_FIELDS_NAMES.password]: Yup.string()
             .min(6, 'Almeno 6 caratteri')
-            .required('Campo Obbligatorio'),
+            .required(YUP_DEFAULT_ERROR_VALUE),
     }
     const validationSignInForm = {
         ...validationLoginForm,
         [LOGIN_FIELDS_NAMES.name]: Yup.string()
-            .required('Campo obbligatorio'),
+            .required(YUP_DEFAULT_ERROR_VALUE),
         [LOGIN_FIELDS_NAMES.surname]: Yup.string()
-            .required('Campo obbligatorio'),
+            .required(YUP_DEFAULT_ERROR_VALUE),
     }
 
     return Yup.object().shape(isSignIn ? validationSignInForm : validationLoginForm)
