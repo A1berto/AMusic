@@ -57,12 +57,12 @@ function App() {
         return () => clearInterval(subscription)
     }, [])
 
-    //TODO controllare se funziona
+    /*//TODO controllare se funziona
     useEffect(() => {
         window.addEventListener('popstate', () => {
             history.go(1)
         })
-    }, [history])
+    }, [history])*/
 
     /*Grant path*/
     const canGoToSpecificSectionExpectLogin = useCallback(() => {

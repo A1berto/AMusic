@@ -66,7 +66,7 @@ const ProfileContainer: FC<IProfileProps> = () => {
             <div className="row">
                 {/* PROFILE IMAGE */}
                 <div className="col-12 d-flex justify-content-center">
-                    <Tooltip title="Change profile image" placement="right" className="c-pointer">
+                    <Tooltip title="Modifica immagine profilo" placement="right" className="c-pointer">
                         <Avatar
                             className="profileImage"
                             variant="circular"

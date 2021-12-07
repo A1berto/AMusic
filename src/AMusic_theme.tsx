@@ -418,6 +418,7 @@ export const AMUSIC_THEME: Theme = createTheme({
             MuiAccordionDetails: {
                 root: {
                     padding: '10px',
+                    paddinTop:'0px',
                     color: 'white',
                     opacity: '0.9',
                     '&$expanded': {
