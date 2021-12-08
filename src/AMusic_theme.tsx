@@ -1,11 +1,11 @@
 import {createTheme, Theme} from '@material-ui/core'
 import {itIT} from '@material-ui/core/locale'
 
+/**
+ * @description Custom palette colors
+ * */
 export const AMUSIC_PALETTE_COLORS = {
     /*USUALLY USED*/
-    YELLOW: '#e6ae27',
-    BLUE: '#006172',
-    LIGHT_BLUE: '#008c96',
     WHITE: '#f5f5eb',
     PURPLE: '#936F9D',
     VIOLET: '#382940',
@@ -18,13 +18,6 @@ export const AMUSIC_PALETTE_COLORS = {
     GRIGIO_BKGD: '#F4F7F6',
     GRIGIO_CHIARO: '#F2F2F2',
     GRIGIO_SCURO: '#5B5B5B',
-
-    /*PRIMARY COLOR*/
-    DARK_GREEN: '#006750',
-    DARK_MEDIUM_GREEN: '#649301',
-
-    /*SECONDARY COLOR*/
-    MEDIUM_ORANGE: '#F4850F',
 
     /*ERROR COLOR*/
     ROSSO_LIGHT: '#EF5350',
@@ -41,22 +34,18 @@ export const AMUSIC_PALETTE_COLORS = {
     VERDE_SS_MAIN: '#4caf50',
     VERDE_SS_DARK: '#388e3c',
 
-    LIGHT_GREEN: '#C9D200',
-    MEDIUM_GREEN: '#85AE1B',
-
 
     AZZURRO: '#6FBDC2',
-
-
-    /*GRADIENT*/
-    VERDE_GRADIENT: 'linear-gradient(90deg, #006750 0%, #85AE1B 100%)',
-    VERDE_LIME_HIGHLIGHTED_TEXT_GRADIENT: 'linear-gradient(180deg, rgba(255,255,255,0) 50%, #E0E480 50%)',
-    ARANCIONE_GRADIENT: 'linear-gradient(90deg, #E85420 0%, #FFB100 99.99%, #649301 100%, #FFB100 100%)',
-    ARANCIONE_LIGHT_GRADIENT: 'linear-gradient(90deg, #EBAC2C 65%, #F3DB3D 90%)',
+    YELLOW: '#e6ae27',
+    BLUE: '#006172',
+    LIGHT_BLUE: '#008c96',
 }
 
 
 // @ts-ignore
+/**
+ * @description Custom Material Ui theme
+ * */
 export const AMUSIC_THEME: Theme = createTheme({
         breakpoints: {
             values: {
@@ -115,7 +104,7 @@ export const AMUSIC_THEME: Theme = createTheme({
             // VALUTARE SE MODIFICARE
             text: {
                 primary: '#212121',
-                secondary: '#FFF',
+                secondary: 'rgba(255,255,255,0.6)',
                 disabled: 'rgba(0, 0, 0, 0.38)',
                 hint: 'rgba(0, 0, 0, 0.38)',
             },
@@ -243,6 +232,7 @@ export const AMUSIC_THEME: Theme = createTheme({
                 fontWeight: 400,
                 fontSize: '1rem '/*'1.25rem'*/,
                 lineHeight: '24px',
+                paddingBottom:'2px'
             },
             // USATO PER TITOLI CARD SCURI (Es: quanti m2 ha l'iimobile) E ACCORDION RIEPILOGO POLIZZA (ES: Garanzie) E TITOLO RIEPILOGO POLIZZA E INFO AGENZIA TITOLO
             subtitle1: {
@@ -285,7 +275,6 @@ export const AMUSIC_THEME: Theme = createTheme({
                 fontWeight: 700,
                 fontSize: '1rem',
                 lineHeight: '24px',
-                textTransform: 'uppercase',
             },
             // PULSANTI
             button: {
@@ -296,7 +285,6 @@ export const AMUSIC_THEME: Theme = createTheme({
                 fontWeight: 'bold',
                 fontSize: '14px',
                 lineHeight: '22px',
-                textTransform: 'uppercase',
                 cursor: 'pointer',
             },
             // USATO PER FOOTER e SCRITTA 'al mese' in RIEPILOGO POLIZZA
@@ -430,6 +418,7 @@ export const AMUSIC_THEME: Theme = createTheme({
             MuiAccordionDetails: {
                 root: {
                     padding: '10px',
+                    paddinTop:'0px',
                     color: 'white',
                     opacity: '0.9',
                     '&$expanded': {
@@ -438,13 +427,14 @@ export const AMUSIC_THEME: Theme = createTheme({
                 },
             },
             MuiLink: {
-                underlineAlways: {
-                    color: AMUSIC_PALETTE_COLORS.PURPLE,
+                root: {
+                    cursor: 'pointer',
+                    color: AMUSIC_PALETTE_COLORS.WHITE,
                     '&:hover': {
                         color: AMUSIC_PALETTE_COLORS.PURPLE,
                         textDecorationColor: 'rgba(245,245,235,0.7)',
                     }
-                }
+                },
             },
             MuiInputLabel: {
                 root: {
@@ -454,6 +444,9 @@ export const AMUSIC_THEME: Theme = createTheme({
                     fontSize: '22px',
                     fontWeight: 400,
                 },
+                formControl: {
+                    top: '-5px'
+                }
             },
             MuiInput: {
                 root: {
@@ -503,6 +496,16 @@ export const AMUSIC_THEME: Theme = createTheme({
                         backgroundColor: 'transparent',
                     },
                 },
+                icon:{
+                    color:AMUSIC_PALETTE_COLORS.WHITE
+                }
+            },
+            MuiListItem: {
+                root: {
+                    '&:hover': {
+                        backgroundColor: '#382940 !important'
+                    }
+                }
             },
             MuiFormHelperText: {
                 root: {
@@ -510,9 +513,9 @@ export const AMUSIC_THEME: Theme = createTheme({
                 },
             },
             MuiAvatar: {
-                circle: {
-                    width: '80px',
-                    height: '80px',
+                root: {
+                    width: '80px !important',
+                    height: '80px !important',
                 }
             },
             MuiDialog: {
@@ -535,7 +538,14 @@ export const AMUSIC_THEME: Theme = createTheme({
             MuiMenuItem: {
                 root: {
                     fontWeight: 'bold',
-                    color: AMUSIC_PALETTE_COLORS.WHITE
+                    color: AMUSIC_PALETTE_COLORS.WHITE,
+                }
+            },
+            MuiGrid: {
+                root: {
+                    '&:hover': {
+                        backgroundColor: 'rgba(229, 229, 229, 0.1)',
+                    }
                 }
             },
             MuiBackdrop: {
@@ -544,28 +554,6 @@ export const AMUSIC_THEME: Theme = createTheme({
                 },
             },
             /*@ts-ignore*/
-            MuiPickersToolbar: {
-                toolbar: {
-                    backgroundColor: AMUSIC_PALETTE_COLORS.DARK_GREEN,
-                },
-            },
-            MuiPickersCalendarHeader: {
-                switchHeader: {
-                    color: AMUSIC_PALETTE_COLORS.DARK_GREEN,
-                },
-            },
-            MuiPickersDay: {
-                day: {
-                    color: AMUSIC_PALETTE_COLORS.NERO,
-                },
-                daySelected: {
-                    backgroundImage: AMUSIC_PALETTE_COLORS.VERDE_GRADIENT,
-                },
-                current: {
-                    color: AMUSIC_PALETTE_COLORS.DARK_GREEN,
-                },
-            },
-
             MuiAutocomplete: {
                 endAdornment: {
                     paddingRight: '10px'

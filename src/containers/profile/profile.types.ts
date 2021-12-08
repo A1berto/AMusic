@@ -1,20 +1,29 @@
-
 /*Interface used to identify user profile*/
-export interface IProfile {
+export interface IProfile extends IProfileFormFields {
+    accountNonExpired: boolean
+    accountNonLocked: boolean
+    createDate: string
+    credentialsNonExpired: boolean
+    displayName: string
+    email: string
+    emailVerified: boolean
+    enabled: boolean
+    id: string
+    lastLogin: string
+    name: string
+    phoneNumber: string
+    photoUrl: string
+    surname: string
+}
+
+export interface IProfileFormFields {
     name: string
     surname: string
-    birthDate?: Date
-    city?: string
     sex?: string
-    credentials: ICrededentials
-    image: any
+    birthDay?: string
+    city?: string
 }
 
-/*Interface used to identify user credentials*/
-export interface ICrededentials {
-    email: string
-    password: string
-}
 
 /*Interface used to identify profile Image*/
 export interface IProfileImageFields {

@@ -8,23 +8,29 @@ import {Router} from 'react-router-dom'
 import {createHashHistory} from 'history'
 import {ThemeProvider} from '@material-ui/core/styles'
 import {AMUSIC_THEME} from './AMusic_theme'
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './serviceWorker'
 import {Provider} from 'react-redux'
 import {initConfiguration} from './initConfig'
+import {FetchProvider} from 'react-fetch-it-hook'
 
+
+// set version in window.buildID
+(window as any).buildID = `${process.env.REACT_APP_BUILD_ID}`
 
 export const HashHistory = createHashHistory()
 
-const {getStore} = initConfiguration()
+export const {getStore} = initConfiguration()
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={getStore()}>
-        <Router history={HashHistory}>
-            <ThemeProvider theme={AMUSIC_THEME}>
-                <App/>
-            </ThemeProvider>
-        </Router>
+            <FetchProvider value={{basePath: process.env.REACT_APP_BACKEND_URL || '', logLevel: 'INFO'}}>
+                <Router history={HashHistory}>
+                    <ThemeProvider theme={AMUSIC_THEME}>
+                        <App/>
+                    </ThemeProvider>
+                </Router>
+            </FetchProvider>
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')

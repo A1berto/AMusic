@@ -1,4 +1,6 @@
 import {FieldInputProps} from 'formik/dist/types'
+import {useEffect, useRef} from 'react'
+import moment from 'moment/moment'
 
 /**
  * GENERIC DROPZONE FILE NAME NORMALIZER
@@ -13,3 +15,27 @@ export const genericDropzoneFileNameNormalizer = (field: FieldInputProps<any>) =
 }
 
 export const mobileMaxWidth = '(max-width:991px)'
+
+
+/**
+ * @label CUSTOM HOOK
+ * Returns the previuos value of something
+ * @param value
+ */
+export const usePrevious = (value: any): any => {
+    const ref = useRef()
+
+    useEffect(() => {
+        if (value) {
+            ref.current = value
+        }
+    })
+    return ref.current
+}
+
+
+export const YUP_DEFAULT_ERROR_VALUE = 'Campo obbligatorio'
+export const halfHour = 1800000
+
+export const actualDate= moment(new Date()).format('yyyy-MM-DD')
+export const hundredYearsAgo= moment(new Date()).subtract(100,'years').format('yyyy-MM-DD')
