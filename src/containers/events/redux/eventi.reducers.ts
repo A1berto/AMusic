@@ -6,9 +6,10 @@ import {
     fetchPaymentAction,
     RESET_STRIPE_CLIENT_SECRET_ACTION
 } from './eventi.actions'
-import {IEvent, IEventHistory} from '../eventi.types'
+import {IEvent, IEventHistory, IGeoLocation} from '../eventi.types'
 import {combineReducers} from 'redux'
 import moment from 'moment/moment'
+import {userLocationReducer} from '../user-location/user-location.reducer'
 
 
 type PaymentIntentActionReducerTypes = IGenericResponse<any>
@@ -56,14 +57,14 @@ export const eventsHistoryListReducer = (state: IEventHistory[] = [], action: IA
                 return [
                     ...agg,
                     {
-                    ...current,
-                    datePayment: moment(current.datePayment).format('DD/MM/YYYY, h:mm:ss a'),
-                    event: {
-                        ...current.event,
-                        eventDate: moment(current?.event?.eventDate).format('DD/MM/YYYY'),
-                        eventDatePublished: moment(current?.event?.eventDatePublished).format('DD/MM/YYYY'),
-                    },
-                }]
+                        ...current,
+                        datePayment: moment(current.datePayment).format('DD/MM/YYYY, h:mm:ss a'),
+                        event: {
+                            ...current.event,
+                            eventDate: moment(current?.event?.eventDate).format('DD/MM/YYYY'),
+                            eventDatePublished: moment(current?.event?.eventDatePublished).format('DD/MM/YYYY'),
+                        },
+                    }]
             }, []) : []
         default:
             return state
@@ -75,10 +76,12 @@ export interface IEventReducer {
     eventsList: IEvent[]
     eventsHistory: IEventHistory[]
     paymentClientSecret: string
+    userLocation: IGeoLocation | null
 }
 
 export const eventsCombineReducer = combineReducers<IEventReducer>({
     eventsList: eventsListReducer,
     paymentClientSecret: paymentClientSecretReducer,
-    eventsHistory: eventsHistoryListReducer
+    eventsHistory: eventsHistoryListReducer,
+    userLocation: userLocationReducer
 })

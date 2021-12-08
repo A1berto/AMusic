@@ -1,5 +1,5 @@
 import React, {lazy, Suspense, useCallback, useEffect} from 'react'
-import {Redirect, Route, Switch, useHistory} from 'react-router-dom'
+import {Redirect, Route, Switch} from 'react-router-dom'
 import {
     EVENTS_HISTORY_PATH,
     EVENTS_PATH,
@@ -17,8 +17,10 @@ import {SnackbarConsumer} from './commons/SnackbarConsumer'
 import {setBaseRequestURL} from 'fetch-with-redux-observable'
 import {getAuth} from 'firebase/auth'
 import {halfHour} from './utils'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {profileIdSelector} from './containers/profile/redux/profile.selectors'
+import {IGeoLocation} from './containers/events/eventi.types'
+import {updateUserLocation} from './containers/events/user-location/user-location.actions'
 
 /* Lazy loading of principle components*/
 const LoginComponent = lazy(() => import('./containers/login/LoginOrSignInContainer'))
@@ -32,6 +34,7 @@ const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosContainer'
 function App() {
 
     const profileId = useSelector(profileIdSelector)
+    const dispatch = useDispatch()
 
     /*Every 30 minutes we set the header with setBaseRequestUrl to allow user to be recognized*/
     useEffect(() => {
@@ -56,14 +59,30 @@ function App() {
         return () => clearInterval(subscription)
     }, [])
 
-    /*//TODO controllare se funziona
+    // user gelocalization
     useEffect(() => {
-        window.addEventListener('popstate', () => {
-            history.go(1)
-        })
-    }, [history])*/
+        if (!navigator.geolocation) {
+            console.error('Geolocalizzazione non supportata!')
+        } else {
+            console.info('Geolocalizzazione supportata!')
+            navigator.geolocation.getCurrentPosition((loc) => {
+                const location: IGeoLocation = {
+                    accuracy: loc.coords.accuracy,
+                    altitude: loc.coords.altitude,
+                    altitudeAccuracy: loc.coords.altitudeAccuracy,
+                    latitude: loc.coords.latitude,
+                    longitude: loc.coords.longitude,
+                    heading: loc.coords.heading,
+                }
+                console.info('Posizione utente', location)
+                dispatch(updateUserLocation(location))
+            }, () => {
+                console.error('Impossibile acquisire la posizione!')
+            })
+        }
+    }, [dispatch])
 
-    /*Grant path*/
+    /*Gard path*/
     const canGoToSpecificSectionExpectLogin = useCallback(() => {
         return !!profileId
     }, [profileId])

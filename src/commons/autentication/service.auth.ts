@@ -125,6 +125,9 @@ const LoginOrSignInError = (error: any, dispatch: any) => {
         case 'auth/popup-blocked':
             errorMessage = 'Ops! Popup bloccato, riprova'
             break
+        case 'auth/account-exists-with-different-credential':
+            errorMessage = 'Ops! Esiste un account con le stesse credenziali email.'
+            break
         default:
             errorMessage= 'Ops! Errore durante la fase di autenticazione'
     }

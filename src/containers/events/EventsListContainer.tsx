@@ -13,6 +13,7 @@ import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
 import {CurrentDialogType} from '../../redux/dialogs/current-dialog.constants'
 import GoogleMapsReact, {Props as GoogleMapsReactProps} from 'google-map-react'
 import {AMusicSlider} from '../../commons/AMusicSlider'
+import {userLocationSelector} from './user-location/user-location.selectors'
 
 
 interface IEventsProps {
@@ -22,10 +23,11 @@ const Events: FC<IEventsProps> = () => {
 
     const [isButtonComeBackUpVisible, setButtonComeBackUpVisible] = useState<boolean>(false)
     const [distanceValue, setDistanceValue] = React.useState<number>(1)
+    const userLocation = useSelector(userLocationSelector)
     const [mapsProps, setMapsPros] = useState<GoogleMapsReactProps>({
         center: {
-            lat: 41.9027835,
-            lng: 12.4963655,
+            lat: !!userLocation ? userLocation.latitude : 41.9027835,
+            lng: !!userLocation ? userLocation.longitude : 12.4963655,
         },
         zoom: 12,
         options: () => ({
