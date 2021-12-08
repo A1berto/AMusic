@@ -1,6 +1,6 @@
-##Progetto di ingengeria del software
-Questo progetto è stato creato con [Create React App](https://github.com/facebook/create-react-app), 
-utilizzando [Redux](https://redux.js.org/) e il template [Redux Toolkit](https://redux-toolkit.js.org/) .
+##AMuisc
+This project was created with [Create React App](https://github.com/facebook/create-react-app), 
+using [Redux](https://redux.js.org/) and the [Redux Toolkit](https://redux-toolkit.js.org/)  template.
 
 ## Available Scripts
 

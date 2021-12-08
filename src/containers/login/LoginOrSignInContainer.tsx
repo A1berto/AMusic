@@ -1,0 +1,134 @@
+import * as React from 'react'
+import {FC, useState} from 'react'
+import {createStyles, makeStyles, Typography} from '@material-ui/core'
+import FacebookLogo from '../../assets/img/facebookLogo.svg'
+import GoogleLogo from '../../assets/img/googleLogo.svg'
+import GitHubLogo from '../../assets/img/gitHubLogo.svg'
+import {AMUSIC_PALETTE_COLORS} from '../../AMusic_theme'
+import LoginOrSignInFields from './components/LoginOrSignInFields'
+import {facebookProvider, gitHubProvider, googleProvider} from '../../commons/autentication/authMethods'
+import {socialMediaAuth} from '../../commons/autentication/service.auth'
+import {useDispatch, useSelector} from 'react-redux'
+import {profileEmailSelector} from '../profile/redux/profile.selectors'
+
+/*LoginOrSignInContainer style*/
+const useStyles = makeStyles(() =>
+    createStyles({
+        divider: (isSingIn) => ({
+            borderLeft: '2px solid white',
+            opacity: '0.6',
+            height: isSingIn ? '30vh' : '20vh',
+            position: 'fixed',
+            left: '50%',
+            marginTop: 'inherit'
+        }),
+        link: {
+            marginLeft: '8px',
+            textDecoration: 'underline',
+            cursor: 'pointer'
+        }
+    }),
+)
+
+
+interface ILogin {
+}
+
+const LoginOrSignInContainer: FC<ILogin> = () => {
+
+    const dispatch = useDispatch()
+    const [isSingIn, setIsSingIn] = useState<boolean>(false)
+    const email = useSelector(profileEmailSelector)
+    const classes = useStyles(isSingIn)
+
+    const handleToggleClick = () => {
+        setIsSingIn(preveState => !preveState)
+    }
+
+    /** @description Authentication with different providers **/
+    const handleAuthenticationClick = async (provider: any) => {
+        const response = await socialMediaAuth(provider, dispatch)
+        console.info('AUTHENTICATION: ', response)
+    }
+
+
+    return (
+        <div style={{textAlign: 'center', width: '60%'}}>
+
+            <div className="row">
+                {/*TITLE*/}
+                <div className="col-12 d-flex justify-content-center">
+                    <Typography variant={'h3'} color="primary">Divertiamoci</Typography>
+                </div>
+                {/*SUBTITLE*/}
+                <div className="col-12 d-flex justify-content-center">
+                    {
+                        isSingIn ?
+                            <Typography variant={'h4'} color="secondary">
+                                Per cominciare, crea il tuo account AMusic. Ne hai già uno?
+                                <span className={classes.link} onClick={handleToggleClick}>Accedi</span>
+                            </Typography> :
+                            <Typography variant={'h4'} color="secondary">
+                                Per cominciare, crea il tuo account AMusic. Non ne hai già uno?
+                                <span className={classes.link} onClick={handleToggleClick}>Registrati</span>
+                            </Typography>
+                    }
+                </div>
+            </div>
+
+            <div
+                className={`row mt-5 animate__animated ${!isSingIn ? ' animate__fadeInRight' : ' animate__fadeInLeft'}`}>
+
+                {/* SING IN or LOGIN */}
+                <LoginOrSignInFields isSingIn={isSingIn}/>
+
+                {/*DIVIDER*/}
+                <div className="col-2 d-flex align-items-center justify-content-center">
+                    <div className={classes.divider}/>
+                    <Typography variant="caption" color="secondary"
+                                className="p-3"
+                                style={{background: AMUSIC_PALETTE_COLORS.BLACK, zIndex: 1}}>
+                        oppure
+                    </Typography>
+                </div>
+
+                {/*LOGIN WITH THIRD PARTIES*/}
+                <div className="col-5 d-flex align-items-center justify-content-center">
+                    <div className="row" style={{paddingLeft: '3vw'}}>
+
+                        <div className={`col-12 appTerzeParti mb-2`}
+                             onClick={() => handleAuthenticationClick(googleProvider)}>
+                            <img src={GoogleLogo} className="appTerzePartiHover" alt="GoogleLogo"/>
+                            <Typography variant="h6" color="secondary" className="ms-3">
+                                Accedi su Google
+                            </Typography>
+                        </div>
+
+                        <div className={`col-12 appTerzeParti my-2`}
+                             onClick={() => handleAuthenticationClick(facebookProvider)}>
+                            <img src={FacebookLogo} className="appTerzePartiHover" alt="FacebookLogo"/>
+                            <Typography variant="h6" color="secondary" className="ms-3">
+                                Accedi su Facebook
+                            </Typography>
+                        </div>
+
+                        <div className={`col-12 appTerzeParti mt-2`}
+                             onClick={() => handleAuthenticationClick(gitHubProvider)}>
+                            <img src={GitHubLogo} className="appTerzePartiHover" alt="GitHubLogo"/>
+                            <Typography variant="h6" color="secondary" className="ms-3">
+                                Accedi su GitHub
+                            </Typography>
+                        </div>
+                    </div>
+                </div>
+                {/*<div className="col-12 mt-5">
+                    <Typography color="textSecondary">
+                        Password dimenticata?
+                        <Link className="ms-2" onClick={handleForgotPassword}>Recupera</Link>
+                    </Typography>
+                </div>*/}
+            </div>
+        </div>
+    )
+}
+export default LoginOrSignInContainer

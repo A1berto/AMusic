@@ -1,8 +1,8 @@
 import {setBaseRequestURL} from 'fetch-with-redux-observable'
 import {applyMiddleware, compose, createStore} from 'redux'
-import {rootReducer} from './redux/reducers'
 import {rootEpics} from './redux/epics'
 import {createEpicMiddleware} from 'redux-observable'
+import {AMusicReducer} from './containers/login/redux/login.reducer'
 
 
 export function initConfiguration() {
@@ -52,18 +52,17 @@ export function initConfiguration() {
         getStore: () => {
 
             const store = createStore(
-                rootReducer,
+                AMusicReducer,
                 {},
                 composeEnhancers(
                     applyMiddleware(epicsMiddleware),
                 ))
 
-            store.subscribe(()=>{
+            store.subscribe(() => {
                 localStorage.setItem('reduxState', JSON.stringify(store.getState()))
             })
 
             epicsMiddleware.run(rootEpics)
-
             return store
         },
         fetchConfig,

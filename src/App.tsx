@@ -1,44 +1,146 @@
-import React, {lazy, Suspense} from 'react'
+import React, {lazy, Suspense, useCallback, useEffect} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
-import {INFO_APP_PATH, LOGIN_PATH, PROFILE_PATH, EVENTI_PATH} from './routes'
-import {AMusicContainer} from './components/AMusicContainer'
-import {FallbackSpinner} from './components/fallback-spinner/FallbackSpinner'
+import {
+    EVENTS_HISTORY_PATH,
+    EVENTS_PATH,
+    FRIENDS_LIST_PATH,
+    INFO_APP_PATH,
+    LOGIN_OR_SIGNIN_PATH,
+    PROFILE_PATH
+} from './routes'
+import {AMusicContainer} from './commons/AMusicContainer'
+import {FallbackSpinner} from './commons/fallback-spinner/FallbackSpinner'
 import 'animate.css'
-import DialogProvider from './components/dialogs/DialogProvider'
+import DialogProvider from './commons/dialogs/DialogProvider'
+import {SnackbarProvider} from 'notistack'
+import {SnackbarConsumer} from './commons/SnackbarConsumer'
+import {setBaseRequestURL} from 'fetch-with-redux-observable'
+import {getAuth} from 'firebase/auth'
+import {halfHour} from './utils'
+import {useDispatch, useSelector} from 'react-redux'
+import {profileIdSelector} from './containers/profile/redux/profile.selectors'
+import {IGeoLocation} from './containers/events/eventi.types'
+import {updateUserLocation} from './containers/events/user-location/user-location.actions'
 
-const LoginComponent = lazy(() => import('./containers/login/Login'))
-const EventiComponent = lazy(() => import('./containers/eventi/Events'))
-const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosApp'))
-const ProfileComponent = lazy(() => import('./containers/profile/Profile'))
+/* Lazy loading of principle components*/
+const LoginComponent = lazy(() => import('./containers/login/LoginOrSignInContainer'))
+const ProfileComponent = lazy(() => import('./containers/profile/ProfileContainer'))
+const EventiComponent = lazy(() => import('./containers/events/EventsListContainer'))
+const FriendsListComponent = lazy(() => import('./containers/friends/FriendsContainer'))
+const EventsHistoryComponent = lazy(() => import('./containers/eventsHistory/EventsHistory'))
+const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosContainer'))
 
 
 function App() {
+
+    const profileId = useSelector(profileIdSelector)
+    const dispatch = useDispatch()
+
+    /*Every 30 minutes we set the header with setBaseRequestUrl to allow user to be recognized*/
+    useEffect(() => {
+        const subscription = setInterval(() => {
+            const auth = getAuth()
+
+            auth.currentUser && auth?.currentUser?.getIdToken(true)
+                .then((idToken: string) => setBaseRequestURL({
+                    devUrl: process.env.REACT_APP_BACKEND_URL || '',
+                    prodUrl: process.env.REACT_APP_BACKEND_URL || '.',
+                    headers: {
+                        //@ts-ignore
+                        Authorization: `Bearer ${idToken}`
+                    },
+                    retryStrategy: {
+                        attempts: 0,
+                        delayMs: 0,
+                    }
+                }))
+        }, halfHour)
+        /*clearInterval during unMount*/
+        return () => clearInterval(subscription)
+    }, [])
+
+    // user gelocalization
+    useEffect(() => {
+        if (!navigator.geolocation) {
+            console.error('Geolocalizzazione non supportata!')
+        } else {
+            console.info('Geolocalizzazione supportata!')
+            navigator.geolocation.getCurrentPosition((loc) => {
+                const location: IGeoLocation = {
+                    accuracy: loc.coords.accuracy,
+                    altitude: loc.coords.altitude,
+                    altitudeAccuracy: loc.coords.altitudeAccuracy,
+                    latitude: loc.coords.latitude,
+                    longitude: loc.coords.longitude,
+                    heading: loc.coords.heading,
+                }
+                console.info('Posizione utente', location)
+                dispatch(updateUserLocation(location))
+            }, () => {
+                console.error('Impossibile acquisire la posizione!')
+            })
+        }
+    }, [dispatch])
+
+    /*Gard path*/
+    const canGoToSpecificSectionExpectLogin = useCallback(() => {
+        return !!profileId
+    }, [profileId])
+
     return (
-        <Suspense fallback={<FallbackSpinner/>}>
-            <AMusicContainer>
-                <Switch>
+        <>
+            <Suspense fallback={<FallbackSpinner/>}>
+                <AMusicContainer>
+                    <Switch>
 
-                    {/*LOGIN*/}
-                    <Route path={LOGIN_PATH} component={LoginComponent}/>
+                        {/*LOGIN*/}
+                        <Route path={LOGIN_OR_SIGNIN_PATH} component={LoginComponent}/>
 
-                    {/*EVENTI*/}
-                    <Route path={EVENTI_PATH} component={EventiComponent}/>
+                        {/*EVENTS*/}
+                        <Route path={EVENTS_PATH}
+                               render={() => canGoToSpecificSectionExpectLogin() ? <EventiComponent/> :
+                                   <Redirect to={`${LOGIN_OR_SIGNIN_PATH}`}/>}/>
 
-                    {/*PROFILE*/}
-                    <Route path={PROFILE_PATH} component={ProfileComponent}/>
+                        {/*PROFILE*/}
+                        <Route path={PROFILE_PATH}
+                               render={() => canGoToSpecificSectionExpectLogin() ? <ProfileComponent/> :
+                                   <Redirect to={`${LOGIN_OR_SIGNIN_PATH}`}/>}/>
 
-                    {/*INFO APP*/}
-                    <Route path={INFO_APP_PATH} component={InfoAppComponent}/>
+                        {/*INFO APP*/}
+                        <Route path={INFO_APP_PATH}
+                               render={() => canGoToSpecificSectionExpectLogin() ? <InfoAppComponent/> :
+                                   <Redirect to={`${LOGIN_OR_SIGNIN_PATH}`}/>}/>
 
-                    <Redirect to={LOGIN_PATH}/>
+                        {/*FRIENDS LIST*/}
+                        <Route path={FRIENDS_LIST_PATH}
+                               render={() => canGoToSpecificSectionExpectLogin() ? <FriendsListComponent/> :
+                                   <Redirect to={`${LOGIN_OR_SIGNIN_PATH}`}/>}/>
 
-                </Switch>
+                        {/*EVENTS HISTORY*/}
+                        <Route path={EVENTS_HISTORY_PATH}
+                               render={() => canGoToSpecificSectionExpectLogin() ? <EventsHistoryComponent/> :
+                                   <Redirect to={`${LOGIN_OR_SIGNIN_PATH}`}/>}/>
 
-                {/* GENERIC DIALOGS */}
-                <DialogProvider/>
+                        {/*DEFAULT*/}
+                        <Redirect to={LOGIN_OR_SIGNIN_PATH}/>
 
-            </AMusicContainer>
-        </Suspense>
+                    </Switch>
+
+                    {/* GENERIC DIALOGS */}
+                    <DialogProvider/>
+
+                </AMusicContainer>
+            </Suspense>
+
+            {/* APP SNACKBARS */}
+            <SnackbarProvider maxSnack={4} anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}>
+                <SnackbarConsumer variant="error" time={4000}/>
+                <SnackbarConsumer variant="success" time={4000}/>
+                <SnackbarConsumer variant="info" time={4000}/>
+                <SnackbarConsumer variant="warning" time={4000}/>
+            </SnackbarProvider>
+        </>
+
     )
 }
 
