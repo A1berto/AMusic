@@ -1,15 +1,17 @@
 import * as React from 'react'
 import {FC} from 'react'
-import {Button} from '@material-ui/core'
+import {Button, Link, Typography} from '@material-ui/core'
 import {
     createProfileWithEmailAndPasswordAuth,
-    loginProfileWithEmailAndPasswordAuth
+    loginProfileWithEmailAndPasswordAuth,
+    resetPasswordAuth
 } from '../../../commons/autentication/service.auth'
 import {Field, Form, Formik} from 'formik'
 import {ILoginFormProps} from '../login.types'
 import {LOGIN_FIELDS_NAMES, LOGIN_FORM_INIT_VALUES, loginValidationSchema} from '../login.constants'
 import {TextField} from 'formik-material-ui'
 import {useDispatch} from 'react-redux'
+import {addError} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 
 interface ILoginFields {
     isSingIn: boolean
@@ -18,24 +20,32 @@ interface ILoginFields {
 const LoginOrSignInFields: FC<ILoginFields> = (props: ILoginFields) => {
 
     const {isSingIn = false} = props
-    const dispatch= useDispatch()
+    const dispatch = useDispatch()
 
     //TODO scoppia quandol'email è già presente su firebase
     const handleAuthenticationEmailClick = async (formValues: ILoginFormProps) => {
-         isSingIn ?
-            await createProfileWithEmailAndPasswordAuth(formValues,dispatch) :
-            await loginProfileWithEmailAndPasswordAuth(formValues?.email, formValues?.password,dispatch)
+        isSingIn ?
+            await createProfileWithEmailAndPasswordAuth(formValues, dispatch) :
+            await loginProfileWithEmailAndPasswordAuth(formValues?.email, formValues?.password, dispatch)
+    }
+
+    const handleForgotPassword = async (email: any) => {
+        if (!!email) {
+            const response = await resetPasswordAuth(email, dispatch)
+            console.info('RESET PASSWORD: ', response)
+        } else {
+            dispatch(addError({userMessage: 'Inserire la mail prima di cliccare Recupera'}))
+        }
     }
 
     return (
         <div className="col-5">
-            {/*TODO non far spuntare gli helper di google*/}
             <Formik initialValues={LOGIN_FORM_INIT_VALUES}
                     onSubmit={handleAuthenticationEmailClick}
                     validateOnChange={true}
                     validationSchema={loginValidationSchema(isSingIn)}>
                 {
-                    () => {
+                    (formikProps) => {
                         return <Form autoComplete="off">
                             <div className="row justify-content-center">
                                 {
@@ -94,6 +104,13 @@ const LoginOrSignInFields: FC<ILoginFields> = (props: ILoginFields) => {
                                         {isSingIn ? 'Registrati' : 'Accedi'}
                                     </Button>
                                 </div>
+                            </div>
+                            <div style={{position: 'absolute', left: '37%', bottom: '-80px'}}>
+                                <Typography color="textSecondary">
+                                    Password dimenticata?
+                                    <Link className="ms-2"
+                                          onClick={() => handleForgotPassword(formikProps.values.email)}>Recupera</Link>
+                                </Typography>
                             </div>
                         </Form>
                     }}

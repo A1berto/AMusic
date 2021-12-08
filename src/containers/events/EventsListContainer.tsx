@@ -115,7 +115,7 @@ const Events: FC<IEventsProps> = () => {
                                         {/* GOOGLE MAPS REACT */}
                                         <GoogleMapsReact
                                             bootstrapURLKeys={{
-                                                key: 'AIzaSyAJw3ne1rGwjdNEhyQsMlIZ-lO3_XG5_k0',  //TODO passare dal be durante la chiamata config
+                                                key: 'AIzaSyDTNW-bYg4EQSNqkQ2IMImBY3AdsBEK-0c',
                                                 language: 'it',
                                                 libraries: ['places', 'geometry'],
                                             }}

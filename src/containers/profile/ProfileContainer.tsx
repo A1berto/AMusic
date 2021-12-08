@@ -140,7 +140,7 @@ const ProfileContainer: FC<IProfileProps> = () => {
                                         <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>
                                     }
                                 </Button>
-                            </div>UQ
+                            </div>
                         </div>
                     </div>
                 </Form>

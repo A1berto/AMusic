@@ -1,10 +1,21 @@
 import firebase from './firebase.configs'
 import {DEFAULT_REQUEST_ID, setBaseRequestURL} from 'fetch-with-redux-observable'
-import {addError} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
+import {addError, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 import {fetchProfileAction} from '../../containers/profile/redux/profile.actions'
 import {getAuth, updateProfile} from 'firebase/auth'
 import {ILoginFormProps} from '../../containers/login/login.types'
 import {clearAMusicState} from '../../containers/login/redux/login.actions'
+
+/**
+ * @description Method that provide resetPassword
+ * */
+export const resetPasswordAuth = (email: string, dispatch: any) => {
+    return firebase.auth().sendPasswordResetEmail(email, null)
+        .then(() => {
+            return dispatch(addSuccess({userMessage: 'Controlla la tua posta elettronica'}))
+        })
+        .catch((error) => LoginOrSignInError(error, dispatch))
+}
 
 /**
  * @description Method that provide socialMedia login
@@ -84,6 +95,38 @@ export const loginOrSignInCompleted = (idToken: string, dispatch: any, formValue
  * @description If login or signIn have gone wrong, I show a snackbar error
  * */
 const LoginOrSignInError = (error: any, dispatch: any) => {
-    console.log('error>>>', error)
-    dispatch(addError({userMessage: 'Ops! Errore durante la fase di autenticazione'}))
+    console.log('error>>>', error.code)
+    let errorMessage = ''
+    switch (error.code) {
+        case 'auth/invalid-email':
+            errorMessage = 'Ops! Email non valida'
+            break
+        case 'auth/user-not-found':
+            errorMessage = 'Ops! Utente inesistente'
+            break
+        case 'auth/email-already-in-use':
+            errorMessage = 'Ops! Utente già esistente, cambiare email'
+            break
+        case 'auth/id-token-expired':
+            errorMessage = 'Ops! IdToken scaduto, ricaricare la pagina'
+            break
+        case 'auth/internal-error':
+            errorMessage = 'Ops! Errore lato server, riprovare'
+            break
+        case 'auth/invalid-credential':
+            errorMessage = 'Ops! Credenziali non valide'
+            break
+        case 'auth/wrong-password':
+            errorMessage = 'Ops! Password errata'
+            break
+        case 'auth/cancelled-popup-request':
+            errorMessage = 'Ops! Cancellata la richiesta del popup,riprova'
+            break
+        case 'auth/popup-blocked':
+            errorMessage = 'Ops! Popup bloccato, riprova'
+            break
+        default:
+            errorMessage= 'Ops! Errore durante la fase di autenticazione'
+    }
+    dispatch(addError({userMessage: errorMessage}))
 }

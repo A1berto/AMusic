@@ -32,7 +32,6 @@ const InfoAppComponent = lazy(() => import('./containers/infoApp/InfosContainer'
 function App() {
 
     const profileId = useSelector(profileIdSelector)
-    const history = useHistory()
 
     /*Every 30 minutes we set the header with setBaseRequestUrl to allow user to be recognized*/
     useEffect(() => {
@@ -115,7 +114,7 @@ function App() {
             </Suspense>
 
             {/* APP SNACKBARS */}
-            <SnackbarProvider maxSnack={4} anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}>
+            <SnackbarProvider maxSnack={4} anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}>
                 <SnackbarConsumer variant="error" time={4000}/>
                 <SnackbarConsumer variant="success" time={4000}/>
                 <SnackbarConsumer variant="info" time={4000}/>
