@@ -4,6 +4,7 @@ import {addError} from 'fetch-with-redux-observable/dist/user-message/user-messa
 import {fetchProfileAction} from '../../containers/profile/redux/profile.actions'
 import {getAuth, updateProfile} from 'firebase/auth'
 import {ILoginFormProps} from '../../containers/login/login.types'
+import {clearAMusicState} from '../../containers/login/redux/login.actions'
 
 /**
  * @description Method that provide socialMedia login
@@ -61,6 +62,7 @@ export const loginOrSignInCompleted = (idToken: string, dispatch: any, formValue
             attempts: 0,
             delayMs: 0,
         }
+
     })
 
     //If it come in it means that the user is signedIn
@@ -74,6 +76,7 @@ export const loginOrSignInCompleted = (idToken: string, dispatch: any, formValue
         })
     }
 
+    dispatch(clearAMusicState())
     dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
 }
 

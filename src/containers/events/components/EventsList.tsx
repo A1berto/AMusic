@@ -23,13 +23,18 @@ const EventsList: FC<IEventsListProps> = (props) => {
 
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        console.log('eventsList>>>',eventsList)
+    },[eventsList])
+
     /* Open the dialog to show local details */
     const handleCardClick = (event: any) => {
+        console.log("moment>>>>",moment(event.datePayment).format('DD/MM/YYYY, h:mm:ss a'))
         dispatch(setCurrentDialog(CurrentDialogType.LOCAL_DETAILS,
             isInHistorySection ? {
                 event: event.event,
                 paymentInfo: {
-                    datePayment: moment(event.datePayment).format('DD/MM/YYYY, h:mm:ss a'),
+                    datePayment: event.datePayment,
                     idPayment: event.idPayment,
                     vendor: event.vendor
                 }

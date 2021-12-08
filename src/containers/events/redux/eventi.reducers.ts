@@ -1,9 +1,10 @@
 import {genericResponseNormalizer, IAction, IGenericResponse} from 'fetch-with-redux-observable'
 import {
-    fetchEventsListAction,
     fetchEventsHistoryListAction,
+    fetchEventsListAction,
+    fetchNearEventsListAction,
     fetchPaymentAction,
-    RESET_STRIPE_CLIENT_SECRET_ACTION, fetchNearEventsListAction
+    RESET_STRIPE_CLIENT_SECRET_ACTION
 } from './eventi.actions'
 import {IEvent, IEventHistory} from '../eventi.types'
 import {combineReducers} from 'redux'
@@ -51,7 +52,19 @@ export const eventsHistoryListReducer = (state: IEventHistory[] = [], action: IA
     switch (action.type) {
         case fetchEventsHistoryListAction.successActionType:
             const response = genericResponseNormalizer(action.payload)
-            return !!response ? response : []
+            return !!response ? response.reduce((agg: IEventHistory[], current: IEventHistory) => {
+                return [
+                    ...agg,
+                    {
+                    ...current,
+                    datePayment: moment(current.datePayment).format('DD/MM/YYYY, h:mm:ss a'),
+                    event: {
+                        ...current.event,
+                        eventDate: moment(current?.event?.eventDate).format('DD/MM/YYYY'),
+                        eventDatePublished: moment(current?.event?.eventDatePublished).format('DD/MM/YYYY'),
+                    },
+                }]
+            }, []) : []
         default:
             return state
     }

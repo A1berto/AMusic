@@ -1,7 +1,16 @@
 import * as React from 'react'
 import {FC, useCallback, useEffect, useMemo, useState} from 'react'
 import {IEvent, IPartecipant} from '../../../containers/events/eventi.types'
-import {Avatar, Checkbox, CircularProgress, IconButton, Tooltip, Typography} from '@material-ui/core'
+import {
+    Avatar,
+    Checkbox,
+    CircularProgress,
+    createStyles,
+    IconButton,
+    makeStyles,
+    Tooltip,
+    Typography
+} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import Fab from '@material-ui/core/Fab'
 import PaymentOutlinedIcon from '@material-ui/icons/PaymentOutlined'
@@ -13,6 +22,20 @@ import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {paymentClientSecretSelector} from '../../../containers/events/redux/eventi.selectors'
 import {EVENTS_HISTORY_PATH} from '../../../routes'
 import HelpIcon from '@material-ui/icons/Help'
+import {AMUSIC_PALETTE_COLORS} from '../../../AMusic_theme'
+
+
+export const localInfosStyles = makeStyles(() =>
+    createStyles({
+        link: {
+            color: AMUSIC_PALETTE_COLORS.PURPLE,
+            '&:hover': {
+                color: AMUSIC_PALETTE_COLORS.ARANCIONE_WG_LIGHT,
+            },
+        },
+
+    }),
+)
 
 interface ILocalInfosProps {
     event: IEvent
@@ -22,6 +45,7 @@ interface ILocalInfosProps {
 const LocalInfosDialog: FC<ILocalInfosProps> = props => {
 
     const {event, paymentInfo} = props
+    const classes = localInfosStyles()
 
     const [showPaymentForm, setPaymentForm] = useState<boolean>(false)
     const [visibleChecked, setVisibleChecked] = useState<boolean>(true)
@@ -123,10 +147,15 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                         </Typography>
                     </div>
                     <div className="col ms-2">
-                        <Typography variant="h6"
-                                    color="secondary">
-                            {event?.phoneNumber}
-                        </Typography>
+                            <Typography variant="h6"
+                                        color="secondary">
+                                <Tooltip title={'Clicca per chiamare'} placement="right">
+                                    <a href={`tel:${event?.phoneNumber}`}
+                                       className={classes.link}>
+                                        {event?.phoneNumber}
+                                    </a>
+                                </Tooltip>
+                            </Typography>
                     </div>
                 </div>
 
@@ -151,7 +180,8 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                                              <div>Data del pagamento : {paymentInfo.datePayment}</div>
                                              <div>Vendor : {paymentInfo.vendor}</div>
                                          </>
-                                     }>
+                                     }
+                                     placement="right">
                                 <HelpIcon color="secondary"/>
                             </Tooltip>
                         }
@@ -216,6 +246,6 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                 </div>
             }
         </>
-    )
+)
 }
 export default LocalInfosDialog
