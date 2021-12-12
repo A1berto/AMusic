@@ -8,9 +8,9 @@ import {AMusicReducer} from './containers/login/redux/login.reducer'
 export function initConfiguration() {
 
     // config init config fetch-with-redux-observable
-    const fetchConfig = setBaseRequestURL({
-        devUrl: 'https://amusic-service-l7sxicqleq-oa.a.run.app' || '',
-        prodUrl: 'https://amusic-service-l7sxicqleq-oa.a.run.app' || '.',
+        const fetchConfig = setBaseRequestURL({
+        devUrl: 'https://amusic-service-l7sxicqleq-oa.a.run.app',
+        prodUrl: 'https://amusic-service-l7sxicqleq-oa.a.run.app',
         headers: {},
         retryStrategy: {
             attempts: 0,
