@@ -10,8 +10,10 @@ import {Field, Form, Formik} from 'formik'
 import {ILoginFormProps} from '../login.types'
 import {LOGIN_FIELDS_NAMES, LOGIN_FORM_INIT_VALUES, loginValidationSchema} from '../login.constants'
 import {TextField} from 'formik-material-ui'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {addError} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
+import {isFetchProfilePendingSelector} from '../../profile/redux/profile.actions'
+import {isFetchEventsListPendingSelector} from '../../events/redux/eventi.actions'
 
 interface ILoginFields {
     isSingIn: boolean
@@ -20,6 +22,8 @@ interface ILoginFields {
 const LoginOrSignInFields: FC<ILoginFields> = (props: ILoginFields) => {
 
     const {isSingIn = false} = props
+    const isFetchProfilePending = useSelector(isFetchProfilePendingSelector)
+    const isFetchEventsListPending = useSelector(isFetchEventsListPendingSelector)
     const dispatch = useDispatch()
 
     //TODO scoppia quandol'email è già presente su firebase
@@ -99,8 +103,8 @@ const LoginOrSignInFields: FC<ILoginFields> = (props: ILoginFields) => {
                                 </div>
                             </div>
                             <div className="row justify-content-center">
-                                <div className="col-8 mt-5">
-                                    <Button variant="contained" type="submit" fullWidth>
+                                <div className={`col-8 mt-5 animate__animated animate__infinite ${isFetchProfilePending || isFetchEventsListPending ? 'animate__pulse' : ''}`} >
+                                    <Button variant="contained" type="submit"  disabled={isFetchProfilePending || isFetchEventsListPending} fullWidth>
                                         {isSingIn ? 'Registrati' : 'Accedi'}
                                     </Button>
                                 </div>

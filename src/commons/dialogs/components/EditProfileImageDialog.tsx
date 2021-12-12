@@ -7,8 +7,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import {DropzoneField} from '../../DropezoneFields'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {
-    DROPZONE_FORM_INIT_VALUES,
-    GENERIC_DROPZONE_VALIDATION_SCHEMA
+    DROPZONE_FORM_INIT_VALUES, GENERIC_DROPZONE_VALIDATION_SCHEMA,
 } from '../../../containers/profile/profile.constants'
 import {IProfileImageFields} from '../../../containers/profile/profile.types'
 import {DEFAULT_REQUEST_ID, HttpMethods} from 'fetch-with-redux-observable'

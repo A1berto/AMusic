@@ -55,7 +55,8 @@
     "typescript": "~4.1.5",
     "yup": "^0.32.11"
   },
-  "proxy": "http://25.84.153.83:8080",
+
+  "proxy": "https://amusic-service-l7sxicqleq-oa.a.run.app",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

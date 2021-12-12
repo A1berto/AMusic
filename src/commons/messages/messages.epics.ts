@@ -8,7 +8,11 @@ import {
     fetchProfileAction,
     updateProfileAction
 } from '../../containers/profile/redux/profile.actions'
-import {fetchEventsListAction, fetchEventsHistoryListAction} from '../../containers/events/redux/eventi.actions'
+import {
+    fetchEventsListAction,
+    fetchEventsHistoryListAction,
+    fetchPaymentAction
+} from '../../containers/events/redux/eventi.actions'
 import {
     fetchAddFriendAction,
     fetchFilteredFriendsListAction,
@@ -50,11 +54,14 @@ export const TYPES_TO_MESSAGES_MAPPER: IGenericEntities<string> = {
 // GENERIC ERROR MESSAGE (compare di default)
 export const GENERIC_ERROR_MESSAGE = 'Ops! Si è verificato un errore'
 
+export const ACTION_TYPES_TO_EXCLUDE_FROM_MESSAGES = [fetchPaymentAction.failureActionType]
+
 export const genericMessagesEpic = (action$: Observable<IAction>) =>
     action$.pipe(
         filter((action: IAction) =>
             action.type.includes(SUCCCESS_FETCH_SUFFIX) || action.type.includes(FAILURE_FETCH_SUFFIX)
         ),
+        filter((action: IAction) => !ACTION_TYPES_TO_EXCLUDE_FROM_MESSAGES.includes(action.type)),
         mergeMap((action: IAction) => {
 
             const userMessage = TYPES_TO_MESSAGES_MAPPER[action.type]

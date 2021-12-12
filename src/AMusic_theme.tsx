@@ -336,6 +336,7 @@ export const AMUSIC_THEME: Theme = createTheme({
                     textTransform: 'none',
                     letterSpacing: '0.1em',
                     '&$disabled': {
+                        backgroundColor:AMUSIC_PALETTE_COLORS.PURPLE,
                         color: AMUSIC_PALETTE_COLORS.BIANCO,
                         opacity: 0.5,
                     },
@@ -353,6 +354,7 @@ export const AMUSIC_THEME: Theme = createTheme({
                     textTransform: 'none',
                     letterSpacing: '0.1em',
                     '&$disabled': {
+                        backgroundColor:AMUSIC_PALETTE_COLORS.PURPLE,
                         color: AMUSIC_PALETTE_COLORS.BIANCO,
                         border: `1px solid ${AMUSIC_PALETTE_COLORS.BIANCO}`,
                         opacity: 0.5,
@@ -435,6 +437,14 @@ export const AMUSIC_THEME: Theme = createTheme({
                         textDecorationColor: 'rgba(245,245,235,0.7)',
                     }
                 },
+            },
+            MuiLinearProgress:{
+                root:{
+                    width:'100%',
+                    '& > * + *': {
+                        marginTop: "4px",
+                    },
+                }
             },
             MuiInputLabel: {
                 root: {

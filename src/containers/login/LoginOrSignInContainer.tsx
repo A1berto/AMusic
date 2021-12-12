@@ -76,8 +76,7 @@ const LoginOrSignInContainer: FC<ILogin> = () => {
                 </div>
             </div>
 
-            <div
-                className={`row mt-5 animate__animated ${!isSingIn ? ' animate__fadeInRight' : ' animate__fadeInLeft'}`}>
+            <div className={`row mt-5 animate__animated ${!isSingIn ? ' animate__fadeInRight' : ' animate__fadeInLeft'}`}>
 
                 {/* SING IN or LOGIN */}
                 <LoginOrSignInFields isSingIn={isSingIn}/>
@@ -121,13 +120,9 @@ const LoginOrSignInContainer: FC<ILogin> = () => {
                         </div>
                     </div>
                 </div>
-                {/*<div className="col-12 mt-5">
-                    <Typography color="textSecondary">
-                        Password dimenticata?
-                        <Link className="ms-2" onClick={handleForgotPassword}>Recupera</Link>
-                    </Typography>
-                </div>*/}
+
             </div>
+
         </div>
     )
 }

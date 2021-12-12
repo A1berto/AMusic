@@ -24,7 +24,7 @@ export const {getStore} = initConfiguration()
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={getStore()}>
-            <FetchProvider value={{basePath: process.env.REACT_APP_BACKEND_URL || '', logLevel: 'INFO'}}>
+            <FetchProvider value={{basePath: 'https://amusic-service-l7sxicqleq-oa.a.run.app' || '', logLevel: 'INFO'}}>
                 <Router history={HashHistory}>
                     <ThemeProvider theme={AMUSIC_THEME}>
                         <App/>

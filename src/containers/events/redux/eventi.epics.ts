@@ -6,6 +6,7 @@ import {map, mergeMap} from 'rxjs/operators'
 import {HashHistory} from '../../../index'
 import {EVENTS_HISTORY_PATH, EVENTS_PATH} from '../../../routes'
 import {IEvent} from '../eventi.types'
+import {addError} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 
 export const allEventsListSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<any>>>) =>
     action$.pipe(
@@ -26,9 +27,7 @@ export const fetchPaymentFailureEpic = (action$: Observable<any>) =>
         map((action: any) => action.payload),
         mergeMap((payload) => {
             const errorMessage = payload.response.messages[0].text ?? ''
-            console.log('errorMessageASDSA>>>', errorMessage)
-            //TODO chiedere a vito perchè non miparte questo error e mi parte uno generico
-            return NEVER
+            return [addError({userMessage:errorMessage})]
         })
     )
 
