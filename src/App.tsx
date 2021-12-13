@@ -21,6 +21,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {profileIdSelector} from './containers/profile/redux/profile.selectors'
 import {IGeoLocation} from './containers/events/eventi.types'
 import {updateUserLocation} from './containers/events/user-location/user-location.actions'
+import {BASE_REQUEST_BACKEND_URL} from './fetch.constants'
 
 /* Lazy loading of principle components*/
 const LoginComponent = lazy(() => import('./containers/login/LoginOrSignInContainer'))
@@ -43,8 +44,8 @@ function App() {
 
             auth.currentUser && auth?.currentUser?.getIdToken(true)
                 .then((idToken: string) => setBaseRequestURL({
-                    devUrl: 'https://amusic-service-l7sxicqleq-oa.a.run.app',
-                    prodUrl: 'https://amusic-service-l7sxicqleq-oa.a.run.app',
+                    devUrl: BASE_REQUEST_BACKEND_URL,
+                    prodUrl: BASE_REQUEST_BACKEND_URL,
                     headers: {
                         //@ts-ignore
                         Authorization: `Bearer ${idToken}`

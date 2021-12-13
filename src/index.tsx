@@ -12,7 +12,7 @@ import * as serviceWorker from './serviceWorker'
 import {Provider} from 'react-redux'
 import {initConfiguration} from './initConfig'
 import {FetchProvider} from 'react-fetch-it-hook'
-import {BASE_REQUEST_URL} from './fetch.constants'
+import {BASE_REQUEST_BACKEND_URL} from './fetch.constants'
 
 
 // set version in window.buildID
@@ -25,7 +25,7 @@ export const {getStore} = initConfiguration()
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={getStore()}>
-            <FetchProvider value={{basePath: BASE_REQUEST_URL || '', logLevel: 'INFO'}}>
+            <FetchProvider value={{basePath: BASE_REQUEST_BACKEND_URL || '', logLevel: 'INFO'}}>
                 <Router history={HashHistory}>
                     <ThemeProvider theme={AMUSIC_THEME}>
                         <App/>

@@ -5,6 +5,7 @@ import {fetchProfileAction} from '../../containers/profile/redux/profile.actions
 import {getAuth, updateProfile} from 'firebase/auth'
 import {ILoginFormProps} from '../../containers/login/login.types'
 import {clearAMusicState} from '../../containers/login/redux/login.actions'
+import {BASE_REQUEST_BACKEND_URL} from '../../fetch.constants'
 
 /**
  * @description Method that provide resetPassword
@@ -63,8 +64,8 @@ export const loginProfileWithEmailAndPasswordAuth = (email: string, password: st
 export const loginOrSignInCompleted = (idToken: string, dispatch: any, formValues?: ILoginFormProps) => {
 
     setBaseRequestURL({
-        devUrl: 'https://amusic-service-l7sxicqleq-oa.a.run.app',
-        prodUrl: 'https://amusic-service-l7sxicqleq-oa.a.run.app',
+        devUrl: BASE_REQUEST_BACKEND_URL,
+        prodUrl: BASE_REQUEST_BACKEND_URL,
         headers: {
             //@ts-ignore
             Authorization: `Bearer ${idToken}`
