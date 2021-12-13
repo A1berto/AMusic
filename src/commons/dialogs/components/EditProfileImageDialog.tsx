@@ -1,13 +1,14 @@
 import * as React from 'react'
 import {FC, useCallback, useState} from 'react'
-import {Button, CircularProgress, IconButton, Typography} from '@material-ui/core'
+import {Button, IconButton, Typography} from '@material-ui/core'
 import {useDispatch} from 'react-redux'
 import {Field, Form, Formik} from 'formik'
 import CloseIcon from '@material-ui/icons/Close'
 import {DropzoneField} from '../../DropezoneFields'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {
-    DROPZONE_FORM_INIT_VALUES, GENERIC_DROPZONE_VALIDATION_SCHEMA,
+    DROPZONE_FORM_INIT_VALUES,
+    GENERIC_DROPZONE_VALIDATION_SCHEMA,
 } from '../../../containers/profile/profile.constants'
 import {IProfileImageFields} from '../../../containers/profile/profile.types'
 import {DEFAULT_REQUEST_ID, HttpMethods} from 'fetch-with-redux-observable'
@@ -35,12 +36,12 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
 
             // Set spinner
             setIsInPending(true)
-            
+
             fetch(`private/user/uploadPhoto`, {
                 method: HttpMethods.POST,
                 body: formData,
             }).then(async (response) => {
-                console.log("response Upload Photo>>",response)
+                console.log('response Upload Photo>>', response)
 
                 if (response.ok) {
                     dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
@@ -103,11 +104,11 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
                                 </Button>
 
                                 {/* SUBMIT */}
-                                <Button type="submit" variant="contained">
+                                <Button type="submit"
+                                        variant="contained"
+                                        disabled={isInPending}
+                                        className={`animate__animated animate__infinite ${isInPending ? 'animate__pulse' : ''}`}>
                                     CONFERMA
-                                    {
-                                        isInPending && <CircularProgress className="ms-2" color="inherit" size={20}/>
-                                    }
                                 </Button>
                             </div>
                         </Form>

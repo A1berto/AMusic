@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {FC, useState} from 'react'
-import {Button, CircularProgress, IconButton, TextField, Typography} from '@material-ui/core'
+import {Button, IconButton, TextField, Typography} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import {SearchOutlined} from '@material-ui/icons'
 import {useDispatch, useSelector} from 'react-redux'
@@ -133,13 +133,12 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                                 }}/>
 
                             {/* SEARCH FRIENDS*/}
-                            <Button variant={'contained'} onClick={handleSearch} className="ms-3">
+                            <Button variant={'contained'}
+                                    onClick={handleSearch}
+                                    disabled={isFetchFilteredFriendsListPending}
+                                    className={`ms-3 animate__animated animate__infinite ${isFetchFilteredFriendsListPending ? 'animate__pulse' : ''}`}>
                                 CERCA UTENTE
-                                {
-                                    isFetchFilteredFriendsListPending ?
-                                        <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/> :
-                                        <SearchOutlined fontSize={'small'} className="ms-1 mb-1"/>
-                                }
+                                <SearchOutlined fontSize={'small'} className="ms-1 mb-1"/>
                             </Button>
                         </div>
 

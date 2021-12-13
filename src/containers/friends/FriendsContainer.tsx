@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {FC} from 'react'
 import Typography from '@material-ui/core/Typography'
-import {Button, CircularProgress, createStyles, makeStyles} from '@material-ui/core'
+import {Button, createStyles, makeStyles} from '@material-ui/core'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
@@ -70,21 +70,19 @@ const FriendsContainer: FC<IFriendsListProps> = () => {
                             <GenericFriend sectionId="friendsContainer"
                                            tooltipTitle="Visualizza il dettaglio"
                                            friend={friend}
-                                           handleClick={()=>handleOpenInfoFriend(friend)}/>
+                                           handleClick={() => handleOpenInfoFriend(friend)}/>
                         )
                     }
 
                 </div>
 
-                <div style={{position: 'fixed', bottom: 40, right: '45.5%'}}>
+                <div style={{position: 'fixed', bottom: 40, right: '45.5%'}}
+                     className={`animate__animated animate__infinite ${isFetchSuggestedFriendsListPending ? 'animate__pulse' : ''}`}>
                     {/* ADD FRIENDS */}
-                    <Button variant={'contained'} onClick={handleAddFriendsClick}>
+                    <Button variant={'contained'} onClick={handleAddFriendsClick}
+                            disabled={isFetchSuggestedFriendsListPending}>
                         AGGIUNGI
-                        {
-                            isFetchSuggestedFriendsListPending ?
-                                <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/> :
-                                <AddOutlinedIcon fontSize={'small'} className="ms-1 mb-1"/>
-                        }
+                        <AddOutlinedIcon fontSize={'small'} className="ms-1 mb-1"/>
                     </Button>
                 </div>
             </div>

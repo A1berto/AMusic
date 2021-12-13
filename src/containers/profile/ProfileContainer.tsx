@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {FC, useMemo, useState} from 'react'
-import {Avatar, Button, CircularProgress, Tooltip, Typography} from '@material-ui/core'
+import {Avatar, Button, Tooltip, Typography} from '@material-ui/core'
 import {AMUSIC_PALETTE_COLORS} from '../../AMusic_theme'
 import {CurrentDialogType} from '../../redux/dialogs/current-dialog.constants'
 import {setCurrentDialog} from '../../redux/dialogs/current-dialogs.actions'
@@ -123,22 +123,15 @@ const ProfileContainer: FC<IProfileProps> = () => {
                             </div>
 
                             {/* EDIT BUTTONS */}
-                            <div className="row d-flex justify-content-end" style={{marginTop: '176px'}}>
+                            <div className={`row d-flex justify-content-end animate__animated animate__infinite ${isChangeProfilePasswordPending ? 'animate__pulse' : ''}`} style={{marginTop: '176px'}}>
                                 <Button variant="contained" onClick={handleChangeCredentials}>
                                     Modifica password
-                                    {
-                                        isChangeProfilePasswordPending &&
-                                        <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>
-                                    }
                                 </Button>
                             </div>
-                            <div className="row d-flex justify-content-end mt-2">
+                            <div
+                                className={`row d-flex justify-content-end mt-2 animate__animated animate__infinite ${isUpdateProfilePending ? 'animate__pulse' : ''}`}>
                                 <Button variant="contained" type={'submit'} disabled={isUpdateProfilePending}>
                                     {isEditProfileData ? 'Conferma modifica' : 'Modifica dati'}
-                                    {
-                                        isUpdateProfilePending &&
-                                        <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>
-                                    }
                                 </Button>
                             </div>
                         </div>

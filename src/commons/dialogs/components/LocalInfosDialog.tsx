@@ -225,7 +225,6 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                             <Tooltip title={'Iscrizione e Pagamento'} placement="left">
                                 <Fab style={{position: 'absolute', right: 25, bottom: 25}} color="primary"
                                      onClick={handleOpenPayment}>
-
                                     {
                                         isFetchPaymentPending ?
                                             <CircularProgress style={{color: 'white'}}/> : <PaymentOutlinedIcon/>

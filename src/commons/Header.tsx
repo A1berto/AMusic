@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {FC, useState} from 'react'
-import {CircularProgress, IconButton, Menu, MenuItem, Tooltip, Typography} from '@material-ui/core'
+import {IconButton, Menu, MenuItem, Tooltip, Typography} from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import {
     EVENTS_HISTORY_PATH,
@@ -16,9 +16,10 @@ import {fetchFriendsListAction, isFetchFriendsListPendingSelector} from '../cont
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {isFetchProfilePendingSelector} from '../containers/profile/redux/profile.actions'
 import {
-    fetchEventsListAction,
     fetchEventsHistoryListAction,
-    isFetchEventsListPendingSelector, isFetchEventsHistoryListPendingSelector
+    fetchEventsListAction,
+    isFetchEventsHistoryListPendingSelector,
+    isFetchEventsListPendingSelector
 } from '../containers/events/redux/eventi.actions'
 import {AMUSIC_PALETTE_COLORS} from '../AMusic_theme'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
@@ -103,30 +104,31 @@ const Header: FC<IHeaderProps> = () => {
                     }}
                 >
                     {
-                        isSectionDisabled(PROFILE_PATH) && <MenuItem onClick={() => handleOpenSection(PROFILE_PATH)}>
-                            Profilo {isFetchProfilePending &&
-                            <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>}
+                        isSectionDisabled(PROFILE_PATH) &&
+                        <MenuItem onClick={() => handleOpenSection(PROFILE_PATH)}
+                                  className={`animate__animated animate__infinite ${isFetchProfilePending ? 'animate__headShake' : ''}`}>
+                            Profilo
                         </MenuItem>
                     }
                     {
                         isSectionDisabled(EVENTS_PATH) &&
-                        <MenuItem onClick={() => handleOpenSection(EVENTS_PATH)}>
-                            Eventi {isFetchALLEventsListPending &&
-                            <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>}
+                        <MenuItem onClick={() => handleOpenSection(EVENTS_PATH)}
+                                  className={`animate__animated animate__infinite ${isFetchALLEventsListPending ? 'animate__headShake' : ''}`}>
+                            Eventi
                         </MenuItem>
                     }
                     {
                         isSectionDisabled(FRIENDS_LIST_PATH) &&
-                        <MenuItem onClick={() => handleOpenSection(FRIENDS_LIST_PATH)}>
-                            Lista amici {isFetchFriendsListPending &&
-                            <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>}
+                        <MenuItem onClick={() => handleOpenSection(FRIENDS_LIST_PATH)}
+                                  className={`animate__animated animate__infinite ${isFetchFriendsListPending ? 'animate__headShake' : ''}`}>
+                            Lista amici
                         </MenuItem>
                     }
                     {
                         isSectionDisabled(EVENTS_HISTORY_PATH) &&
-                        <MenuItem onClick={() => handleOpenSection(EVENTS_HISTORY_PATH)}>
-                            Cronologia eventi {isFetchEventsHistoryListPending &&
-                            <CircularProgress className="ms-2" size={20} style={{color: 'white'}}/>}
+                        <MenuItem onClick={() => handleOpenSection(EVENTS_HISTORY_PATH)}
+                                  className={`animate__animated animate__infinite ${isFetchEventsHistoryListPending ? 'animate__headShake' : ''}`}>
+                            Cronologia eventi
                         </MenuItem>
                     }
                 </Menu>
