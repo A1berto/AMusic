@@ -11,7 +11,9 @@ export function initConfiguration() {
         const fetchConfig = setBaseRequestURL({
         devUrl: BASE_REQUEST_BACKEND_URL,
         prodUrl: BASE_REQUEST_BACKEND_URL,
-        headers: {},
+        headers: {
+           'Access-Control-Allow-Origin':'*'
+        },
         retryStrategy: {
             attempts: 0,
             delayMs: 0,

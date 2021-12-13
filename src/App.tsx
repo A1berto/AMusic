@@ -48,7 +48,8 @@ function App() {
                     prodUrl: BASE_REQUEST_BACKEND_URL,
                     headers: {
                         //@ts-ignore
-                        Authorization: `Bearer ${idToken}`
+                        Authorization: `Bearer ${idToken}`,
+                        'Access-Control-Allow-Origin':'*'
                     },
                     retryStrategy: {
                         attempts: 0,
