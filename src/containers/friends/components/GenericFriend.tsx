@@ -9,6 +9,7 @@ import {
 } from '../redux/friends.actions'
 import {IFriend} from '../friends.types'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
+import {AMUSIC_PALETTE_COLORS} from '../../../AMusic_theme'
 
 interface IAddFriendListProps {
     friend: IFriend
@@ -50,41 +51,39 @@ const GenericFriend: FC<IAddFriendListProps> = (props) => {
                  onMouseEnter={onMouseEnter}
                  onMouseLeave={onMouseLeave}>
                 <div className="row d-flex c-pointer">
-                    <div className="col-auto d-flex"
-                         onClick={handleClick}>
-                        <Tooltip title={tooltipTitle}>
-
-                            <div className="d-flex align-items-center">
-                                {
-                                    isFetchAddFriendPending ?
-                                        <CircularProgress className="ms-2" size={80}
-                                                          style={{color: 'white'}}/> :
-                                        <Avatar variant="circular"
-                                                alt="Friend Image"
-                                                src={friend?.photoUrl}/>
-                                }
+                    <div className="col-auto d-flex">
+                        <div className="d-flex align-items-center">
+                            {
+                                isFetchAddFriendPending ?
+                                    <CircularProgress className="ms-2" size={80}
+                                                      style={{color: 'white'}}/> :
+                                    <Avatar variant="circular"
+                                            alt="Friend Image"
+                                            src={friend?.photoUrl}/>
+                            }
+                            {
+                                isDeleteFriendPossible &&
+                                <Tooltip title={'Elimina amico'}
+                                         style={{marginLeft: '-65px', marginRight: '17px', backgroundColor: 'white'}}>
+                                    <IconButton onClick={handleDeleteFriend} color="primary">
+                                        {
+                                            isFetchDeleteFriendPending ?
+                                                <CircularProgress size={20}
+                                                                  style={{color: AMUSIC_PALETTE_COLORS.PURPLE}}/> :
+                                                <DeleteOutlineIcon/>
+                                        }
+                                    </IconButton>
+                                </Tooltip>
+                            }
+                            <Tooltip title={tooltipTitle}
+                                     onClick={handleClick}>
                                 <Typography variant="body2"
                                             color="secondary"
                                             className="ms-4">
                                     {friend?.displayName}
                                 </Typography>
-                            </div>
-                        </Tooltip>
-                    </div>
-                    <div className="col d-flex justify-content-center">
-                        {
-                            isDeleteFriendPossible &&
-                            <Tooltip title={'Elimina amico'}>
-                                <IconButton onClick={handleDeleteFriend} color="primary">
-                                    {
-                                        isFetchDeleteFriendPending ?
-                                            <CircularProgress className="ms-2" size={20}
-                                                              style={{color: 'white'}}/> :
-                                            <DeleteOutlineIcon/>
-                                    }
-                                </IconButton>
                             </Tooltip>
-                        }
+                        </div>
                     </div>
                 </div>
             </div>

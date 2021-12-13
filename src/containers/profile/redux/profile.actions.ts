@@ -1,5 +1,10 @@
 import {DEFAULT_REQUEST_ID, fetchActionFactory, isRequestInPending} from 'fetch-with-redux-observable'
-import {CHANGE_PROFILE_PASSWORD_API, FETCH_PROFILE_API, UPDATE_PROFILE_API} from '../../../fetch.constants'
+import {
+    CHANGE_PROFILE_IMAGE_API,
+    CHANGE_PROFILE_PASSWORD_API,
+    FETCH_PROFILE_API,
+    UPDATE_PROFILE_API
+} from '../../../fetch.constants'
 
 export const FETCH_PROFILE_ACTION = 'FETCH_PROFILE_ACTION'
 export const fetchProfileAction = fetchActionFactory(FETCH_PROFILE_API, FETCH_PROFILE_ACTION)
@@ -12,3 +17,7 @@ export const isUpdateProfilePendingSelector = isRequestInPending(updateProfileAc
 export const CHANGE_PROFILE_PASSWORD = 'CHANGE_PROFILE_PASSWORD'
 export const changeProfilePasswordAction = fetchActionFactory(CHANGE_PROFILE_PASSWORD_API, CHANGE_PROFILE_PASSWORD)
 export const isChangeProfilePasswordPendingSelector = isRequestInPending(changeProfilePasswordAction.pendingActionTypeWithSpinner, DEFAULT_REQUEST_ID)
+
+export const CHANGE_PROFILE_IMAGE = 'CHANGE_PROFILE_IMAGE'
+export const changeProfileImageAction = fetchActionFactory(CHANGE_PROFILE_IMAGE_API, CHANGE_PROFILE_IMAGE)
+export const isChangeProfileImagePendingSelector = isRequestInPending(changeProfileImageAction.pendingActionTypeWithSpinner, DEFAULT_REQUEST_ID)

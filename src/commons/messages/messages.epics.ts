@@ -14,7 +14,7 @@ import {
     fetchPaymentAction
 } from '../../containers/events/redux/eventi.actions'
 import {
-    fetchAddFriendAction,
+    fetchAddFriendAction, fetchDeleteFriendAction,
     fetchFilteredFriendsListAction,
     fetchFriendsListAction,
     fetchSuggestedFriendsListAction
@@ -49,6 +49,8 @@ export const TYPES_TO_MESSAGES_MAPPER: IGenericEntities<string> = {
     [changeProfilePasswordAction.successActionType]: 'Controlla la tua posta elettronica',
     //GET FILTERED FRIENDS LIST
     [fetchAddFriendAction.successActionType]: 'Amico aggiunto alla lista degli amici',
+    //DELETE FRIEND
+    [fetchDeleteFriendAction.successActionType]: 'Amico rimosso dalla lista degli amici',
 }
 
 // GENERIC ERROR MESSAGE (compare di default)

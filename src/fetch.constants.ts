@@ -37,6 +37,18 @@ export const CHANGE_PROFILE_PASSWORD_API: IRequestModel = {
 }
 
 /**
+ * @description Change profile image
+ * @method GET
+ */
+export const CHANGE_PROFILE_IMAGE_API: IRequestModel = {
+    url: `/private/user/uploadPhoto`,
+    method: HttpMethods.POST,
+    headers: {
+        'Content-Type': 'multipart/form-data'
+    },
+}
+
+/**
  * @description Take profile info
  * @method GET
  */

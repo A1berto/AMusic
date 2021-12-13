@@ -39,7 +39,7 @@ const ProfileContent: FC<IProfileContentProps> = props => {
                             inputProps={{
                                 placeholder: 'Inserisci il tuo nome'
                             }}
-                            disabled={!isEditProfileData || profile?.name}
+                            disabled={!isEditProfileData || !!profile?.name}
                             color="secondary"
                         />
                     </div>
@@ -59,7 +59,7 @@ const ProfileContent: FC<IProfileContentProps> = props => {
                             inputProps={{
                                 placeholder: 'Inserisci il tuo cognome'
                             }}
-                            disabled={!isEditProfileData || profile?.surname}
+                            disabled={!isEditProfileData || !!profile?.surname}
                             color="secondary"
                         />
                     </div>
@@ -102,6 +102,7 @@ const ProfileContent: FC<IProfileContentProps> = props => {
                             InputProps={{
                                 inputProps: {min: hundredYearsAgo, max: actualDate}
                             }}
+
                             fullWidth
                         />
                     </div>

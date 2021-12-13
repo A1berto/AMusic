@@ -15,7 +15,7 @@ import GenericFriend from './components/GenericFriend'
 export const friendsStyles = makeStyles(() =>
     createStyles({
         friendsList: {
-            overflowY: 'scroll',
+            overflowY: 'auto',
             height: '50vh',
             width: '100%',
             textAlign: 'start',

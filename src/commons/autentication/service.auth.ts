@@ -23,9 +23,10 @@ export const resetPasswordAuth = (email: string, dispatch: any) => {
  * */
 export const socialMediaAuth = (provider: any, dispatch: any) => {
     return firebase.auth().signInWithPopup(provider)
-        .then((response) => {
-            return response?.user?.getIdToken()
-        }).then((idToken) => {
+        .then((response) =>
+            //@ts-ignore
+            response.additionalUserInfo?.providerId.includes('google') ? response?.user?.getIdToken() : response.user?.multiFactor.user.accessToken
+        ).then((idToken) => {
             idToken && loginOrSignInCompleted(idToken, dispatch)
         })
         .catch((error) => LoginOrSignInError(error, dispatch))

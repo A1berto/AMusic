@@ -1,6 +1,7 @@
 import {combineEpics, Epic} from 'redux-observable'
 import {generalSpinnerEpics, switchMapFetchEpics} from 'fetch-with-redux-observable'
 import {
+    changeProfileImageAction,
     changeProfilePasswordAction,
     fetchProfileAction,
     updateProfileAction
@@ -45,6 +46,7 @@ export const rootEpics: Epic = combineEpics<Epic>(
     switchMapFetchEpics(fetchProfileAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(updateProfileAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(changeProfilePasswordAction.pendingActionTypeWithSpinner),
+    switchMapFetchEpics(changeProfileImageAction.pendingActionTypeWithSpinner),
 
     switchMapFetchEpics(fetchEventsListAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(fetchNearEventsListAction.pendingActionTypeWithSpinner),

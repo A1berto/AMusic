@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {FC, useState} from 'react'
+import {FC, useMemo, useState} from 'react'
 import {Button, IconButton, TextField, Typography} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import {SearchOutlined} from '@material-ui/icons'
@@ -15,8 +15,8 @@ import {
     suggestedFriendsListSelector
 } from '../../../containers/friends/redux/friends.selectors'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
-import GenericFriend from '../../../containers/friends/components/GenericFriend'
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined'
+import GenericFriend from '../../../containers/friends/components/GenericFriend'
 import {IFriend} from '../../../containers/friends/friends.types'
 
 interface IAddFriendsListDialogProps {
@@ -36,6 +36,10 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value)
     }
+
+    const friendListToShow = useMemo(() => {
+        return isSuggestedShowed ? suggestedFriendsList : filteredFriendsList
+    }, [isSuggestedShowed, suggestedFriendsList, filteredFriendsList])
 
     const handleSearch = () => {
         setIsSuggestedShowed(false)
@@ -95,19 +99,22 @@ const AddFriendsListDialog: FC<IAddFriendsListDialogProps> = () => {
                             }
                             <div className="row mt-2 px-2"
                                  style={{
-                                     overflowY: 'scroll',
+                                     overflowY: 'auto',
                                      height: '35vh',
                                      width: '100%',
                                      textAlign: 'start',
                                      margin: 'auto'
                                  }}>
                                 {
-                                    (isSuggestedShowed ? suggestedFriendsList : filteredFriendsList)?.map((friend: IFriend) =>
-                                        <GenericFriend sectionId="addFriendsDialog"
-                                                       friend={friend}
-                                                       tooltipTitle="Clicca per aggiungerlo!"
-                                                       handleClick={() => handleAddFriend(friend)}/>
-                                    )
+                                    !!friendListToShow.length ? friendListToShow?.map((friend: IFriend) =>
+                                    <GenericFriend sectionId="addFriendsDialog"
+                                    friend={friend}
+                                    tooltipTitle="Clicca per aggiungerlo!"
+                                    handleClick={() => handleAddFriend(friend)}/>
+                                    ) : <Typography className="d-flex align-items-center justify-content-center"
+                                                    color="textSecondary">
+                                        Nessun elemento trovato
+                                    </Typography>
                                 }
                             </div>
                         </div>

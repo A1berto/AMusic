@@ -11,9 +11,8 @@ import {
     GENERIC_DROPZONE_VALIDATION_SCHEMA,
 } from '../../../containers/profile/profile.constants'
 import {IProfileImageFields} from '../../../containers/profile/profile.types'
-import {DEFAULT_REQUEST_ID, HttpMethods} from 'fetch-with-redux-observable'
-import {addError, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
-import {fetchProfileAction} from '../../../containers/profile/redux/profile.actions'
+import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
+import {changeProfileImageAction} from '../../../containers/profile/redux/profile.actions'
 
 interface IEditProfileImageDialogProps {
 }
@@ -37,23 +36,26 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
             // Set spinner
             setIsInPending(true)
 
-            fetch(`private/user/uploadPhoto`, {
-                method: HttpMethods.POST,
-                body: formData,
-            }).then(async (response) => {
-                console.log('response Upload Photo>>', response)
+            //TODO decidere che fare, se utilizzare la action oppure la fetch normale. Tutte e due le scelte hanno un problema
+            dispatch(changeProfileImageAction.build(formData, DEFAULT_REQUEST_ID))
 
-                if (response.ok) {
-                    dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
-                    dispatch(addSuccess({userMessage: 'Documento caricato con successo'}))
-                    dispatch(closeCurrentDialog())
-                } else {
-                    dispatch(addError({userMessage: 'Ops! Errore durante il caricamento'}))
-                }
+                /*            fetch(`${BASE_REQUEST_BACKEND_URL}/private/user/uploadPhoto`, {
+                                method: HttpMethods.POST,
+                                body: formData,
+                            }).then(async (response) => {
+                                console.log('response Upload Photo>>', response)
 
-            }).finally(() => {
+                                if (response.ok) {
+                                    dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
+                                    dispatch(addSuccess({userMessage: 'Documento caricato con successo'}))
+                                    dispatch(closeCurrentDialog())
+                                } else {
+                                    dispatch(addError({userMessage: 'Ops! Errore durante il caricamento'}))
+                                }
+
+                            }).finally(() => {
                 setIsInPending(false)
-            })
+            })*/
 
         }
     }

@@ -22,7 +22,7 @@ interface IEventsProps {
 const Events: FC<IEventsProps> = () => {
 
     const [isButtonComeBackUpVisible, setButtonComeBackUpVisible] = useState<boolean>(false)
-    const [distanceValue, setDistanceValue] = React.useState<number>(1)
+    const [distanceValue, setDistanceValue] = React.useState<number>(5)
     const userLocation = useSelector(userLocationSelector)
     const [mapsProps, setMapsPros] = useState<GoogleMapsReactProps>({
         center: {
@@ -144,7 +144,7 @@ const Events: FC<IEventsProps> = () => {
                 <div className="row">
                     <div className="col-12">
                         <Typography id="discrete-slider" color="secondary" gutterBottom>
-                            Distanza di ricerca evento (km)
+                            {`Distanza di ricerca evento (${distanceValue} km)`}
                         </Typography>
                         <AMusicSlider
                             value={distanceValue}
