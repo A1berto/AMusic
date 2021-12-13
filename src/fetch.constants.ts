@@ -5,7 +5,7 @@ import {HttpMethods, IRequestModel} from 'fetch-with-redux-observable'
  * @method GET
  */
 export const FETCH_PROFILE_API: IRequestModel = {
-    url: `/profile`,
+    url: `private/profile`,
     method: HttpMethods.GET,
     headers: {
         'Content-Type': 'application/json'
