@@ -1,7 +1,5 @@
 import {HttpMethods, IRequestModel} from 'fetch-with-redux-observable'
 
-export const BASE_REQUEST_BACKEND_URL =  "https://amusic-service-l7sxicqleq-oa.a.run.app"
-
 /**
  * @description Take profile info
  * @method GET

@@ -3,7 +3,7 @@ import {applyMiddleware, compose, createStore} from 'redux'
 import {rootEpics} from './redux/epics'
 import {createEpicMiddleware} from 'redux-observable'
 import {AMusicReducer} from './containers/login/redux/login.reducer'
-import {BASE_REQUEST_BACKEND_URL} from './fetch.constants'
+import {BASE_REQUEST_BACKEND_URL} from './index'
 
 export function initConfiguration() {
 

@@ -12,20 +12,22 @@ import * as serviceWorker from './serviceWorker'
 import {Provider} from 'react-redux'
 import {initConfiguration} from './initConfig'
 import {FetchProvider} from 'react-fetch-it-hook'
-import {BASE_REQUEST_BACKEND_URL} from './fetch.constants'
 
 
 // set version in window.buildID
 (window as any).buildID = `${process.env.REACT_APP_BUILD_ID}`
 
+export const BASE_REQUEST_BACKEND_URL = 'https://amusic-service-l7sxicqleq-oa.a.run.app'
+
 export const HashHistory = createHashHistory()
 
 export const {getStore} = initConfiguration()
 
+
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={getStore()}>
-            <FetchProvider value={{basePath: BASE_REQUEST_BACKEND_URL || '', logLevel: 'INFO'}}>
+            <FetchProvider value={{basePath: '', logLevel: 'INFO'}}>
                 <Router history={HashHistory}>
                     <ThemeProvider theme={AMUSIC_THEME}>
                         <App/>

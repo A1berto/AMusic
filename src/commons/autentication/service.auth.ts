@@ -5,7 +5,7 @@ import {fetchProfileAction} from '../../containers/profile/redux/profile.actions
 import {getAuth, updateProfile} from 'firebase/auth'
 import {ILoginFormProps} from '../../containers/login/login.types'
 import {clearAMusicState} from '../../containers/login/redux/login.actions'
-import {BASE_REQUEST_BACKEND_URL} from '../../fetch.constants'
+import {BASE_REQUEST_BACKEND_URL} from '../../index'
 
 /**
  * @description Method that provide resetPassword
