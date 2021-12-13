@@ -4,7 +4,6 @@ import {rootEpics} from './redux/epics'
 import {createEpicMiddleware} from 'redux-observable'
 import {AMusicReducer} from './containers/login/redux/login.reducer'
 
-
 export function initConfiguration() {
 
     // config init config fetch-with-redux-observable

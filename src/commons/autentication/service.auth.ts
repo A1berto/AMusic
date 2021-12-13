@@ -63,8 +63,8 @@ export const loginProfileWithEmailAndPasswordAuth = (email: string, password: st
 export const loginOrSignInCompleted = (idToken: string, dispatch: any, formValues?: ILoginFormProps) => {
 
     setBaseRequestURL({
-        devUrl: process.env.REACT_APP_BACKEND_URL || '',
-        prodUrl: process.env.REACT_APP_BACKEND_URL || '.',
+        devUrl: 'https://amusic-service-l7sxicqleq-oa.a.run.app',
+        prodUrl: 'https://amusic-service-l7sxicqleq-oa.a.run.app',
         headers: {
             //@ts-ignore
             Authorization: `Bearer ${idToken}`

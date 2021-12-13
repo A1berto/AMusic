@@ -8,8 +8,7 @@ import {AMUSIC_PALETTE_COLORS} from '../../AMusic_theme'
 import LoginOrSignInFields from './components/LoginOrSignInFields'
 import {facebookProvider, gitHubProvider, googleProvider} from '../../commons/autentication/authMethods'
 import {socialMediaAuth} from '../../commons/autentication/service.auth'
-import {useDispatch, useSelector} from 'react-redux'
-import {profileEmailSelector} from '../profile/redux/profile.selectors'
+import {useDispatch} from 'react-redux'
 
 /*LoginOrSignInContainer style*/
 const useStyles = makeStyles(() =>
@@ -38,7 +37,6 @@ const LoginOrSignInContainer: FC<ILogin> = () => {
 
     const dispatch = useDispatch()
     const [isSingIn, setIsSingIn] = useState<boolean>(false)
-    const email = useSelector(profileEmailSelector)
     const classes = useStyles(isSingIn)
 
     const handleToggleClick = () => {
@@ -76,7 +74,8 @@ const LoginOrSignInContainer: FC<ILogin> = () => {
                 </div>
             </div>
 
-            <div className={`row mt-5 animate__animated ${!isSingIn ? ' animate__fadeInRight' : ' animate__fadeInLeft'}`}>
+            <div
+                className={`row mt-5 animate__animated ${!isSingIn ? ' animate__fadeInRight' : ' animate__fadeInLeft'}`}>
 
                 {/* SING IN or LOGIN */}
                 <LoginOrSignInFields isSingIn={isSingIn}/>

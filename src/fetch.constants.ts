@@ -1,13 +1,13 @@
 import {HttpMethods, IRequestModel} from 'fetch-with-redux-observable'
 
-export const BASE_REQUEST =  "https://amusic-service-l7sxicqleq-oa.a.run.app"
+export const BASE_REQUEST_URL =  "https://amusic-service-l7sxicqleq-oa.a.run.app"
 
 /**
  * @description Take profile info
  * @method GET
  */
 export const FETCH_PROFILE_API: IRequestModel = {
-    url: `${BASE_REQUEST}/profile`,
+    url: `${BASE_REQUEST_URL}/profile`,
     method: HttpMethods.GET,
     headers: {
         'Content-Type': 'application/json'
@@ -19,7 +19,7 @@ export const FETCH_PROFILE_API: IRequestModel = {
  * @method GET
  */
 export const UPDATE_PROFILE_API: IRequestModel = {
-    url: `${BASE_REQUEST}/private/user/update`,
+    url: `${BASE_REQUEST_URL}/private/user/update`,
     method: HttpMethods.PUT,
     headers: {
         'Content-Type': 'application/json'
@@ -31,7 +31,7 @@ export const UPDATE_PROFILE_API: IRequestModel = {
  * @method GET
  */
 export const CHANGE_PROFILE_PASSWORD_API: IRequestModel = {
-    url: `${BASE_REQUEST}/private/user/changePassword`,
+    url: `${BASE_REQUEST_URL}/private/user/changePassword`,
     method: HttpMethods.POST,
     headers: {
         'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ export const CHANGE_PROFILE_PASSWORD_API: IRequestModel = {
  * @method GET
  */
 export const FETCH_PAYMENT_API: IRequestModel = {
-    url: `${BASE_REQUEST}/private/pay`,
+    url: `${BASE_REQUEST_URL}/private/pay`,
     method: HttpMethods.POST,
     headers: {
         'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ export const FETCH_PAYMENT_API: IRequestModel = {
  * @method GET
  */
 export const FETCH_FRIENDS_LIST_API: IRequestModel = {
-    url: `${BASE_REQUEST}/private/user/friends`,
+    url: `${BASE_REQUEST_URL}/private/user/friends`,
     method: HttpMethods.GET,
     headers: {
         'Content-Type': 'application/json'
@@ -67,7 +67,7 @@ export const FETCH_FRIENDS_LIST_API: IRequestModel = {
  * @method GET
  */
 export const FETCH_SUGGESTED_FRIENDS_LIST_API: IRequestModel = {
-    url: `${BASE_REQUEST}/private/user/suggestedFriends`,
+    url: `${BASE_REQUEST_URL}/private/user/suggestedFriends`,
     method: HttpMethods.GET,
     headers: {
         'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ export const FETCH_SUGGESTED_FRIENDS_LIST_API: IRequestModel = {
  * @method GET
  */
 export const FETCH_FILTERED_FRIENDS_LIST_API: IRequestModel = {
-    url: `${BASE_REQUEST}/private/user`,
+    url: `${BASE_REQUEST_URL}/private/user`,
     method: HttpMethods.GET,
     headers: {
         'Content-Type': 'application/json'
@@ -91,7 +91,7 @@ export const FETCH_FILTERED_FRIENDS_LIST_API: IRequestModel = {
  * @method POST
  */
 export const FETCH_ADD_FRIEND_API: IRequestModel = {
-    url: `${BASE_REQUEST}/private/user/addFriend`,
+    url: `${BASE_REQUEST_URL}/private/user/addFriend`,
     method: HttpMethods.POST,
     headers: {
         'Content-Type': 'application/json'
@@ -103,7 +103,7 @@ export const FETCH_ADD_FRIEND_API: IRequestModel = {
  * @method POST
  */
 export const FETCH_DELETE_FRIEND_API: IRequestModel = {
-    url: `${BASE_REQUEST}/private/user/removeFriend`,
+    url: `${BASE_REQUEST_URL}/private/user/removeFriend`,
     method: HttpMethods.DELETE,
     headers: {
         'Content-Type': 'application/json'
@@ -115,7 +115,7 @@ export const FETCH_DELETE_FRIEND_API: IRequestModel = {
  * @method GET
  */
 export const FETCH_EVENTS_LIST_API: IRequestModel = {
-    url: `${BASE_REQUEST}/private/events`,
+    url: `${BASE_REQUEST_URL}/private/events`,
     method: HttpMethods.GET,
     headers: {
         'Content-Type': 'application/json'
@@ -127,7 +127,7 @@ export const FETCH_EVENTS_LIST_API: IRequestModel = {
  * @method GET
  */
 export const FETCH_NEAR_EVENTS_LIST_API: IRequestModel = {
-    url: `${BASE_REQUEST}/private/events/near`,
+    url: `${BASE_REQUEST_URL}/private/events/near`,
     method: HttpMethods.GET,
     headers: {
         'Content-Type': 'application/json'
@@ -139,7 +139,7 @@ export const FETCH_NEAR_EVENTS_LIST_API: IRequestModel = {
  * @method GET
  */
 export const FETCH_EVENTS_HISTORY_LIST_API: IRequestModel = {
-    url: `${BASE_REQUEST}/private/payment/history`,
+    url: `${BASE_REQUEST_URL}/private/payment/history`,
     method: HttpMethods.GET,
     headers: {
         'Content-Type': 'application/json'
