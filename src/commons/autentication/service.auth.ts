@@ -87,11 +87,14 @@ export const loginOrSignInCompleted = (idToken: string, dispatch: any, formValue
         !!auth.currentUser && updateProfile(auth.currentUser, {
             displayName: `${formattedName} ${formattedSurname}`,
             photoURL: ''
-        })
+        }).then(()=>
+            dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
+        )
+    }else{
+        dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
     }
 
     dispatch(clearAMusicState())
-    dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
 }
 
 /**

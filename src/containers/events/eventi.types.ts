@@ -10,6 +10,7 @@ export interface IEvent {
     maxPartecipants: number
     partecipants: IPartecipant[]
     ticketPrice: number
+    bought:boolean
     address: string
 }
 

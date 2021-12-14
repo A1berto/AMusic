@@ -147,15 +147,15 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                         </Typography>
                     </div>
                     <div className="col ms-2">
-                            <Typography variant="h6"
-                                        color="secondary">
-                                <Tooltip title={'Clicca per chiamare'} placement="right">
-                                    <a href={`tel:${event?.phoneNumber}`}
-                                       className={classes.link}>
-                                        {event?.phoneNumber}
-                                    </a>
-                                </Tooltip>
-                            </Typography>
+                        <Typography variant="h6"
+                                    color="secondary">
+                            <Tooltip title={'Clicca per chiamare'} placement="right">
+                                <a href={`tel:${event?.phoneNumber}`}
+                                   className={classes.link}>
+                                    {event?.phoneNumber}
+                                </a>
+                            </Tooltip>
+                        </Typography>
                     </div>
                 </div>
 
@@ -206,7 +206,7 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                 </div>
 
                 {
-                    !isInHistorySection &&
+                    !isInHistorySection && !event.bought &&
                     <>
                         {/* VISIBLE PARTICIPATION*/}
                         <div className="col-12 pt-4 d-flex align-items-center">
@@ -234,17 +234,26 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                         </div>
                     </>
                 }
+                {
+                    event.bought &&
+                    <div className="col-12 pt-4 d-flex align-items-center">
+                        <Typography variant="h6"
+                                    color="secondary">
+                            Biglietto già acquistato per questo evento
+                        </Typography>
+                    </div>
+                }
             </div>
 
 
             {/*PAYMENT COMPONENT*/}
             {
-                !!clientSecret && showPaymentForm &&
+                !!clientSecret && showPaymentForm && !event.bought &&
                 <div style={{left: 0, right: 0, top: '29%', margin: 'auto', position: 'absolute', width: '50%'}}>
                     <StripeContainer clientSecret={clientSecret}/>
                 </div>
             }
         </>
-)
+    )
 }
 export default LocalInfosDialog
