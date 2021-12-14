@@ -15,8 +15,8 @@ const PaymentForm = () => {
     const elements = useElements()
     const dispatch = useDispatch()
 
-    const [message, setMessage] = useState(null)
-    const [isLoading, setIsLoading] = useState(false)
+    const [message, setMessage] = useState<string>('')
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     /* Intercept payment status */
     useEffect(() => {
@@ -33,7 +33,7 @@ const PaymentForm = () => {
         }
 
         stripe.retrievePaymentIntent(clientSecret).then(({paymentIntent}) => {
-            switch (paymentIntent.status) {
+            switch (paymentIntent?.status) {
                 case 'succeeded':
                     dispatch(addSuccess({userMessage: 'Pagamento avvenuto con successo!'}))
                     setMessage('Pagamento avvenuto con successo!')
@@ -55,7 +55,7 @@ const PaymentForm = () => {
     }, [dispatch, stripe])
 
     /* Confirm payment if it is all right*/
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e:any) => {
         e.preventDefault()
 
         if (!stripe || !elements) {
