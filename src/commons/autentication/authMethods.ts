@@ -2,10 +2,6 @@ import {FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider} from 'fire
 
 export const googleProvider = new GoogleAuthProvider().addScope('email')
 
-export const facebookProvider = new FacebookAuthProvider().setCustomParameters({
-    display: 'popup',
-    login_hint: 'email@email.com',
-    prompt: 'consent'
-})
+export const facebookProvider = new FacebookAuthProvider().addScope('public_profile')
 
 export const gitHubProvider = new GithubAuthProvider().addScope('user')
