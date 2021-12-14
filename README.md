@@ -1,4 +1,10 @@
 ##AMuisc
+Web app developed for the software engineering project.
+The application was created to participate in evening events such as DjSet, Discos, Pubs, Ballrooms and much more.
+Alternative social network that allows you to buy a ticket for an event and to view, in addition to the details of the event, who will participate in it.
+You can create a community through a special section that allows the addition or deletion of a friend. It is also possible to keep track of past events, through a special section, with relative details of the event and the payment made.
+Each user can authenticate which will allow him, at a later time, to view all the data associated with it.
+
 This project was created with [Create React App](https://github.com/facebook/create-react-app), 
 using [Redux](https://redux.js.org/) and the [Redux Toolkit](https://redux-toolkit.js.org/)  template.
 
@@ -40,6 +46,8 @@ Instead, it will copy all the configuration files and the transitive dependencie
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## Learn More
+
+[AMusic documentation](https://abundant-tail-8cb.notion.site/AMusic-07159b095802489980d953b673725d25).
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
