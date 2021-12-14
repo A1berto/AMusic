@@ -4,8 +4,10 @@ import {ofType} from 'redux-observable'
 import {fetchEventsListAction} from '../../events/redux/eventi.actions'
 import {mergeMap} from 'rxjs/operators'
 import {IProfile} from '../profile.types'
-import {fetchProfileAction} from './profile.actions'
+import {changeProfileImageAction, fetchProfileAction} from './profile.actions'
 import {LOGIN_OR_SIGNIN_PATH} from '../../../routes'
+import {addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
+import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 
 
 export const profileSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<IProfile>>>) =>
@@ -16,5 +18,18 @@ export const profileSuccessEpic = (action$: Observable<ISuccessFetchAction<IGene
                 return [fetchEventsListAction.build(null, DEFAULT_REQUEST_ID)]
             }
             return NEVER
+        })
+    )
+
+export const editProfileImageSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<IProfile>>>) =>
+    action$.pipe(
+        ofType(changeProfileImageAction.successActionType),
+        mergeMap((response) => {
+            console.log('response Upload Photo>>', response)
+            return [
+                fetchProfileAction.build(null, DEFAULT_REQUEST_ID),
+                addSuccess({userMessage: 'Documento caricato con successo'}),
+                closeCurrentDialog()
+            ]
         })
     )

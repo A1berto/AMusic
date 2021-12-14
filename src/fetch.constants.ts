@@ -43,9 +43,7 @@ export const CHANGE_PROFILE_PASSWORD_API: IRequestModel = {
 export const CHANGE_PROFILE_IMAGE_API: IRequestModel = {
     url: `/private/user/uploadPhoto`,
     method: HttpMethods.POST,
-    headers: {
-        'Content-Type': 'multipart/form-data'
-    },
+    headers: {}
 }
 
 /**

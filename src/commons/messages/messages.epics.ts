@@ -4,6 +4,7 @@ import {NEVER, Observable} from 'rxjs'
 import {IGenericEntities} from 'fetch-with-redux-observable/dist/types'
 import {addError, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 import {
+    changeProfileImageAction,
     changeProfilePasswordAction,
     fetchProfileAction,
     updateProfileAction
@@ -28,6 +29,8 @@ export const TYPES_TO_MESSAGES_MAPPER: IGenericEntities<string> = {
     [updateProfileAction.failureActionType]: 'Ops! Impossibile modificare dati profilo',
     //CHANGE PROFILE PASSWORD
     [changeProfilePasswordAction.failureActionType]: 'Ops! Impossibile modificare la password',
+    //CHANGE PROFILE IMAGE
+    [changeProfileImageAction.failureActionType]: 'Ops! Errore durante il caricamento',
     //GET EVENTS
     [fetchEventsListAction.failureActionType]: 'Ops! Impossibile recuperare la lista degli eventi',
     //GET EVENTS HISTORY

@@ -1,7 +1,7 @@
 import * as React from 'react'
-import {FC, useCallback, useState} from 'react'
+import {FC, useCallback} from 'react'
 import {Button, IconButton, Typography} from '@material-ui/core'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {Field, Form, Formik} from 'formik'
 import CloseIcon from '@material-ui/icons/Close'
 import {DropzoneField} from '../../DropezoneFields'
@@ -12,14 +12,17 @@ import {
 } from '../../../containers/profile/profile.constants'
 import {IProfileImageFields} from '../../../containers/profile/profile.types'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
-import {changeProfileImageAction} from '../../../containers/profile/redux/profile.actions'
+import {
+    changeProfileImageAction,
+    isChangeProfileImagePendingSelector
+} from '../../../containers/profile/redux/profile.actions'
 
 interface IEditProfileImageDialogProps {
 }
 
 const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
 
-    const [isInPending, setIsInPending] = useState<boolean>(false)
+    const isChangeProfileImagePending = useSelector(isChangeProfileImagePendingSelector)
 
     const dispatch = useDispatch()
 
@@ -33,30 +36,7 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
             const formData = new FormData()
             formData.append('file', values.dropzone)
 
-            // Set spinner
-            setIsInPending(true)
-
-            //TODO decidere che fare, se utilizzare la action oppure la fetch normale. Tutte e due le scelte hanno un problema
             dispatch(changeProfileImageAction.build(formData, DEFAULT_REQUEST_ID))
-
-                /*            fetch(`${BASE_REQUEST_BACKEND_URL}/private/user/uploadPhoto`, {
-                                method: HttpMethods.POST,
-                                body: formData,
-                            }).then(async (response) => {
-                                console.log('response Upload Photo>>', response)
-
-                                if (response.ok) {
-                                    dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
-                                    dispatch(addSuccess({userMessage: 'Documento caricato con successo'}))
-                                    dispatch(closeCurrentDialog())
-                                } else {
-                                    dispatch(addError({userMessage: 'Ops! Errore durante il caricamento'}))
-                                }
-
-                            }).finally(() => {
-                setIsInPending(false)
-            })*/
-
         }
     }
 
@@ -108,8 +88,8 @@ const EditProfileImageDialog: FC<IEditProfileImageDialogProps> = () => {
                                 {/* SUBMIT */}
                                 <Button type="submit"
                                         variant="contained"
-                                        disabled={isInPending}
-                                        className={`animate__animated animate__infinite ${isInPending ? 'animate__pulse' : ''}`}>
+                                        disabled={isChangeProfileImagePending}
+                                        className={`animate__animated animate__infinite ${isChangeProfileImagePending ? 'animate__pulse' : ''}`}>
                                     CONFERMA
                                 </Button>
                             </div>

@@ -28,13 +28,14 @@ import {
     fetcheventsHistoryListSuccessEpic,
     fetchPaymentFailureEpic
 } from '../containers/events/redux/eventi.epics'
-import {profileSuccessEpic} from '../containers/profile/redux/profile.epics'
+import {editProfileImageSuccessEpic, profileSuccessEpic} from '../containers/profile/redux/profile.epics'
 
 // root epics
 export const rootEpics: Epic = combineEpics<Epic>(
     generalSpinnerEpics,
     genericMessagesEpic,
     profileSuccessEpic,
+    editProfileImageSuccessEpic,
     allEventsListSuccessEpic,
     fetchPaymentFailureEpic,
     fetchAllFriendsListSuccessEpic,
