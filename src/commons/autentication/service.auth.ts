@@ -1,17 +1,26 @@
-import firebase from './firebase.configs'
 import {DEFAULT_REQUEST_ID, setBaseRequestURL} from 'fetch-with-redux-observable'
 import {addError, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 import {fetchProfileAction} from '../../containers/profile/redux/profile.actions'
-import {getAuth, updateProfile} from 'firebase/auth'
+import {
+    createUserWithEmailAndPassword,
+    getAuth,
+    sendPasswordResetEmail,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    updateProfile
+} from 'firebase/auth'
 import {ILoginFormProps} from '../../containers/login/login.types'
 import {clearAMusicState} from '../../containers/login/redux/login.actions'
 import {BASE_REQUEST_BACKEND_URL} from '../../index'
+import {auth} from './firebase.configs'
+
 
 /**
  * @description Method that provide resetPassword
  * */
 export const resetPasswordAuth = (email: string, dispatch: any) => {
-    return firebase.auth().sendPasswordResetEmail(email, null)
+
+    return sendPasswordResetEmail(auth,email)
         .then(() => {
             return dispatch(addSuccess({userMessage: 'Controlla la tua posta elettronica'}))
         })
@@ -22,10 +31,12 @@ export const resetPasswordAuth = (email: string, dispatch: any) => {
  * @description Method that provide socialMedia login
  * */
 export const socialMediaAuth = (provider: any, dispatch: any) => {
-    return firebase.auth().signInWithPopup(provider)
-        .then((response) =>
-            //@ts-ignore
-            response.additionalUserInfo?.providerId.includes('google') ? response?.user?.getIdToken() : response.user?.multiFactor.user.accessToken
+    return signInWithPopup(auth, provider)
+        .then((response) => {
+                console.log('responseProvider>>>', response)
+                console.log('getAuth().currentUser?.getIdToken()>>>', getAuth().currentUser?.getIdToken())
+                return getAuth().currentUser?.getIdToken()
+            }
         ).then((idToken) => {
             idToken && loginOrSignInCompleted(idToken, dispatch)
         })
@@ -38,8 +49,9 @@ export const socialMediaAuth = (provider: any, dispatch: any) => {
 export const createProfileWithEmailAndPasswordAuth = (formValues: ILoginFormProps, dispatch: any) => {
     const {email, password} = formValues
 
-    return firebase.auth().createUserWithEmailAndPassword(email, password)
+    return createUserWithEmailAndPassword(auth, email, password)
         .then(response => {
+            console.log('response SIGNIN>>>', response)
             //@ts-ignore
             loginOrSignInCompleted(response?.user?.multiFactor?.user?.accessToken, dispatch, formValues)
         })
@@ -50,8 +62,10 @@ export const createProfileWithEmailAndPasswordAuth = (formValues: ILoginFormProp
  * @description Method that provide login with email and password
  * */
 export const loginProfileWithEmailAndPasswordAuth = (email: string, password: string, dispatch: any) => {
-    return firebase.auth().signInWithEmailAndPassword(email, password)
+
+    return signInWithEmailAndPassword(auth, email, password)
         .then(response => {
+            console.log('response LOGIN>>>', response)
             //@ts-ignore
             loginOrSignInCompleted(response?.user?.multiFactor?.user?.accessToken, dispatch)
         })
@@ -70,7 +84,7 @@ export const loginOrSignInCompleted = (idToken: string, dispatch: any, formValue
         headers: {
             //@ts-ignore
             Authorization: `Bearer ${idToken}`,
-            'Access-Control-Allow-Origin':'*'
+            'Access-Control-Allow-Origin': '*'
         },
         retryStrategy: {
             attempts: 0,
@@ -87,10 +101,10 @@ export const loginOrSignInCompleted = (idToken: string, dispatch: any, formValue
         !!auth.currentUser && updateProfile(auth.currentUser, {
             displayName: `${formattedName} ${formattedSurname}`,
             photoURL: ''
-        }).then(()=>
+        }).then(() =>
             dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
         )
-    }else{
+    } else {
         dispatch(fetchProfileAction.build(null, DEFAULT_REQUEST_ID))
     }
 
@@ -135,7 +149,7 @@ const LoginOrSignInError = (error: any, dispatch: any) => {
             errorMessage = 'Ops! Esiste un account con le stesse credenziali email.'
             break
         default:
-            errorMessage= 'Ops! Errore durante la fase di autenticazione'
+            errorMessage = 'Ops! Errore durante la fase di autenticazione'
     }
     dispatch(addError({userMessage: errorMessage}))
 }
