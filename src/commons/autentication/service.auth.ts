@@ -53,7 +53,7 @@ export const createProfileWithEmailAndPasswordAuth = (formValues: ILoginFormProp
         .then(response => {
             console.log('response SIGNIN>>>', response)
             //@ts-ignore
-            loginOrSignInCompleted(response?.user?.multiFactor?.user?.accessToken, dispatch, formValues)
+            loginOrSignInCompleted(response?.user?.accessToken, dispatch, formValues)
         })
         .catch((error) => LoginOrSignInError(error, dispatch))
 }
@@ -67,7 +67,7 @@ export const loginProfileWithEmailAndPasswordAuth = (email: string, password: st
         .then(response => {
             console.log('response LOGIN>>>', response)
             //@ts-ignore
-            loginOrSignInCompleted(response?.user?.multiFactor?.user?.accessToken, dispatch)
+            loginOrSignInCompleted(response?.user?.accessToken, dispatch)
         })
         .catch((error) => LoginOrSignInError(error, dispatch))
 }
@@ -116,7 +116,7 @@ export const loginOrSignInCompleted = (idToken: string, dispatch: any, formValue
  * */
 const LoginOrSignInError = (error: any, dispatch: any) => {
     console.log('error>>>', error.code)
-    let errorMessage = ''
+    let errorMessage: string
     switch (error.code) {
         case 'auth/invalid-email':
             errorMessage = 'Ops! Email non valida'
