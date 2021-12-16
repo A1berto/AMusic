@@ -16,10 +16,9 @@ import {fetchFriendsListAction, isFetchFriendsListPendingSelector} from '../cont
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {isFetchProfilePendingSelector} from '../containers/profile/redux/profile.actions'
 import {
-    fetchEventsHistoryListAction,
-    fetchEventsListAction,
+    fetchEventsHistoryListAction, fetchNearEventsListAction,
     isFetchEventsHistoryListPendingSelector,
-    isFetchEventsListPendingSelector
+    isFetchNearEventsListPendingSelector
 } from '../containers/events/redux/eventi.actions'
 import {AMUSIC_PALETTE_COLORS} from '../AMusic_theme'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
@@ -39,7 +38,7 @@ const Header: FC<IHeaderProps> = () => {
 
     const location = useSelector(userLocationSelector)
     const isFetchProfilePending = useSelector(isFetchProfilePendingSelector)
-    const isFetchALLEventsListPending = useSelector(isFetchEventsListPendingSelector)
+    const isFetchNearEventsListPending = useSelector(isFetchNearEventsListPendingSelector)
     const isFetchEventsHistoryListPending = useSelector(isFetchEventsHistoryListPendingSelector)
     const isFetchFriendsListPending = useSelector(isFetchFriendsListPendingSelector)
 
@@ -59,7 +58,7 @@ const Header: FC<IHeaderProps> = () => {
                     setAnchorEl(null)
                     break
                 case EVENTS_PATH:
-                    dispatch(fetchEventsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {lat: location?.latitude, lon: location?.longitude}, {setAnchorEl}))
+                    dispatch(fetchNearEventsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {lat: location?.latitude, lon: location?.longitude}, {setAnchorEl}))
                     break
                 case FRIENDS_LIST_PATH:
                     dispatch(fetchFriendsListAction.build(null, DEFAULT_REQUEST_ID, undefined, undefined, {setAnchorEl}))
@@ -115,7 +114,7 @@ const Header: FC<IHeaderProps> = () => {
                     {
                         isSectionDisabled(EVENTS_PATH) &&
                         <MenuItem onClick={() => handleOpenSection(EVENTS_PATH)}
-                                  className={`animate__animated animate__infinite ${isFetchALLEventsListPending ? 'animate__headShake' : ''}`}>
+                                  className={`animate__animated animate__infinite ${isFetchNearEventsListPending ? 'animate__headShake' : ''}`}>
                             Eventi
                         </MenuItem>
                     }

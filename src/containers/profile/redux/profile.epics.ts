@@ -1,7 +1,7 @@
 import {NEVER, Observable} from 'rxjs'
 import {DEFAULT_REQUEST_ID, IGenericResponse, ISuccessFetchAction} from 'fetch-with-redux-observable'
 import {ofType, StateObservable} from 'redux-observable'
-import {fetchEventsListAction} from '../../events/redux/eventi.actions'
+import {fetchNearEventsListAction} from '../../events/redux/eventi.actions'
 import {mergeMap} from 'rxjs/operators'
 import {IProfile} from '../profile.types'
 import {changeProfileImageAction, fetchProfileAction} from './profile.actions'
@@ -18,7 +18,7 @@ export const profileSuccessEpic = (action$: Observable<ISuccessFetchAction<IGene
         mergeMap(() => {
             if (window.location.hash.includes(LOGIN_OR_SIGNIN_PATH)) {
                 const location = userLocationSelector(state$.value)
-                return [fetchEventsListAction.build(
+                return [fetchNearEventsListAction.build(
                     null,
                     DEFAULT_REQUEST_ID,
                     undefined,

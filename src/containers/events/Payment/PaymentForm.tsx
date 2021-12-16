@@ -5,7 +5,7 @@ import {Button} from '@material-ui/core'
 import {useDispatch, useSelector} from 'react-redux'
 import {addError, addInfo, addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
-import {fetchEventsListAction, resetStripeClienteSecretAction} from '../redux/eventi.actions'
+import {fetchNearEventsListAction, resetStripeClienteSecretAction} from '../redux/eventi.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {userLocationSelector} from '../user-location/user-location.selectors'
 
@@ -57,7 +57,7 @@ const PaymentForm = () => {
     }, [dispatch, stripe])
 
     /* Confirm payment if it is all right*/
-    const handleSubmit = async (e:any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault()
 
         if (!stripe || !elements) {
@@ -79,7 +79,10 @@ const PaymentForm = () => {
                 dispatch(addError({userMessage: 'Ops! Errore durante il pagamento'}))
             } else {
                 dispatch(closeCurrentDialog())
-                dispatch(fetchEventsListAction.build(null,DEFAULT_REQUEST_ID, undefined,{lat: location?.latitude, lon: location?.longitude}))
+                dispatch(fetchNearEventsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {
+                    lat: location?.latitude,
+                    lon: location?.longitude
+                }))
                 dispatch(addSuccess({userMessage: 'Pagamento avvenuto con successo!'}))
             }
         })

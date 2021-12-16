@@ -13,7 +13,7 @@ import {TextField} from 'formik-material-ui'
 import {useDispatch, useSelector} from 'react-redux'
 import {addError} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 import {isFetchProfilePendingSelector} from '../../profile/redux/profile.actions'
-import {isFetchEventsListPendingSelector} from '../../events/redux/eventi.actions'
+import {isFetchNearEventsListPendingSelector} from '../../events/redux/eventi.actions'
 
 interface ILoginFields {
     isSingIn: boolean
@@ -23,7 +23,7 @@ const LoginOrSignInFields: FC<ILoginFields> = (props: ILoginFields) => {
 
     const {isSingIn = false} = props
     const isFetchProfilePending = useSelector(isFetchProfilePendingSelector)
-    const isFetchEventsListPending = useSelector(isFetchEventsListPendingSelector)
+    const isFetchNearEventsListPending = useSelector(isFetchNearEventsListPendingSelector)
     const dispatch = useDispatch()
 
     const handleAuthenticationEmailClick = async (formValues: ILoginFormProps) => {
@@ -102,8 +102,8 @@ const LoginOrSignInFields: FC<ILoginFields> = (props: ILoginFields) => {
                                 </div>
                             </div>
                             <div className="row justify-content-center">
-                                <div className={`col-8 mt-5 animate__animated animate__infinite ${isFetchProfilePending || isFetchEventsListPending ? 'animate__pulse' : ''}`} >
-                                    <Button variant="contained" type="submit"  disabled={isFetchProfilePending || isFetchEventsListPending} fullWidth>
+                                <div className={`col-8 mt-5 animate__animated animate__infinite ${isFetchProfilePending || isFetchNearEventsListPending ? 'animate__pulse' : ''}`} >
+                                    <Button variant="contained" type="submit"  disabled={isFetchProfilePending || isFetchNearEventsListPending} fullWidth>
                                         {isSingIn ? 'Registrati' : 'Accedi'}
                                     </Button>
                                 </div>

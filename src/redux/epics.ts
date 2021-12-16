@@ -7,12 +7,13 @@ import {
     updateProfileAction
 } from '../containers/profile/redux/profile.actions'
 import {
-    fetchEventsListAction,
     fetchEventsHistoryListAction,
-    fetchPaymentAction, fetchNearEventsListAction
+    fetchNearEventsListAction,
+    fetchPaymentAction
 } from '../containers/events/redux/eventi.actions'
 import {
-    fetchAddFriendAction, fetchDeleteFriendAction,
+    fetchAddFriendAction,
+    fetchDeleteFriendAction,
     fetchFilteredFriendsListAction,
     fetchFriendsListAction,
     fetchSuggestedFriendsListAction
@@ -43,17 +44,18 @@ export const rootEpics: Epic = combineEpics<Epic>(
     fetchAddFriendsSuccessEpic,
     fetchSuggestedFriendsListSuccessEpic,
 
-    //fetch
+    //fetch profile
     switchMapFetchEpics(fetchProfileAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(updateProfileAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(changeProfilePasswordAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(changeProfileImageAction.pendingActionTypeWithSpinner),
 
-    switchMapFetchEpics(fetchEventsListAction.pendingActionTypeWithSpinner),
+    //fetch events
     switchMapFetchEpics(fetchNearEventsListAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(fetchEventsHistoryListAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(fetchPaymentAction.pendingActionTypeWithSpinner),
 
+    //fetch friends
     switchMapFetchEpics(fetchFriendsListAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(fetchFilteredFriendsListAction.pendingActionTypeWithSpinner),
     switchMapFetchEpics(fetchSuggestedFriendsListAction.pendingActionTypeWithSpinner),

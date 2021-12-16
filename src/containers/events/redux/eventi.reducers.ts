@@ -1,7 +1,6 @@
 import {genericResponseNormalizer, IAction, IGenericResponse} from 'fetch-with-redux-observable'
 import {
     fetchEventsHistoryListAction,
-    fetchEventsListAction,
     fetchNearEventsListAction,
     fetchPaymentAction,
     RESET_STRIPE_CLIENT_SECRET_ACTION
@@ -30,7 +29,6 @@ export const paymentClientSecretReducer = (state: any | null = null, action: IAc
 type EventsActionReducerTypes = IGenericResponse<IEvent[]>
 export const eventsListReducer = (state: IEvent[] = [], action: IAction<EventsActionReducerTypes>): IEvent[] => {
     switch (action.type) {
-        case fetchEventsListAction.successActionType:
         case fetchNearEventsListAction.successActionType:
             const response = genericResponseNormalizer(action.payload)
             return !!response ? response.reduce((agg: IEvent[], current: IEvent) => {

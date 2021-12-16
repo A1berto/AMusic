@@ -49,7 +49,7 @@ function App() {
                     headers: {
                         //@ts-ignore
                         Authorization: `Bearer ${idToken}`,
-                        'Access-Control-Allow-Origin':'*'
+                        'Access-Control-Allow-Origin': '*'
                     },
                     retryStrategy: {
                         attempts: 0,

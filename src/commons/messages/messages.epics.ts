@@ -10,7 +10,6 @@ import {
     updateProfileAction
 } from '../../containers/profile/redux/profile.actions'
 import {
-    fetchEventsListAction,
     fetchEventsHistoryListAction,
     fetchPaymentAction
 } from '../../containers/events/redux/eventi.actions'
@@ -31,8 +30,6 @@ export const TYPES_TO_MESSAGES_MAPPER: IGenericEntities<string> = {
     [changeProfilePasswordAction.failureActionType]: 'Ops! Impossibile modificare la password',
     //CHANGE PROFILE IMAGE
     [changeProfileImageAction.failureActionType]: 'Ops! Errore durante il caricamento',
-    //GET EVENTS
-    [fetchEventsListAction.failureActionType]: 'Ops! Impossibile recuperare la lista degli eventi',
     //GET EVENTS HISTORY
     [fetchEventsHistoryListAction.failureActionType]: 'Ops! Impossibile recuperare la cronologia degli eventi',
     //GET FRIENDS LIST

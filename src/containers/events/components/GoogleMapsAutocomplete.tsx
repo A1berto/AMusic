@@ -7,7 +7,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn'
 import parse from 'autosuggest-highlight/parse'
 import {AMUSIC_PALETTE_COLORS} from '../../../AMusic_theme'
 import {IGeoLocation} from '../eventi.types'
-import {fetchEventsListAction, fetchNearEventsListAction} from '../redux/eventi.actions'
+import {fetchNearEventsListAction} from '../redux/eventi.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {useDispatch, useSelector} from 'react-redux'
 import {userLocationSelector} from '../user-location/user-location.selectors'
@@ -161,7 +161,7 @@ export const GoogleMapsAutocomplete: React.FC<IGoogleMapsAutocomplete> = props =
                             longitude: location?.longitude ?? results[0].geometry.location.lng(),
                         })
 
-                        !newInputValue && dispatch(fetchEventsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {
+                        !newInputValue && dispatch(fetchNearEventsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {
                             lat: location?.latitude,
                             lon: location?.longitude,
                             distance: props.distance

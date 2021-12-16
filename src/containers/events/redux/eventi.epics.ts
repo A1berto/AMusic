@@ -1,7 +1,11 @@
 import {NEVER, Observable} from 'rxjs'
 import {IGenericResponse, ISuccessFetchAction} from 'fetch-with-redux-observable'
 import {ofType} from 'redux-observable'
-import {fetchEventsHistoryListAction, fetchEventsListAction, fetchPaymentAction} from './eventi.actions'
+import {
+    fetchEventsHistoryListAction,
+    fetchNearEventsListAction,
+    fetchPaymentAction
+} from './eventi.actions'
 import {map, mergeMap} from 'rxjs/operators'
 import {HashHistory} from '../../../index'
 import {EVENTS_HISTORY_PATH, EVENTS_PATH} from '../../../routes'
@@ -10,7 +14,7 @@ import {addError} from 'fetch-with-redux-observable/dist/user-message/user-messa
 
 export const allEventsListSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<any>>>) =>
     action$.pipe(
-        ofType(fetchEventsListAction.successActionType),
+        ofType(fetchNearEventsListAction.successActionType),
         mergeMap((action) => {
             console.info(`Redirect to ${EVENTS_PATH}`)
             //@ts-ignore
