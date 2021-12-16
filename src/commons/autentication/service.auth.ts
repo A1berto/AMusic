@@ -34,7 +34,6 @@ export const socialMediaAuth = (provider: any, dispatch: any) => {
     return signInWithPopup(auth, provider)
         .then((response) => {
                 console.log('responseProvider>>>', response)
-                console.log('getAuth().currentUser?.getIdToken()>>>', auth.currentUser?.getIdToken())
                 return auth.currentUser?.getIdToken() || ''
             }
         ).then((idToken) => {

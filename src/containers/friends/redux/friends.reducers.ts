@@ -8,6 +8,7 @@ import {
 } from './friends.actions'
 import {combineReducers} from 'redux'
 import {IFriend} from '../friends.types'
+import moment from 'moment/moment'
 
 type FriendsActionReducerTypes = IGenericResponse<IFriend[]>
 export const friendsListReducer = (state: IFriend[] = [], action: IAction<FriendsActionReducerTypes>): IFriend[] => {
@@ -15,7 +16,17 @@ export const friendsListReducer = (state: IFriend[] = [], action: IAction<Friend
         case fetchFriendsListAction.successActionType:
         case fetchDeleteFriendAction.successActionType:
         case fetchAddFriendAction.successActionType:
-            return genericResponseNormalizer(action.payload) ?? []
+            const response = genericResponseNormalizer(action.payload)
+            return response?.reduce((agg: IFriend[], current: IFriend) => {
+                return [
+                    ...agg,
+                    {
+                        ...current,
+                        friendSince: moment(current.friendSince).format('DD/MM/YYYY'),
+                        lastLogin: moment(current.lastLogin).format('DD/MM/YYYY')
+                    }
+                ]
+            }, []) ?? []
         default:
             return state
     }

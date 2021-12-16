@@ -9,7 +9,8 @@ import {AMUSIC_PALETTE_COLORS} from '../../../AMusic_theme'
 import {IGeoLocation} from '../eventi.types'
 import {fetchEventsListAction, fetchNearEventsListAction} from '../redux/eventi.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
+import {userLocationSelector} from '../user-location/user-location.selectors'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,6 +53,7 @@ export const GoogleMapsAutocomplete: React.FC<IGoogleMapsAutocomplete> = props =
     const [inputValue, setInputValue] = React.useState('')
     const [options, setOptions] = React.useState<PlaceType[]>([])
 
+    const location = useSelector(userLocationSelector)
     const dispatch = useDispatch()
 
     const fetch = React.useMemo(
@@ -151,7 +153,21 @@ export const GoogleMapsAutocomplete: React.FC<IGoogleMapsAutocomplete> = props =
             }}
             onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue)
-                !newInputValue && dispatch(fetchEventsListAction.build(null, DEFAULT_REQUEST_ID,undefined,{distance:props.distance}))
+                const geocoder = new (window as any).google.maps.Geocoder()
+                geocoder.geocode({placeId: value?.place_id}, (results: any, status: any) => {
+                    if (status === 'OK' && results[0]) {
+                        props.onPlaceChange && props.onPlaceChange({
+                            latitude: location?.latitude ?? results[0].geometry.location.lat(),
+                            longitude: location?.longitude ?? results[0].geometry.location.lng(),
+                        })
+
+                        !newInputValue && dispatch(fetchEventsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {
+                            lat: location?.latitude,
+                            lon: location?.longitude,
+                            distance: props.distance
+                        }))
+                    }
+                })
             }}
             renderInput={(params) => (
                 <TextField

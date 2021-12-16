@@ -1,12 +1,11 @@
 import * as React from 'react'
-import {FC, useEffect, useMemo} from 'react'
+import {FC, useMemo} from 'react'
 import {IEvent, IEventHistory} from '../eventi.types'
 import {useDispatch} from 'react-redux'
 import {setCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import {CurrentDialogType} from '../../../redux/dialogs/current-dialog.constants'
 import {EVENTS_HISTORY_PATH} from '../../../routes'
 import {Card, CardContent, CardMedia, Typography} from '@material-ui/core'
-import moment from 'moment/moment'
 
 interface IEventsListProps {
     eventsList: IEvent[] | IEventHistory[]
@@ -23,13 +22,8 @@ const EventsList: FC<IEventsListProps> = (props) => {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        console.log('eventsList>>>',eventsList)
-    },[eventsList])
-
     /* Open the dialog to show local details */
     const handleCardClick = (event: any) => {
-        console.log("moment>>>>",moment(event.datePayment).format('DD/MM/YYYY, h:mm:ss a'))
         dispatch(setCurrentDialog(CurrentDialogType.LOCAL_DETAILS,
             isInHistorySection ? {
                 event: event.event,
@@ -40,10 +34,6 @@ const EventsList: FC<IEventsListProps> = (props) => {
                 }
             } : {event}))
     }
-
-    useEffect(() => {
-        console.log('eventsList>>>', eventsList)
-    }, [eventsList])
 
     return (
         <>

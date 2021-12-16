@@ -17,7 +17,11 @@ import PaymentOutlinedIcon from '@material-ui/icons/PaymentOutlined'
 import {useDispatch, useSelector} from 'react-redux'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
 import StripeContainer from '../../../containers/events/Payment/StripeContainer'
-import {fetchPaymentAction, isFetchPaymentPendingSelector} from '../../../containers/events/redux/eventi.actions'
+import {
+    fetchPaymentAction,
+    isFetchPaymentPendingSelector,
+    resetStripeClienteSecretAction
+} from '../../../containers/events/redux/eventi.actions'
 import {DEFAULT_REQUEST_ID} from 'fetch-with-redux-observable'
 import {paymentClientSecretSelector} from '../../../containers/events/redux/eventi.selectors'
 import {EVENTS_HISTORY_PATH} from '../../../routes'
@@ -84,6 +88,10 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
     const handleClose = useCallback(() => {
         dispatch(closeCurrentDialog())
     }, [dispatch])
+    
+    useEffect(() => () => {
+        dispatch(resetStripeClienteSecretAction(''))
+    },[dispatch])
 
     return (
         <>
@@ -206,7 +214,7 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                 </div>
 
                 {
-                    !isInHistorySection && !event.bought &&
+                    !isInHistorySection && !event.bought && event?.partecipants.length < event?.maxPartecipants &&
                     <>
                         {/* VISIBLE PARTICIPATION*/}
                         <div className="col-12 pt-4 d-flex align-items-center">
@@ -219,32 +227,32 @@ const LocalInfosDialog: FC<ILocalInfosProps> = props => {
                                 checked={visibleChecked}
                                 onChange={handleVisibleChange}/>
                         </div>
-
-                        {/*PAYMENT BUTTON*/}
-                        <div className="col-12">
-                            <Tooltip title={'Iscrizione e Pagamento'} placement="left">
-                                <Fab style={{position: 'absolute', right: 25, bottom: 25}} color="primary"
-                                     onClick={handleOpenPayment}>
-                                    {
-                                        isFetchPaymentPending ?
-                                            <CircularProgress style={{color: 'white'}}/> : <PaymentOutlinedIcon/>
-                                    }
-                                </Fab>
-                            </Tooltip>
-                        </div>
+                        { !event.bought && event?.partecipants.length < event?.maxPartecipants &&
+                            <div className="col-12">
+                                {/*PAYMENT BUTTON*/}
+                                <Tooltip title={'Iscrizione e Pagamento'} placement="left">
+                                    <Fab style={{position: 'absolute', right: 25, bottom: 25}} color="primary"
+                                         onClick={handleOpenPayment}>
+                                        {
+                                            isFetchPaymentPending ?
+                                                <CircularProgress style={{color: 'white'}}/> : <PaymentOutlinedIcon/>
+                                        }
+                                    </Fab>
+                                </Tooltip>
+                            </div>
+                        }
                     </>
                 }
                 {
                     event.bought &&
-                    <div className="col-12 pt-4 d-flex align-items-center">
+                    <div className="col-12 pt-4 d-flex align-items-center justify-content-center">
                         <Typography variant="h6"
-                                    color="secondary">
+                                    style={{color: '#ffb74d'}}>
                             Biglietto già acquistato per questo evento
                         </Typography>
                     </div>
                 }
             </div>
-
 
             {/*PAYMENT COMPONENT*/}
             {

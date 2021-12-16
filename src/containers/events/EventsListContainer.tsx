@@ -16,18 +16,19 @@ import {AMusicSlider} from '../../commons/AMusicSlider'
 import {userLocationSelector} from './user-location/user-location.selectors'
 
 
-interface IEventsProps {
+interface IEventsListContainerProps {
 }
 
-const Events: FC<IEventsProps> = () => {
-
+const EventsListContainer: FC<IEventsListContainerProps> = () => {
+    const dispatch = useDispatch()
     const [isButtonComeBackUpVisible, setButtonComeBackUpVisible] = useState<boolean>(false)
     const [distanceValue, setDistanceValue] = React.useState<number>(5)
     const userLocation = useSelector(userLocationSelector)
+    const eventsList = useSelector(eventsListSelector)
     const [mapsProps, setMapsPros] = useState<GoogleMapsReactProps>({
         center: {
-            lat: !!userLocation ? userLocation.latitude : 41.9027835,
-            lng: !!userLocation ? userLocation.longitude : 12.4963655,
+            lat: !!userLocation?.latitude ? userLocation?.latitude : 41.9027835,
+            lng: !!userLocation?.longitude ? userLocation?.longitude : 12.4963655,
         },
         zoom: 12,
         options: () => ({
@@ -39,8 +40,6 @@ const Events: FC<IEventsProps> = () => {
         },
     })
 
-    const eventsList = useSelector(eventsListSelector)
-    const dispatch = useDispatch()
 
     const handleDistanceChange = (event: any, newValue: number | number[]) => {
         setDistanceValue(newValue as number)
@@ -189,4 +188,4 @@ const Events: FC<IEventsProps> = () => {
         </div>
     )
 }
-export default Events
+export default EventsListContainer

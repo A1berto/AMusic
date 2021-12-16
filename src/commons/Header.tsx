@@ -23,6 +23,7 @@ import {
 } from '../containers/events/redux/eventi.actions'
 import {AMUSIC_PALETTE_COLORS} from '../AMusic_theme'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
+import {userLocationSelector} from '../containers/events/user-location/user-location.selectors'
 
 
 interface IHeaderProps {
@@ -36,6 +37,7 @@ const Header: FC<IHeaderProps> = () => {
     const history = useHistory()
     const dispatch = useDispatch()
 
+    const location = useSelector(userLocationSelector)
     const isFetchProfilePending = useSelector(isFetchProfilePendingSelector)
     const isFetchALLEventsListPending = useSelector(isFetchEventsListPendingSelector)
     const isFetchEventsHistoryListPending = useSelector(isFetchEventsHistoryListPendingSelector)
@@ -57,7 +59,7 @@ const Header: FC<IHeaderProps> = () => {
                     setAnchorEl(null)
                     break
                 case EVENTS_PATH:
-                    dispatch(fetchEventsListAction.build(null, DEFAULT_REQUEST_ID, undefined, undefined, {setAnchorEl}))
+                    dispatch(fetchEventsListAction.build(null, DEFAULT_REQUEST_ID, undefined, {lat: location?.latitude, lon: location?.longitude}, {setAnchorEl}))
                     break
                 case FRIENDS_LIST_PATH:
                     dispatch(fetchFriendsListAction.build(null, DEFAULT_REQUEST_ID, undefined, undefined, {setAnchorEl}))

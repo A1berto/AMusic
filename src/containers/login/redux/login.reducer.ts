@@ -30,7 +30,8 @@ export const AMusicReducer: Reducer<any, any> = (state: IRootState, action: IAct
                 eventsList: [],
                 eventsHistory: [],
                 paymentClientSecret: '',
-                userLocation:null
+                //@ts-ignore
+                userLocation: {...state?.events?.userLocation}
             },
             friends: {
                 friendsList: [],

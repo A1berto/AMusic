@@ -1,5 +1,5 @@
-import {IUserLocationReducer} from './user-location.reducer'
+import {IGeoLocation} from '../eventi.types'
 
 
 export const UPDATE_USER_LOCATION = 'UPDATE_USER_LOCATION'
-export const updateUserLocation = (payload: IUserLocationReducer) => ({type: UPDATE_USER_LOCATION, payload})
+export const updateUserLocation = (payload: IGeoLocation) => ({type: UPDATE_USER_LOCATION, payload})

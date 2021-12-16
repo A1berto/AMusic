@@ -26,7 +26,6 @@ const LoginOrSignInFields: FC<ILoginFields> = (props: ILoginFields) => {
     const isFetchEventsListPending = useSelector(isFetchEventsListPendingSelector)
     const dispatch = useDispatch()
 
-    //TODO scoppia quandol'email è già presente su firebase
     const handleAuthenticationEmailClick = async (formValues: ILoginFormProps) => {
         isSingIn ?
             await createProfileWithEmailAndPasswordAuth(formValues, dispatch) :

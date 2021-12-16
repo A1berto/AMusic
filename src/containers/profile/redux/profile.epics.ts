@@ -1,6 +1,6 @@
 import {NEVER, Observable} from 'rxjs'
 import {DEFAULT_REQUEST_ID, IGenericResponse, ISuccessFetchAction} from 'fetch-with-redux-observable'
-import {ofType} from 'redux-observable'
+import {ofType, StateObservable} from 'redux-observable'
 import {fetchEventsListAction} from '../../events/redux/eventi.actions'
 import {mergeMap} from 'rxjs/operators'
 import {IProfile} from '../profile.types'
@@ -8,14 +8,22 @@ import {changeProfileImageAction, fetchProfileAction} from './profile.actions'
 import {LOGIN_OR_SIGNIN_PATH} from '../../../routes'
 import {addSuccess} from 'fetch-with-redux-observable/dist/user-message/user-message.actions'
 import {closeCurrentDialog} from '../../../redux/dialogs/current-dialogs.actions'
+import {IRootState} from '../../../redux/reducer'
+import {userLocationSelector} from '../../events/user-location/user-location.selectors'
 
 
-export const profileSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<IProfile>>>) =>
+export const profileSuccessEpic = (action$: Observable<ISuccessFetchAction<IGenericResponse<IProfile>>>, state$: StateObservable<IRootState>) =>
     action$.pipe(
         ofType(fetchProfileAction.successActionType),
         mergeMap(() => {
             if (window.location.hash.includes(LOGIN_OR_SIGNIN_PATH)) {
-                return [fetchEventsListAction.build(null, DEFAULT_REQUEST_ID)]
+                const location = userLocationSelector(state$.value)
+                return [fetchEventsListAction.build(
+                    null,
+                    DEFAULT_REQUEST_ID,
+                    undefined,
+                    {lat: location?.latitude, lon: location?.longitude}
+                )]
             }
             return NEVER
         })
