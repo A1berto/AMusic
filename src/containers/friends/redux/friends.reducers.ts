@@ -23,7 +23,7 @@ export const friendsListReducer = (state: IFriend[] = [], action: IAction<Friend
                     {
                         ...current,
                         friendSince: moment(current.friendSince).format('DD/MM/YYYY'),
-                        lastLogin: moment(current.lastLogin).format('DD/MM/YYYY')
+                        lastLogin: moment(current.lastLogin).format('DD/MM/YYYY, h:mm:ss a')
                     }
                 ]
             }, []) ?? []

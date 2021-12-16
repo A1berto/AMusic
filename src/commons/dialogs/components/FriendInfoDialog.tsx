@@ -46,52 +46,56 @@ const FriendInfoDialog: FC<IFriendInfoDialogProps> = (props) => {
 
                     <div className="row pt-4">
                         <div className="col-12 d-flex align-items-end">
-                            <div className="col-auto">
-                                <Typography variant="h4"
-                                            color="textSecondary">
-                                    Amici da
-                                </Typography>
-                            </div>
-                            <div className="col">
-                                <Typography variant="h6"
-                                            color="secondary"
-                                            className="ms-3">
-                                    {friend.friendSince}
-                                </Typography>
+                            <div className="row d-flex align-items-end">
+                                <div className="col-auto">
+                                    <Typography variant="h4"
+                                                color="textSecondary">
+                                        Amici da
+                                    </Typography>
+                                </div>
+                                <div className="col">
+                                    <Typography variant="h6"
+                                                color="secondary"
+                                                className="ms-3">
+                                        {friend.friendSince}
+                                    </Typography>
+                                </div>
                             </div>
                         </div>
                         <div className="col-12 pt-3 d-flex align-items-baseline">
-                            <div className="col-auto">
-                                <Typography variant="h4"
-                                            color="textSecondary">
-                                    Ultimo accesso
-                                </Typography>
-                            </div>
-                            <div className="col">
-                                <Typography variant="h6"
-                                            color="secondary"
-                                            className="ms-3">
-                                    {friend.lastLogin}
-                                </Typography>
+                            <div className="row d-flex align-items-end">
+                                <div className="col-auto">
+                                    <Typography variant="h4"
+                                                color="textSecondary">
+                                        Ultimo accesso
+                                    </Typography>
+                                </div>
+                                <div className="col">
+                                    <Typography variant="h6"
+                                                color="secondary"
+                                                className="ms-3">
+                                        {friend.lastLogin}
+                                    </Typography>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="row pt-3">
+                    <div className="row pt-3 d-flex align-items-center">
                         <Typography variant={'h4'} color="textSecondary">
                             Lista iscrizione eventi
                         </Typography>
                         <div className="col-12 d-flex">
                             {
                                 friend?.nextEvents?.map((event: IEvent, index) =>
-                                <Tooltip title="Clicca per visionare"
-                                         className="c-pointer"
-                                         onClick={() => handleOpenEvent(event)}>
-                                    <Link className="me-2">
-                                        {event?.eventName}{friend?.nextEvents?.length - 1 !== index ? `,` : '.'}
-                                    </Link>
-                                </Tooltip>
-                            )}
+                                    <Tooltip title="Clicca per visionare"
+                                             className="c-pointer"
+                                             onClick={() => handleOpenEvent(event)}>
+                                        <Link className="me-2">
+                                            {event?.eventName}{friend?.nextEvents?.length - 1 !== index ? `,` : '.'}
+                                        </Link>
+                                    </Tooltip>
+                                )}
                         </div>
                     </div>
                 </div>
