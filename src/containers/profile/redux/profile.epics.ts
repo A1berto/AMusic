@@ -22,7 +22,7 @@ export const profileSuccessEpic = (action$: Observable<ISuccessFetchAction<IGene
                     null,
                     DEFAULT_REQUEST_ID,
                     undefined,
-                    {lat: location?.latitude, lon: location?.longitude}
+                    {lat: location?.latitude ?? 41.9027835, lon: location?.longitude ?? 12.4963655}
                 )]
             }
             return NEVER
