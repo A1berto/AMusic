@@ -17,7 +17,7 @@ import {FetchProvider} from 'react-fetch-it-hook'
 // set version in window.buildID
 (window as any).buildID = `${process.env.REACT_APP_BUILD_ID}`
 
-export const BASE_REQUEST_BACKEND_URL = 'https://amusic-service-l7sxicqleq-oa.a.run.app'
+export const BASE_REQUEST_BACKEND_URL = 'https://polimi-amusic-l7sxicqleq-oa.a.run.app'
 
 export const HashHistory = createHashHistory()
 
